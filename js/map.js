@@ -34,23 +34,23 @@ function map(){
 
     // load data and draw the map
     d3.json("data/sweden_mun.topojson", function(error, sweden) {
-       // console.log(world);
+
+        var electionData = [];
         var mun = topojson.feature(sweden, sweden.objects.swe_mun).features;
+
+        // All csv files for the election years
+        var data = ["data/Swedish_Election_2002.csv","data/Swedish_Election_2006.csv","data/Swedish_Election_2010.csv", "data/Swedish_Election_2014.csv"];  
         
         //load summary data
-        //...
-        draw(mun);
-/*
-        d3.csv("data/OECD-better-life-index-hi.csv", function(error, data) {
-
-            draw(mun, data);    
+        data.forEach( function(f) { 
+            d3.csv(f, function(data) {  
+                electionData[f] = data;
+            });
         });
-*/
-        
-        
+        draw(mun, electionData);    
     });
 
-    function draw(mun)
+    function draw(mun, data)
     {
         var mun = g.selectAll(".swe_mun").data(mun);
 
@@ -58,13 +58,13 @@ function map(){
             .attr("class", "mun")
             .attr("d", path)
             .attr("id", function(d) { return d.id; })
-            //.attr("title", function(d) { return d.properties.name; })
+            .attr("title", function(d) { return d.properties.name; })
             //country color
             .style("fill", "blue")
             .attr("stroke-width", 0.5)
             .attr("stroke", "black")
             
-
+/*
             //tooltip
             .on("mousemove", function(d) {
                 tooltip.transition()
@@ -75,9 +75,17 @@ function map(){
                 tooltip.transition()
                 .duration(200)
                 .style("opacity", 0); 
+            }) */
+            .on('mouseover', function(d, i) {
+                d3.select(this)
+                    .style('fill-opacity', 1);
+            })
+            .on('mouseout', function(d, i) {
+                d3.selectAll('path')
+                    .style( 'fill-opacity', .5 );
             });
     }
-    
+
     //zoom and panning method
     function move() {
 

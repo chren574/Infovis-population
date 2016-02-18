@@ -1,13 +1,12 @@
-.country{ fill: rgb(0, 75, 151); }
+.swe_mun{ fill: rgb(0, 75, 151); }
 
-.country:hover{
+.swe_mun:hover{
     stroke: #fff;
     stroke-width: .7px;
     cursor:pointer;
 
 }
 
-.country.Sweden { fill: #dd0400; }
 
 .hidden {
     display: none;

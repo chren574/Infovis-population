@@ -18,10 +18,6 @@ textarea {
     color: #222;
 }
 
-#k{
-        width: 50px;
-    }
-
 html {
     font-size: 1em;
     line-height: 1.4;
@@ -110,10 +106,11 @@ body {
 /* Wrapper for page content to push down footer */
 #wrap {
     min-height: 100%;
-    height: auto;/* Negative indent footer by its height */
-    margin: 0 auto -60px;/* Pad bottom by footer height */
+    height: auto;
+    /* Negative indent footer by its height */
+    margin: 0 auto -60px;
+    /* Pad bottom by footer height */
     padding: 0 0 60px;
-    background-color: rgba(0, 0, 0, 0);
 }
 
 /* Set the fixed height of the footer here */
@@ -128,11 +125,6 @@ body {
 /* Not required for template or sticky footer method. */
 
 
-@media (min-width: 1200px){
-    .container {
-        width: auto;
-    }
-}
 
 
 
@@ -324,5 +316,4 @@ body {
     h3 {
         page-break-after: avoid;
     }
-    
 }
