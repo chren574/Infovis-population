@@ -11,8 +11,19 @@ function map(){
         height = mapDiv.height() - margin.top - margin.bottom;
 
     //initialize color scale
-    var color = d3.scale.category20();
-    
+    //var color = d3.scale.category20();
+
+    var color = [];
+    color.push("Moderaterna", "#52BDEC");
+    color.push("Centerpartiet", "#016A3A");
+    color.push("Folkpartiet", "#0094D7");
+    color.push("Kristdemokraterna", "blue");
+    color.push("Miljöpartiet", "#53A045");
+    color.push("Socialdemokraterna", "#ED1B34");
+    color.push("Vänsterpartiet", "#DA291C");
+    color.push("Sverigedemokraterna", "purple");
+    color.push("övriga partier", "gray");
+
     //initialize tooltip
     var tooltip = d3.select("body").append("div")
     .attr("class", "tooltip")
@@ -37,34 +48,26 @@ function map(){
 
         var electionData = [];
         var mun = topojson.feature(sweden, sweden.objects.swe_mun).features;
-
-        // All csv files for the election years
-        var data = ["data/Swedish_Election_2002.csv","data/Swedish_Election_2006.csv","data/Swedish_Election_2010.csv", "data/Swedish_Election_2014.csv"];  
         
         //load summary data
-        data.forEach( function(f) { 
-            d3.csv(f, function(data) {  
-                electionData[f] = data;
-            });
+        d3.csv("data/Swedish_Election.csv", function(error, data) {  
+            draw(mun, data);  
         });
-        draw(mun, electionData);    
     });
 
-    function draw(mun, data)
+    function draw(mun, electionData)
     {
         var mun = g.selectAll(".swe_mun").data(mun);
 
         mun.enter().insert("path")
             .attr("class", "mun")
             .attr("d", path)
-            .attr("id", function(d) { return d.id; })
             .attr("title", function(d) { return d.properties.name; })
-            //country color
             .style("fill", "blue")
             .attr("stroke-width", 0.5)
             .attr("stroke", "black")
             
-/*
+/*          // Fungerar inte
             //tooltip
             .on("mousemove", function(d) {
                 tooltip.transition()
@@ -75,15 +78,21 @@ function map(){
                 tooltip.transition()
                 .duration(200)
                 .style("opacity", 0); 
-            }) */
+            }) 
+*/
             .on('mouseover', function(d, i) {
                 d3.select(this)
-                    .style('fill-opacity', 1);
+                    .style('fill-opacity', .5);
             })
             .on('mouseout', function(d, i) {
                 d3.selectAll('path')
-                    .style( 'fill-opacity', .5 );
+                    .style( 'fill-opacity', 1 );
             });
+    }
+
+    function strongestParty() {
+
+        return party;
     }
 
     //zoom and panning method
