@@ -1,5 +1,5 @@
-function map(){
-    
+function map(data){
+
     var zoom = d3.behavior.zoom()
         .scaleExtent([1, 8])
         .on("zoom", move);
@@ -45,20 +45,21 @@ function map(){
     d3.json("data/sweden_mun.topojson", function(error, sweden) {
 
         var mun = topojson.feature(sweden, sweden.objects.swe_mun).features;
-        
-        //load summary data
-        d3.csv("data/Swedish_Election.csv", function(error, data) {  
-            data.forEach(function(d) {
-                parseData(d, year);
-            });
-            draw(mun, data);  
+              
+        data.forEach(function(d) {
+            parseData(d, year);
         });
+        draw(mun, data);  
+        
     });
 
     function draw(mun, electionData)
     {
 
-        var year = document.getElementById("year");
+
+
+        self.electionData = electionData;
+        var year = document.getElementById("year").value;
 
         var mun = g.selectAll(".swe_mun").data(mun);
         var colorOfParty = partyColor(electionData, year);
@@ -97,8 +98,7 @@ function map(){
             }) 
 */          
             .on("click", function(d) {
-                map.selectMun(d.properties.name);
-                colorByYear("2006");
+                map1.selectMun(d.properties.name);
             })
             
             .on('mouseover', function(d) {
@@ -111,9 +111,10 @@ function map(){
             });
     }
 
-    function colorByYear() {
+    this.colorByYear = function () {
 
-        var year = document.getElementById("year");
+        var year = document.getElementById("year").value;
+
         var colorOfParty = partyColor(electionData, year);
 
         g.selectAll(".mun").each(function(p) {
@@ -123,14 +124,14 @@ function map(){
             point.style("fill", function(d) {
             
             var index = 0;
-            for(var l = 0; l < colorOfParty_.length; ++l) {
+            for(var l = 0; l < colorOfParty.length; ++l) {
                 // Compare region-name
-                if(d.properties.name == colorOfParty_[l].reg) {
+                if(d.properties.name == colorOfParty[l].reg) {
                     index = l;
                     break;
                 }
             };
-            return color.get(colorOfParty_[index].par);
+            return color.get(colorOfParty[index].par);
                 
             });
 
@@ -159,8 +160,9 @@ function map(){
     function parseData(data, year) {
 
         data.region = data.region.slice(5);
-        data[year] = +data[year];
-        data["2006"] = +data["2006"];
+        if(data[year] != "..") {
+            data[year] = +data[year];
+        }
     }
 
 
