@@ -15,4 +15,5 @@ d3.csv("data/Swedish_Election.csv", function (data) {
     color.set("Vänsterpartiet", "#DA291C");
     color.set("Sverigedemokraterna", "#DDDD00");
     color.set("övriga partier", "gray");
+    color.set("övriga partier", "gray");
 });

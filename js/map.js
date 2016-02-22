@@ -21,6 +21,7 @@ function map(data){
     color.set("Vänsterpartiet", "#DA291C");
     color.set("Sverigedemokraterna", "#DDDD00");
     color.set("övriga partier", "gray");
+    color.set("Odefinierad", "white");
 
     //initialize tooltip
     var tooltip = d3.select("body").append("div")
@@ -55,8 +56,6 @@ function map(data){
 
     function draw(mun, electionData)
     {
-
-
 
         self.electionData = electionData;
         var year = document.getElementById("year").value;
@@ -103,11 +102,11 @@ function map(data){
             
             .on('mouseover', function(d) {
                 d3.select(this)
-                    .style('fill-opacity', .5);
+                    .style('stroke-width', .5);
             })
             .on('mouseout', function(d) {
                 d3.selectAll('path')
-                    .style( 'fill-opacity', 1 );
+                    .style( 'stroke-width', 0.1 );
             });
     }
 
@@ -120,10 +119,11 @@ function map(data){
         g.selectAll(".mun").each(function(p) {
 
             var point = d3.select(this);
+            point.style("fill-opacity", 1 )
 
             point.style("fill", function(d) {
             
-            var index = 0;
+            var index = NaN;
             for(var l = 0; l < colorOfParty.length; ++l) {
                 // Compare region-name
                 if(d.properties.name == colorOfParty[l].reg) {
@@ -131,12 +131,73 @@ function map(data){
                     break;
                 }
             };
-            return color.get(colorOfParty[index].par);
-                
+            //console.log(index)
+            if(!isNaN(index)) {
+                return color.get(colorOfParty[index].par);
+            } else {
+                console.log("LOG")
+                return color.get("Odefinierad");
+            }
+            
             });
 
         });
+    }
 
+    this.colorByParty = function() {
+
+        var party = document.getElementById("party").value;
+        var year = document.getElementById("year").value;
+
+        var nested_data = d3.nest()
+            .key(function(d) { return d.parti; })
+            .sortValues(function(a, b) { return b[year] - a[year]; })
+            .entries(electionData);
+
+        nested_data = nested_data.filter(function(d) {
+            return d.key == party;
+        })
+
+        var len = nested_data[0].values.length;
+
+        var max, min;
+        max = parseFloat(nested_data[0].values[0][year]);
+        min = parseFloat(nested_data[0].values[len-1][year]);
+
+        g.selectAll(".mun").each(function(p) {
+
+            var point = d3.select(this);
+
+            point.style("fill", function(d) {
+                for(var i = 0; i < len; ++i) {
+                    
+                    var region = nested_data[0].values[i];
+                    
+                    if(d.properties.name == region.region) {
+
+                        return !(isNaN(region[year])) ? color.get(party) : "white";
+                    
+                    }
+                };
+            })
+
+            point.style("fill-opacity", function(d) {
+            
+            var opac = 0;
+            for(var i = 0; i < len; ++i) {
+                
+                var region = nested_data[0].values[i];
+                // Compare region-name
+                if(d.properties.name == region.region) {
+                    
+                    opac = (parseFloat(region[year]) - min)/(max - min);
+                    break;
+                }
+            };
+            
+            return opac;
+            });
+        });
 
     }
 
@@ -171,7 +232,6 @@ function map(data){
 
         var t = d3.event.translate;
         var s = d3.event.scale;
-        
 
         zoom.translate(t);
         g.style("stroke-width", 1 / s).attr("transform", "translate(" + t + ")scale(" + s + ")");
