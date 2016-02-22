@@ -1,4 +1,4 @@
-function map(year){
+function map(){
 
     // Temp
     year = "2014";
@@ -121,7 +121,6 @@ function map(year){
         nested_data.forEach(function(d, i) {
             colorOfParty.push({reg: d.values[0].region, par: d.values[0].parti });
         });
-
         return colorOfParty;
     }
 

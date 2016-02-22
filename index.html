@@ -42,7 +42,10 @@
                     <label>
                         Magnitude > <span id="slider-value">4</span>
                         </label>
-                        <input type="range" min="4" max="7" value="4" id="slider" onload="sliderValue()" onchange="sliderValue()">
+                        <input type="range" min="1970" max="2014" value="2014" id="slider" onload="sliderValue()" onchange="sliderValue()">
+                        <input type="number" id="k" value="4" style="float:right;"> 
+                        <input type="button" value="cluster" onclick="map.cluster()" style="float:right;"/>
+                        <label id="info" style="float:right;"></label>
                     </label>
 
                 </div>
