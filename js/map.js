@@ -1,4 +1,7 @@
-function map(){
+function map(year){
+
+    // Temp
+    year = "2014";
 
     var zoom = d3.behavior.zoom()
         .scaleExtent([1, 8])
@@ -11,18 +14,16 @@ function map(){
         height = mapDiv.height() - margin.top - margin.bottom;
 
     //initialize color scale
-    //var color = d3.scale.category20();
-
-    var color = [];
-    color.push("Moderaterna", "#52BDEC");
-    color.push("Centerpartiet", "#016A3A");
-    color.push("Folkpartiet", "#0094D7");
-    color.push("Kristdemokraterna", "blue");
-    color.push("Miljöpartiet", "#53A045");
-    color.push("Socialdemokraterna", "#ED1B34");
-    color.push("Vänsterpartiet", "#DA291C");
-    color.push("Sverigedemokraterna", "purple");
-    color.push("övriga partier", "gray");
+    color = new Map();
+    color.set("Moderaterna", "#52BDEC");
+    color.set("Centerpartiet", "#016A3A");
+    color.set("Folkpartiet", "#0094D7");
+    color.set("Kristdemokraterna", "#231977");
+    color.set("Miljöpartiet", "#53A045");
+    color.set("Socialdemokraterna", "#ED1B34");
+    color.set("Vänsterpartiet", "#DA291C");
+    color.set("Sverigedemokraterna", "#DDDD00");
+    color.set("övriga partier", "gray");
 
     //initialize tooltip
     var tooltip = d3.select("body").append("div")
@@ -46,11 +47,13 @@ function map(){
     // load data and draw the map
     d3.json("data/sweden_mun.topojson", function(error, sweden) {
 
-        var electionData = [];
         var mun = topojson.feature(sweden, sweden.objects.swe_mun).features;
         
         //load summary data
         d3.csv("data/Swedish_Election.csv", function(error, data) {  
+            data.forEach(function(d) {
+                parseData(d, year);
+            });
             draw(mun, data);  
         });
     });
@@ -58,16 +61,28 @@ function map(){
     function draw(mun, electionData)
     {
         var mun = g.selectAll(".swe_mun").data(mun);
+        var colorOfParty = partyColor(electionData, "2014");
 
         mun.enter().insert("path")
             .attr("class", "mun")
             .attr("d", path)
             .attr("title", function(d) { return d.properties.name; })
-            .style("fill", "blue")
-            .attr("stroke-width", 0.5)
+            .style("fill", function(d, i) {
+                var index = 0;
+                for(var l = 0; l < colorOfParty.length; ++l) {
+                    // Compare region-name
+                    if(d.properties.name == colorOfParty[l].reg) {
+                        index = l;
+                        break;
+                    }
+
+                };
+                return color.get(colorOfParty[index].par);
+            })
+            .attr("stroke-width", 0.1)
             .attr("stroke", "black")
             
-/*          // Fungerar inte
+/*          // Fungerar inte, css krånglar
             //tooltip
             .on("mousemove", function(d) {
                 tooltip.transition()
@@ -79,21 +94,45 @@ function map(){
                 .duration(200)
                 .style("opacity", 0); 
             }) 
-*/
-            .on('mouseover', function(d, i) {
+*/          
+            .on("click", function(d) {
+                map.selectMun(d.properties.name);
+            })
+            
+            .on('mouseover', function(d) {
                 d3.select(this)
                     .style('fill-opacity', .5);
             })
-            .on('mouseout', function(d, i) {
+            .on('mouseout', function(d) {
                 d3.selectAll('path')
                     .style( 'fill-opacity', 1 );
             });
     }
 
-    function strongestParty() {
+    function partyColor(electionData, year) {
+        
+        var nested_data = d3.nest()
+            .key(function(d) { return d.region; })
+            .sortValues(function(a, b) { return b[year] - a[year]; })
+            .entries(electionData);
 
-        return party;
+        var colorOfParty = [];
+
+        nested_data.forEach(function(d, i) {
+            colorOfParty.push({reg: d.values[0].region, par: d.values[0].parti });
+        });
+
+        return colorOfParty;
     }
+
+    // Removes region code from region name
+    // Parse year to float
+    function parseData(data, year) {
+
+        data.region = data.region.slice(5);
+        data[year] = +data[year];
+    }
+
 
     //zoom and panning method
     function move() {
@@ -104,6 +143,13 @@ function map(){
 
         zoom.translate(t);
         g.style("stroke-width", 1 / s).attr("transform", "translate(" + t + ")scale(" + s + ")");
+
+    }
+
+    // Sends the name of the mun to other .js-files
+    this.selectMun = function (mun) {
+
+        //console.log(mun);
 
     }
 }
