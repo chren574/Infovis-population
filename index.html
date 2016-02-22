@@ -52,24 +52,44 @@
 
                     	<form method="post">
 					        <select name="Election Year" id="year">
-					                <option value="1973">1973</option>
-					                <option value="1976">1976</option>
-					                <option value="1979">1979</option>
-					                <option value="1982">1982</option>
-					                <option value="1985">1985</option>
-					                <option value="1988">1988</option>
-					                <option value="1991">1991</option>
-					                <option value="1994">1994</option>
-					                <option value="1998">1998</option>
-					                <option value="2002">2002</option>
-					                <option value="2006">2006</option>
+					                <option selected="selected" value="2014">2014</option>
 					                <option value="2010">2010</option>
-					                <option value="2014">2014</option>
+					                <option value="2006">2006</option>
+					                <option value="2002">2002</option>
+					                <option value="1998">1998</option>
+					                <option value="1994">1994</option>
+					                <option value="1991">1991</option>
+					                <option value="1988">1988</option>
+					                <option value="1985">1985</option>
+					                <option value="1982">1982</option>
+					                <option value="1979">1979</option>
+					                <option value="1976">1976</option>
+					                <option value="1973">1973</option>
 					        </select>
 						</form>
 
-                        <input type="button" value="year" onclick="map1.colorByYear()" style="float:right;"/>
-                        <label id="info" style="float:right;"></label>
+                        <input type="button" value="year" onclick="map1.colorByYear()"/>
+                       <!-- <label id="info" style="float:right;"></label> -->
+
+                       	<form method="post">
+					        <select name="Political Party" id="party">
+					        		<option selected = "selected" value="All">Visa alla</option>
+					                <option value="Moderaterna">Moderaterna</option>
+					                <option value="Centerpartiet">Centerpartiet</option>
+					                <option value="Folkpartiet">Folkpartiet</option>
+					                <option value="Kristdemokraterna">Kristdemokraterna</option>
+					                <option value="Miljöpartiet">Miljöpartiet</option>
+					                <option value="Socialdemokraterna">Socialdemokraterna</option>
+					                <option value="Vänsterpartiet">Vänsterpartiet</option>
+					                <option value="Sverigedemokraterna">Sverigedemokraterna</option>
+					                <option value="Övriga partier">Övriga partier</option>
+					        </select>
+						</form>
+
+                        <input type="button" value="year" onclick="map1.colorByYear()"/>
+                
+						<input type="button" value="party" onclick=alert("Hello! Please make a function for me.")/>
+
                     </label>
 
                 </div>
