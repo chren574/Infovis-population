@@ -1,8 +1,5 @@
 function map(){
-
-    // Temp
-    year = "2014";
-
+    
     var zoom = d3.behavior.zoom()
         .scaleExtent([1, 8])
         .on("zoom", move);
@@ -60,8 +57,12 @@ function map(){
 
     function draw(mun, electionData)
     {
+
+        var year = document.getElementById("year");
+
         var mun = g.selectAll(".swe_mun").data(mun);
-        var colorOfParty = partyColor(electionData, "2014");
+        var colorOfParty = partyColor(electionData, year);
+
 
         mun.enter().insert("path")
             .attr("class", "mun")
@@ -97,6 +98,7 @@ function map(){
 */          
             .on("click", function(d) {
                 map.selectMun(d.properties.name);
+                colorByYear("2006");
             })
             
             .on('mouseover', function(d) {
@@ -107,6 +109,34 @@ function map(){
                 d3.selectAll('path')
                     .style( 'fill-opacity', 1 );
             });
+    }
+
+    function colorByYear() {
+
+        var year = document.getElementById("year");
+        var colorOfParty = partyColor(electionData, year);
+
+        g.selectAll(".mun").each(function(p) {
+
+            var point = d3.select(this);
+
+            point.style("fill", function(d) {
+            
+            var index = 0;
+            for(var l = 0; l < colorOfParty_.length; ++l) {
+                // Compare region-name
+                if(d.properties.name == colorOfParty_[l].reg) {
+                    index = l;
+                    break;
+                }
+            };
+            return color.get(colorOfParty_[index].par);
+                
+            });
+
+        });
+
+
     }
 
     function partyColor(electionData, year) {
@@ -130,6 +160,7 @@ function map(){
 
         data.region = data.region.slice(5);
         data[year] = +data[year];
+        data["2006"] = +data["2006"];
     }
 
 
