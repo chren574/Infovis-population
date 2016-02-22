@@ -39,9 +39,11 @@
                         <div id="map" style="height: 100vh;">
                         </div>
                     </div>
- <!--               <label>
-                        Magnitude > <span id="slider-value">4</span>
-                    </label> -->
+
+                    <div class="col-xs-6">
+                        <div id="doughnut" style="height: 100vh;">
+                        </div>
+                    </div>
 
                     <label>
                     	Election Year
@@ -69,7 +71,6 @@
 						</form>
 
                         <input type="button" value="year" onclick="map1.colorByYear()"/>
-                       <!-- <label id="info" style="float:right;"></label> -->
 
                        	<form method="post">
 					        <select name="Political Party" id="party">
@@ -120,6 +121,7 @@
 
         <!--modules js-->
         <script src="js/map.js"></script>
+        <script src="js/doughnut.js"></script>
         <script src="js/main.js"></script>
 
     </body>

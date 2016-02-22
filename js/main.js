@@ -1,8 +1,10 @@
 var map1;
+var doughnut1;
 
 d3.csv("data/Swedish_Election.csv", function (data) {
 
 	map1 = new map(data);
+	doughnut1 = new doughnut(data);
 
 	// Global colors
     color = new Map();
