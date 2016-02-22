@@ -39,12 +39,36 @@
                         <div id="map" style="height: 100vh;">
                         </div>
                     </div>
-                    <label>
+ <!--               <label>
                         Magnitude > <span id="slider-value">4</span>
-                        </label>
-                        <input type="range" min="1970" max="2014" value="2014" id="slider" onload="sliderValue()" onchange="sliderValue()">
-                        <input type="number" id="k" value="4" style="float:right;"> 
-                        <input type="button" value="cluster" onclick="map.cluster()" style="float:right;"/>
+                    </label> -->
+
+                    <label>
+                    	Election Year
+                    </label>
+
+                      <!--  <input type="range" min="1970" max="2014" value="2014" id="slider" onload="sliderValue()" onchange="sliderValue()"> -->
+                    	<!--    <input type="number" id="k" value="4" style="float:right;"> -->
+
+                    	<form method="post">
+					        <select name="Election Year" id="year">
+					                <option value="1973">1973</option>
+					                <option value="1976">1976</option>
+					                <option value="1979">1979</option>
+					                <option value="1982">1982</option>
+					                <option value="1985">1985</option>
+					                <option value="1988">1988</option>
+					                <option value="1991">1991</option>
+					                <option value="1994">1994</option>
+					                <option value="1998">1998</option>
+					                <option value="2002">2002</option>
+					                <option value="2006">2006</option>
+					                <option value="2010">2010</option>
+					                <option value="2014">2014</option>
+					        </select>
+						</form>
+
+                        <input type="button" value="year" onclick="map.colorByYear()" style="float:right;"/>
                         <label id="info" style="float:right;"></label>
                     </label>
 
