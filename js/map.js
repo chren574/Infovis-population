@@ -46,10 +46,7 @@ function map(data){
     d3.json("data/sweden_mun.topojson", function(error, sweden) {
 
         var mun = topojson.feature(sweden, sweden.objects.swe_mun).features;
-              
-        data.forEach(function(d) {
-            parseData(d, year);
-        });
+        
         draw(mun, data);  
         
     });
@@ -97,7 +94,7 @@ function map(data){
             }) 
 */          
             .on("click", function(d) {
-                map1.selectMun(d.properties.name);
+                donut1.drawMun(d.properties.name);
             })
             
             .on('mouseover', function(d) {
@@ -215,17 +212,6 @@ function map(data){
         });
         return colorOfParty;
     }
-
-    // Removes region code from region name
-    // Parse year to float
-    function parseData(data, year) {
-
-        data.region = data.region.slice(5);
-        if(data[year] != "..") {
-            data[year] = +data[year];
-        }
-    }
-
 
     //zoom and panning method
     function move() {

@@ -20,30 +20,22 @@
         <!--modules css-->
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/map.css">
+        <link rel="stylesheet" href="css/donut.css">
 
     </head>
     <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
 
         <!-- Wrap all page content here -->
         <div id="wrap">
             
+            <!-- container start -->
             <div class="container">
-                <!-- row of columns -->
 
                 <br><br><br>
+                <!-- row 1 start -->
+                <div class="row">                   
 
-                    <div class="col-xs-6">
-                        <div id="map" style="height: 100vh;">
-                        </div>
-                    </div>
-
-                    <div class="col-xs-6">
-                        <div id="doughnut" style="height: 100vh;">
-                        </div>
-                    </div>
+                    <div class="col-xs-2 col-md-2">
 
                     <label>
                     	Election Year
@@ -71,6 +63,14 @@
 						</form>
 
                         <input type="button" value="year" onclick="map1.colorByYear()"/>
+                    </div>
+
+                
+                    <div class="col-xs-2 col-md-2">
+
+                        <label>
+                        Party
+                        </label>
 
                        	<form method="post">
 					        <select name="Political Party" id="party">
@@ -89,12 +89,28 @@
                 
 						<input type="button" value="party" onclick="map1.colorByParty()"/>
 
-                    </label>
+                    <!-- col end -->
+                    </div>
+                <!-- row 1 end -->
+                </div>
+                
+                <!-- row 2 start -->
+                <div class="row">
 
+                    <div class="col-xs-4 col-md-4">MAP
+                        <div id="map" style="height: 80vh;"></div>
+                    </div>
+
+                    <div class="col-xs-8 col-md-8">DONUT
+                        <div id="donut"></div>
+                    </div>
+                <!-- row 2 end -->
                 </div>
 
+            <!-- container end -->
             </div>
 
+        <!-- Wrap end -->    
         </div>            
 
         <div id="footer">
@@ -121,7 +137,7 @@
 
         <!--modules js-->
         <script src="js/map.js"></script>
-        <script src="js/doughnut.js"></script>
+        <script src="js/donut.js"></script>
         <script src="js/main.js"></script>
 
     </body>
