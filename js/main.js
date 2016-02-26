@@ -20,7 +20,6 @@ d3.csv("data/Swedish_Election.csv", function (data) {
     color.set("Vänsterpartiet", "#DA291C");
     color.set("Sverigedemokraterna", "#DDDD00");
     color.set("övriga partier", "gray");
-    color.set("övriga partier", "gray");
 });
 
 function parseData(electionData) {
@@ -30,7 +29,7 @@ function parseData(electionData) {
         data.region = data.region.slice(5);
         for(var i = 0; i < yearArr.length; ++i) {
 
-            if(data[year] != "..") {
+            if(data[yearArr[i]] != "..") {
                 data[yearArr[i]] = +data[yearArr[i]];
             }
 

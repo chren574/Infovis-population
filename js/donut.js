@@ -98,7 +98,7 @@ function donut(data){
     this.drawMun = function (mun) {
 
         //console.log(mun);
-        var year = document.getElementById("year").value;
+        var year = document.getElementById("ex6").value;
 
         //console.log(g.selectAll("path").data(arr))
 

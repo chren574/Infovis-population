@@ -146,6 +146,10 @@ function map(data){
         var party = document.getElementById("party").value;
         var year = document.getElementById("year").value;
 
+        if(party == "All") {
+            map1.colorByYear();
+        } else {
+
         var nested_data = d3.nest()
             .key(function(d) { return d.parti; })
             .sortValues(function(a, b) { return b[year] - a[year]; })
@@ -195,6 +199,8 @@ function map(data){
             return opac;
             });
         });
+
+        }
 
     }
 
