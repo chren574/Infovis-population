@@ -115,11 +115,13 @@ function map(data){
             });
     }
 
-    this.colorByYear = function () {
+    this.colorByYear = function(electionYear) {
 
-        var year = document.getElementById("year").value;
+        //var year = document.getElementById("year").value;
+        //console.log(electionYear);
+        year = electionYear;
 
-        donut1.drawMun(CURRMUN);
+        donut1.drawMun(CURRMUN, electionYear);
 
         var colorOfParty = partyColor(electionData, year);
 
@@ -150,17 +152,17 @@ function map(data){
         });
     }
 
-    this.colorByParty = function() {
+    this.colorByParty = function(electionYear, party) {
 
-
-        var party = $('#party label.active input').val()
+        year = electionYear;
+        //party = party;
+        //var party = $('#party label.active input').val()
         
 
-        var year = document.getElementById("year").value;
+        //var year = document.getElementById("year").value;
 
-        if(party == "All") {
-            map1.colorByYear();
-        } else {
+        // TEMP
+        if(!party) { var party = CURRMUN };
 
         var nested_data = d3.nest()
             .key(function(d) { return d.parti; })
@@ -212,7 +214,7 @@ function map(data){
             });
         });
 
-        }
+        
 
     }
 
@@ -225,7 +227,6 @@ function map(data){
             return CURRMUN;
         }
 
-        //return currMun;
     }
 
     function partyColor(electionData, year) {

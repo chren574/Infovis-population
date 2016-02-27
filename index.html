@@ -74,7 +74,7 @@
                             <input type="radio" class="toggle" value="Sverigedemokraterna"/> Sverigedemokraterna
                         </label>
                         <label class="btn btn-default blue">
-                            <input type="radio" class="toggle" value="Övriga partier"/> Övriga partier
+                            <input type="radio" class="toggle" value="övriga partier"/> Övriga partier
                         </label>
                     </div>
     
@@ -127,34 +127,72 @@
             $(document).ready(function() {
                 
                 $("#year").slider({
-                ticks: [1973, 1976, 1979, 1982, 1985, 1988, 1991, 1994, 1998, 2002, 2006, 2010, 2014],
+                ticks: electionYearsArray,
                 ticks_labels: ['1973', '', '', '', '', '', '1991', '', '', '', '', '', '2014'],
                 ticks_snap_bounds: 3,
                 selection: 'before',
                 value: 1973
                 });
 
+
                 $('#year').on('slideStop', function () {
-                    if($('#party').val() == "All")
-                        map1.colorByYear();
-                    else
-                        map1.colorByParty();
+                    var sliderYear = $('#year').slider('getValue')
+                    
+                    var closestYear = closest(electionYearsArray, sliderYear);
+                    // Sets the slider circle to the 
+                    // closest election year
+                    $("#year").slider('setValue', closestYear, true);
+
+                });
+                $('#year').on('change', function () {
+
+                    var sliderYear = $('#year').slider('getValue')
+                    
+                    var closestYear = closest(electionYearsArray, sliderYear);
+
+                    var party = $('#party label.active input').val()
+
+                    if(party == "All") {
+                        map1.colorByYear(closestYear);
+                    } else {
+                        map1.colorByParty(closestYear, party);
+                    }
                 });
 
 
                 // Just nu behöver man trycka på en knapp två gånger för att värdet ska ändras
                 //$('#party').on("click",function(){ 
                 $("#party :input").change(function() {
-        
-                console.log($('#party label.active input').val())
 
-                    if($('#party input:radio:checked').val() == "All")
-                        map1.colorByYear();
+                var sliderYear = $('#year').slider('getValue')
+                var closestYear = closest(electionYearsArray, sliderYear);
+        
+                var party = $('#party label.active input').val();
+
+                    if($('#party label.active input').val() == "All")
+                        map1.colorByYear(closestYear);
                     else
-                        map1.colorByParty();
+                        map1.colorByParty(closestYear, party);
                 })
 
             });
+
+            function closest(array,num){
+                var i=0;
+                var minDiff=1000;
+                var ans;
+                for(i in array){
+                     var m=Math.abs(num-array[i]);
+                     if(m<minDiff){ 
+                            minDiff=m; 
+                            ans=array[i]; 
+                        }
+                  }
+                return ans;
+            }
+
+            electionYearsArray = [1973, 1976, 1979, 1982, 1985, 1988, 1991, 1994, 1998, 2002, 2006, 2010, 2014];
+
         </script>
 
         <!--modules js-->

@@ -51,9 +51,11 @@ function donut(data){
 
     }
 
-    function getMunData(mun) {
+    function getMunData(mun, electionYear) {
 
-    var year = $('#year').val();
+    //var year = $('#year').val();
+
+    var year = electionYear;
 
     var nested_data = d3.nest()
             .key(function(d) { return d.region; })
@@ -76,9 +78,9 @@ function donut(data){
     }
 
       // Sends the name of the mun to other .js-files
-    this.drawMun = function(mun) {
+    this.drawMun = function(mun, electionYear) {
 
-        var filteredData = getMunData(mun);
+        var filteredData = getMunData(mun, electionYear);
         	pie.value(
         		function(p, i){
 	        		//console.log(p);
