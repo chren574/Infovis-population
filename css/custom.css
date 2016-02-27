@@ -1,0 +1,65 @@
+.btn-mod {
+    color: #333333;
+    background-color: #52BDEC;
+    border-color: #cccccc;
+}
+
+.btn-cent {
+    color: #333333;
+    background-color: #016A3A;
+    border-color: #cccccc;
+}
+
+.btn-folk {
+    color: #333333;
+    background-color: #52BDEC;
+    border-color: #cccccc;
+}
+
+.btn-krist {
+    color: #333333;
+    background-color: #0094D7;
+    border-color: #cccccc;
+}
+
+.btn-mil {
+    color: #333333;
+    background-color: #53A045;
+    border-color: #cccccc;
+}
+
+.btn-soc {
+    color: #333333;
+    background-color: #ED1B34;
+    border-color: #cccccc;
+}
+
+.btn-van {
+    color: #333333;
+    background-color: #DA291C;
+    border-color: #cccccc;
+}
+
+.btn-sve {
+    color: #333333;
+    background-color: #DDDD00;
+    border-color: #cccccc;
+}
+
+.btn-ovr {
+    color: #333333;
+    background-color: gray;
+    border-color: #cccccc;
+}
+
+
+/*    color.set("Moderaterna", "#52BDEC");
+    color.set("Centerpartiet", "#016A3A");
+    color.set("Folkpartiet", "#0094D7");
+    color.set("Kristdemokraterna", "#231977");
+    color.set("Miljöpartiet", "#53A045");
+    color.set("Socialdemokraterna", "#ED1B34");
+    color.set("Vänsterpartiet", "#DA291C");
+    color.set("Sverigedemokraterna", "#DDDD00");
+    color.set("övriga partier", "gray");
+    */
