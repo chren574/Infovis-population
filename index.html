@@ -38,43 +38,47 @@
 
                     <div class="col-xs-6 col-md-6">
 
-                    <!--label>
-                    	Election Year
-                    </label-->
-
                     <input id="year" type="text"/>
 
                     </div>
                 
                     <div class="col-xs-6 col-md-6">
 
-                        <!--label>
-                        Party
-                        </label-->
 
-
-                    <!--input id="ex17" type="text"/-->
+                    <div class="btn-group" id="party" data-toggle="buttons">
+                        <label class="btn btn-default blue active">
+                            <input type="radio" class="toggle" value="All"/>Alla
+                        </label>
+                        <label class="btn btn-default blue">
+                            <input type="radio" class="toggle" value="Moderaterna"/>Moderaterna
+                        </label>
+                        <label class="btn btn-default blue">
+                            <input type="radio" class="toggle" value="Centerpartiet"/> Centerpartiet
+                        </label>
+                        <label class="btn btn-default blue">
+                            <input type="radio" class="toggle" value="Folkpartiet"/> Folkpartiet
+                        </label>
+                        <label class="btn btn-default blue">
+                            <input type="radio" class="toggle" value="Kristdemokraterna"/> Kristdemokraterna
+                        </label>
+                        <label class="btn btn-default blue">
+                            <input type="radio" class="toggle" value="Miljöpartiet"/> Miljöpartiet
+                        </label>
+                        <label class="btn btn-default blue">
+                            <input type="radio" class="toggle" value="Socialdemokraterna"/> Socialdemokraterna
+                        </label>
+                        <label class="btn btn-default blue">
+                            <input type="radio" class="toggle" value="Vänsterpartiet"/> Vänsterpartiet
+                        </label>
+                        <label class="btn btn-default blue">
+                            <input type="radio" class="toggle" value="Sverigedemokraterna"/> Sverigedemokraterna
+                        </label>
+                        <label class="btn btn-default blue">
+                            <input type="radio" class="toggle" value="Övriga partier"/> Övriga partier
+                        </label>
+                    </div>
     
-                        <!--button type="button" class="btn btn-primary" value="Moderaterna" onclick="map1.colorByParty()">Primary</button-->
 
-    
-
-                       	<form method="post">
-					        <select name="Political Party" id="party">
-					        		<option selected = "selected" value="All">Visa alla</option>
-					                <option value="Moderaterna">Moderaterna</option>
-					                <option value="Centerpartiet">Centerpartiet</option>
-					                <option value="Folkpartiet">Folkpartiet</option>
-					                <option value="Kristdemokraterna">Kristdemokraterna</option>
-					                <option value="Miljöpartiet">Miljöpartiet</option>
-					                <option value="Socialdemokraterna">Socialdemokraterna</option>
-					                <option value="Vänsterpartiet">Vänsterpartiet</option>
-					                <option value="Sverigedemokraterna">Sverigedemokraterna</option>
-					                <option value="Övriga partier">Övriga partier</option>
-					        </select>
-						</form>
-                
-						<input type="button" value="party" onclick="map1.colorByParty()">
 
                     <!-- col end -->
                     </div>
@@ -125,13 +129,30 @@
                 $("#year").slider({
                 ticks: [1973, 1976, 1979, 1982, 1985, 1988, 1991, 1994, 1998, 2002, 2006, 2010, 2014],
                 ticks_labels: ['1973', '', '', '', '', '', '1991', '', '', '', '', '', '2014'],
-                ticks_snap_bounds: 3
+                ticks_snap_bounds: 3,
+                selection: 'before',
+                value: 1973
                 });
 
                 $('#year').on('slideStop', function () {
-                    map1.colorByYear();
+                    if($('#party').val() == "All")
+                        map1.colorByYear();
+                    else
+                        map1.colorByParty();
                 });
 
+
+                // Just nu behöver man trycka på en knapp två gånger för att värdet ska ändras
+                //$('#party').on("click",function(){ 
+                $("#party :input").change(function() {
+        
+                console.log($('#party label.active input').val())
+
+                    if($('#party input:radio:checked').val() == "All")
+                        map1.colorByYear();
+                    else
+                        map1.colorByParty();
+                })
 
             });
         </script>

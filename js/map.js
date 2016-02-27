@@ -1,5 +1,9 @@
 function map(data){
 
+    // Global varibale
+    CURRMUN = "Upplands Väsby";
+
+
     var zoom = d3.behavior.zoom()
         .scaleExtent([1, 8])
         .on("zoom", move);
@@ -64,7 +68,9 @@ function map(data){
         mun.enter().insert("path")
             .attr("class", "mun")
             .attr("d", path)
-            .attr("title", function(d) { return d.properties.name; })
+            .attr("title", function(d) { 
+                return d.properties.name; 
+            })
             .style("fill", function(d, i) {
                 var index = 0;
                 for(var l = 0; l < colorOfParty.length; ++l) {
@@ -94,7 +100,9 @@ function map(data){
             }) 
 */          
             .on("click", function(d) {
-                donut1.drawMun(d.properties.name);
+                var mun = currentMun(d.properties.name);
+                //console.log(mun);
+                donut1.drawMun(mun);
             })
             
             .on('mouseover', function(d) {
@@ -110,6 +118,8 @@ function map(data){
     this.colorByYear = function () {
 
         var year = document.getElementById("year").value;
+
+        donut1.drawMun(CURRMUN);
 
         var colorOfParty = partyColor(electionData, year);
 
@@ -132,7 +142,6 @@ function map(data){
             if(!isNaN(index)) {
                 return color.get(colorOfParty[index].par);
             } else {
-                console.log("LOG")
                 return color.get("Odefinierad");
             }
             
@@ -143,7 +152,10 @@ function map(data){
 
     this.colorByParty = function() {
 
-        var party = document.getElementById("party").value;
+
+        var party = $('#party label.active input').val()
+        
+
         var year = document.getElementById("year").value;
 
         if(party == "All") {
@@ -202,6 +214,18 @@ function map(data){
 
         }
 
+    }
+
+    function currentMun(mun) {
+
+        if(mun) {
+            CURRMUN = mun;
+            return CURRMUN;
+        } else {
+            return CURRMUN;
+        }
+
+        //return currMun;
     }
 
     function partyColor(electionData, year) {

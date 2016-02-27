@@ -2,6 +2,8 @@ function donut(data){
 
 	var donutDiv = $("#donut");
 
+    var colorarr = d3.scale.category20b();
+
 	var margin = {top: 20, right: 20, bottom: 20, left: 20},
         width = donutDiv.width() - margin.right - margin.left,
         height = donutDiv.height() - margin.top - margin.bottom;
@@ -10,9 +12,15 @@ function donut(data){
         height = 400,
         radius = Math.min(width, height) / 2;
 
+
+    var legendRectSize = 18;
+    var legendSpacing = 4;
+
     var pie = d3.layout.pie()
         .sort(null)
-        .value(function(d) { return d.year; });
+        .value(function(d) { 
+            return !isNaN(d.year) ? d.year : 0; 
+        });
 
     var arc = d3.svg.arc()
     	.outerRadius(radius - 10)
@@ -32,20 +40,6 @@ function donut(data){
 
     function draw(data_arr)
     {
-   /* var g = svg.selectAll(".arc")
-        .data(pie(data_arr))
-        .enter().append("g")
-        .attr("class", "arc");
-
-    g.append("path")
-        .attr("d", arc)
-        .style("fill", function(d) { return color.get(d.data.parti); });
-
-    g.append("text")
-        .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-        .attr("dy", ".35em")
-        .text(function(d) { return d.data.parti; });
-        */
 
     path = svg.datum(data_arr).selectAll("path")
         .data(pie)
@@ -54,16 +48,18 @@ function donut(data){
             return color.get(d.data.parti); 
         })
         .attr("d", arc);
+
     }
 
     function getMunData(mun) {
-    var year = document.getElementById("year").value;
+
+    var year = $('#year').val();
 
     var nested_data = d3.nest()
             .key(function(d) { return d.region; })
             .sortValues(function(a, b) { return b.parti - a.parti; })
             .entries(data);
-
+    //console.log(nested_data)
         nested_data = nested_data.filter(function(d) {
             return d.key == mun;
         })
@@ -80,31 +76,16 @@ function donut(data){
     }
 
       // Sends the name of the mun to other .js-files
-    this.drawMun = function (mun) {
+    this.drawMun = function(mun) {
 
         var filteredData = getMunData(mun);
-
-
         	pie.value(
         		function(p, i){
-	        		console.log(p);
-	        		return filteredData[i].year;
+	        		//console.log(p);
+                    return  !isNaN(filteredData[i].year) ? filteredData[i].year : 0;
         	});
         	path = path.data(pie);
-
         	path.attr("d", arc);
     }
-    // Store the displayed angles in _current.
-    // Then, interpolate from _current to the new angles.
-    // During the transition, _current is updated in-place by d3.interpolate.
-/*    function arcTween(a) {
-        var i = d3.interpolate(this._current, a);
-        //this._current = i(0);
-        return function(t) {
-            console.log(t)
-            //return arc(i(t));
-        };
-    }
 
-    */
 }
