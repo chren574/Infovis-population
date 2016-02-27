@@ -100,9 +100,8 @@ function map(data){
             }) 
 */          
             .on("click", function(d) {
-                var mun = currentMun(d.properties.name);
-                //console.log(mun);
-                donut1.drawMun(mun);
+                
+                selectedMun(d.properties.name);
             })
             
             .on('mouseover', function(d) {
@@ -256,9 +255,13 @@ function map(data){
     }
 
     // Sends the name of the mun to other .js-files
-    this.selectMun = function (mun) {
+    function selectedMun(mun) {
 
-        //console.log(mun);
+        var electionYear = $('#year').slider('getValue');
+
+        donut1.drawMun(mun, electionYear);
+
+        
 
     }
 }
