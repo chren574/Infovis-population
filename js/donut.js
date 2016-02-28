@@ -2,8 +2,6 @@ function donut(data) {
 
     var donutDiv = $("#donut");
 
-    var colorarr = d3.scale.category20b();
-
     var margin = { top: 20, right: 20, bottom: 20, left: 20 },
         width = donutDiv.width() - margin.right - margin.left,
         height = donutDiv.height() - margin.top - margin.bottom;
@@ -89,6 +87,7 @@ function donut(data) {
                     return !isNaN(filteredData[i].year) ? filteredData[i].year : 0;
                 });
             path = path.data(pie);
+            //path.attr("fill-opacity", 1)
             path.attr("d", arc);
         }
         /*

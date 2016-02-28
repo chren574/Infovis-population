@@ -88,7 +88,16 @@ function map(data) {
         */
         .on("click", function(d) {
 
+            //console.log($('#map').click());
+/*
+            d3.selectAll(".mun")
+                .style("stroke", "black")
+
+            d3.select(this)
+                .style("stroke", "white")
+*/
             selectedMun(d.properties.name);
+
         })
 
         .on('mouseover', function(d) {
@@ -99,6 +108,7 @@ function map(data) {
                 d3.selectAll('path')
                     .style('stroke-width', 0.1);
             });
+
     }
 
     this.colorByYear = function(electionYear) {
@@ -149,13 +159,16 @@ function map(data) {
 
         // TEMP
         if (!party) {
-            var party = CURRMUN };
+            var party = CURRMUN
+        };
 
         var nested_data = d3.nest()
             .key(function(d) {
-                return d.parti; })
+                return d.parti;
+            })
             .sortValues(function(a, b) {
-                return b[year] - a[year]; })
+                return b[year] - a[year];
+            })
             .entries(electionData);
 
         nested_data = nested_data.filter(function(d) {
@@ -222,9 +235,11 @@ function map(data) {
 
         var nested_data = d3.nest()
             .key(function(d) {
-                return d.region; })
+                return d.region;
+            })
             .sortValues(function(a, b) {
-                return b[year] - a[year]; })
+                return b[year] - a[year];
+            })
             .entries(electionData);
 
         var colorOfParty = [];
