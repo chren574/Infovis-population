@@ -237,10 +237,35 @@ function map(data){
 
         var colorOfParty = [];
 
-        nested_data.forEach(function(d, i) {
+        nested_data.forEach(function(d) {
+            
+            d.values.sort(compare);
+            
             colorOfParty.push({reg: d.values[0].region, par: d.values[0].parti });
         });
         return colorOfParty;
+    }
+
+    function compare(a,b) {
+        var year = document.getElementById("year").value;
+        //var year = $('#year').slider('getValue')
+        
+        if ( isNaN(a[year]) && isNaN(b[year]) )
+            return 0;
+        else if ( isNaN(a[year]) && !(isNaN(b[year])) )
+            return 1;
+        else if ( !(isNaN(a[year])) && isNaN(b[year]) )
+            return -1;
+        else if (a[year] < b[year])
+            return 1;
+        else if (a[year] > b[year])
+            return -1;
+        else 
+            return 0;
+    }
+
+    function getYear(year) {
+        return year;
     }
 
     //zoom and panning method
