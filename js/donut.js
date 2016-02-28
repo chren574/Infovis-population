@@ -2,9 +2,14 @@ function donut(data) {
 
     var donutDiv = $("#donut");
 
+    var scaleDiv = 0.7;
+
     var margin = { top: 20, right: 20, bottom: 20, left: 20 },
         width = donutDiv.width() - margin.right - margin.left,
         height = donutDiv.height() - margin.top - margin.bottom;
+
+        width = width*scaleDiv;
+        height = height*scaleDiv;
 
     var radius = Math.min(width, height) / 2;
 

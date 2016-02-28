@@ -3,6 +3,7 @@ function map(data) {
     // Global varibale
     CURRMUN = "Upplands Väsby";
 
+    var scaleDiv = 0.7;
 
     var zoom = d3.behavior.zoom()
         .scaleExtent([1, 8])
@@ -24,8 +25,8 @@ function map(data) {
         .scale(600);
 
     var svg = d3.select("#map").append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", width*scaleDiv)
+        .attr("height", height*scaleDiv)
         .attr("style", "outline: thin dotted black;")
         .call(zoom);
 
