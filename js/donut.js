@@ -65,7 +65,7 @@ function donut(data){
         nested_data = nested_data.filter(function(d) {
             return d.key == mun;
         })
-
+    
         var munData = [];
 
         var obj = nested_data[0].values;
@@ -75,6 +75,7 @@ function donut(data){
         }
 
         return munData;
+       // }
     }
 
       // Sends the name of the mun to other .js-files
@@ -89,5 +90,21 @@ function donut(data){
         	path = path.data(pie);
         	path.attr("d", arc);
     }
+/*
+    this.validateMun = function(str) {
+        
 
+        var m = d3.map([{name: "Vallentuna"}, {name: "bar"}], function(d) { 
+            return d.name == str; 
+        });
+        var n1 = m.get("Vallentuna"); // {"name": "Vallentuna"}
+        var n2 = m.get("bar"); // {"name": "bar"}
+        var n3 = m.get("baz"); // undefined
+
+        console.log(n1);
+        console.log(n2);
+        console.log(n3);
+
+    }
+*/
 }

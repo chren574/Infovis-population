@@ -33,19 +33,24 @@
             <!-- container start -->
             <div class="container">
 
-                <br><br><br>
-                <!-- row 1 start -->
-                <div class="row">                   
+                <div class="row">  
 
-                    <div class="col-xs-4 col-md-4">
-
-                    <input id="year" type="text"/>
-
-                    </div>
+            <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+            <input type="text" class="form-control" id="searchfield" placeholder="Search">
+            </div>
+            <button type="Search" id="searchMun" class="btn btn-default">Submit</button>
+            </form>
 
                 </div>
 
-                <div class="row"> 
+                <br><br>
+                <!-- row 1 start -->
+               
+
+                <div class="row">
+
+                    <input id="year" type="text"/> 
 
                     <br><br><br>
 
@@ -178,6 +183,20 @@
                 })
 
             });
+
+                $("#searchMun").click( function()
+                    {
+                        //var sliderYear = $('#year').slider('getValue')
+                        //var closestYear = closest(electionYearsArray, sliderYear);
+
+                        //alert('button clicked');
+                        var str = $('#searchfield').val()
+                        str1 = (str.substr(0, 1)).toUpperCase();
+                        str2 = (str.substr(1)).toLowerCase();
+                        console.log(str1+str2);
+                        //donut1.drawMun(str, closestYear);
+                    }
+                );
 
             function closest(array,num){
                 var i=0;
