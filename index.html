@@ -2,224 +2,235 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
 
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="css/bootstrap.css">
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/colorbrewer.css">
-        <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/6.0.16/css/bootstrap-slider.min.css">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/colorbrewer.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/6.0.16/css/bootstrap-slider.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <!--modules css-->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/map.css">
+    <link rel="stylesheet" href="css/donut.css">
+    <link rel="stylesheet" href="css/custom.css">
+</head>
 
-        <!--modules css-->
-        <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/map.css">
-        <link rel="stylesheet" href="css/donut.css">
-        <link rel="stylesheet" href="css/custom.css">
-
-    </head>
-    <body>
-
-        <!-- Wrap all page content here -->
-        <div id="wrap">
-            
-            <!-- container start -->
-            <div class="container">
-
-                <div class="row">  
-
-            <form class="navbar-form navbar-left" role="search">
-            <div class="form-group">
-            <input type="text" class="form-control" id="searchfield" placeholder="Search">
+<body>
+    <!-- Wrap all page content here -->
+    <div id="wrap">
+        <!-- container start -->
+        <div class="container">
+            <!-- row 1 start -->
+            <div class="row">
+                <nav class="navbar navbar-inverse" role="navigation">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">Swedish Election</a>
+                    </div>
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group" id="formsearch">
+                            <input type="text" class="form-control" id="searchfield" placeholder="Municipality">
+                        </div>
+                        <button type="Search" id="searchMun" class="btn btn-default">Search</button>
+                    </form>
+                </nav>
+                <!-- row 1 end -->
             </div>
-            <button type="Search" id="searchMun" class="btn btn-default">Submit</button>
-            </form>
-
-                </div>
-
-                <br><br>
-                <!-- row 1 start -->
-               
-
-                <div class="row">
-
-                    <input id="year" type="text"/> 
-
-                    <br><br><br>
-
-                    <div class="col-xs-4 col-md-4">
-
+            <br>
+            <br>
+            <!-- row 2 start -->
+            <div class="row">
+                <input id="year" type="text" />
+                <br>
+                <br>
+                <br>
+                <div class="col-xs-3 col-md-3">
                     <div class="btn-group-vertical" id="party" data-toggle="buttons">
                         <label class="btn btn-default blue active">
-                            <input type="radio" class="toggle" value="All"/>Alla
+                            <input type="radio" class="toggle" value="All" />Alla
                         </label>
                         <label class="btn btn-mod blue">
-                            <input type="radio" class="toggle" value="Moderaterna"/>Moderaterna
+                            <input type="radio" class="toggle" value="Moderaterna" />Moderaterna
                         </label>
                         <label class="btn btn-cent blue">
-                            <input type="radio" class="toggle" value="Centerpartiet"/> Centerpartiet
+                            <input type="radio" class="toggle" value="Centerpartiet" />Centerpartiet
                         </label>
                         <label class="btn btn-folk blue">
-                            <input type="radio" class="toggle" value="Folkpartiet"/> Folkpartiet
+                            <input type="radio" class="toggle" value="Folkpartiet" />Folkpartiet
                         </label>
                         <label class="btn btn-krist blue">
-                            <input type="radio" class="toggle" value="Kristdemokraterna"/> Kristdemokraterna
+                            <input type="radio" class="toggle" value="Kristdemokraterna" />Kristdemokraterna
                         </label>
                         <label class="btn btn-mil blue">
-                            <input type="radio" class="toggle" value="Miljöpartiet"/> Miljöpartiet
+                            <input type="radio" class="toggle" value="Miljöpartiet" />Miljöpartiet
                         </label>
                         <label class="btn btn-soc blue">
-                            <input type="radio" class="toggle" value="Socialdemokraterna"/> Socialdemokraterna
+                            <input type="radio" class="toggle" value="Socialdemokraterna" />Socialdemokraterna
                         </label>
                         <label class="btn btn-van blue">
-                            <input type="radio" class="toggle" value="Vänsterpartiet"/> Vänsterpartiet
+                            <input type="radio" class="toggle" value="Vänsterpartiet" />Vänsterpartiet
                         </label>
                         <label class="btn btn-sve blue">
-                            <input type="radio" class="toggle" value="Sverigedemokraterna"/> Sverigedemokraterna
+                            <input type="radio" class="toggle" value="Sverigedemokraterna" />Sverigedemokraterna
                         </label>
                         <label class="btn btn-ovr blue">
-                            <input type="radio" class="toggle" value="övriga partier"/> Övriga partier
+                            <input type="radio" class="toggle" value="övriga partier" />Övriga partier
                         </label>
                     </div>
-
-                    </div>
-                    
-                    <div class="col-xs-4 col-md-4">
-
-                    <div id="map" style="height: 80vh;"></div>
-
-                    </div>
-
-                    <div class="col-xs-4 col-md-4">
-
-                        <div id="donut" style="height: 80vh;"></div>
-
-                    </div>    
-
                 </div>
-
+                <div class="col-xs-2 col-md-2">
+                    <div id="map" style="height: 80vh;width:50vh"></div>
+                </div>
+                <div class="col-xs-6 col-md-6">
+                    <div id="donut" style="height:80vh;"></div>
+                </div>
+                <!-- row 2 end -->
+            </div>
+            <!--label for="fruits">Fruit <input type="text" name="fruits" id="fruits" /></label-->
             <!-- container end -->
-            </div>
-
-        <!-- Wrap end -->    
-        </div>            
-
-        <div id="footer">
-            <div class="container">
-            </div>
         </div>
-
-        
-
-        <!--script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script-->
-        
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
-        <script src="js/vendor/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/6.0.16/bootstrap-slider.min.js"></script>
-        <script src="js/plugins.js"></script>
-        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
-        <script src="js/vendor/d3.min.js"></script>
-        <script src="js/vendor/topojson.v1.min.js"></script>
-        <script src="js/vendor/underscore-min.js"></script>
-        <script src="js/vendor/colorbrewer.js"></script>
-
-        <script type='text/javascript'>
-            $(document).ready(function() {
-                
-                $("#year").slider({
-                ticks: electionYearsArray,
-                ticks_labels: ['1973', '', '', '', '', '', '1991', '', '', '', '', '', '2014'],
-                ticks_snap_bounds: 3,
-                selection: 'before',
-                value: 1973
-                });
-
-
-                $('#year').on('slideStop', function () {
-                    var sliderYear = $('#year').slider('getValue')
-                    
-                    var closestYear = closest(electionYearsArray, sliderYear);
-                    // Sets the slider circle to the 
-                    // closest election year
-                    $("#year").slider('setValue', closestYear, true);
-
-                });
-                $('#year').on('change', function () {
-
-                    var sliderYear = $('#year').slider('getValue')
-                    
-                    var closestYear = closest(electionYearsArray, sliderYear);
-
-                    var party = $('#party label.active input').val()
-
-                    if(party == "All") {
-                        map1.colorByYear(closestYear);
-                    } else {
-                        map1.colorByParty(closestYear, party);
-                    }
-                });
+        <!-- Wrap end -->
+    </div>
+    <!-- Footer start -->
+    <div id="footer">
+        <div class="container"> </div>
+        <!-- Footer end -->
+    </div>
+    <script>
+    window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')
+    </script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/6.0.16/bootstrap-slider.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    <script src="js/vendor/d3.min.js"></script>
+    <script src="js/vendor/topojson.v1.min.js"></script>
+    <script src="js/vendor/underscore-min.js"></script>
+    <script src="js/vendor/colorbrewer.js"></script>
+    <script type='text/javascript'>
+    var data = [
+        "Apple",
+        "Orange",
+        "Pineapple",
+        "Strawberry",
+        "Mango"
+    ];
 
 
-                // Just nu behöver man trycka på en knapp två gånger för att värdet ska ändras
-                //$('#party').on("click",function(){ 
-                $("#party :input").change(function() {
+    var electionYearsArray = [1973, 1976, 1979, 1982, 1985, 1988, 1991, 1994, 1998, 2002, 2006, 2010, 2014];
 
-                var sliderYear = $('#year').slider('getValue')
-                var closestYear = closest(electionYearsArray, sliderYear);
-        
-                var party = $('#party label.active input').val();
 
-                    if($('#party label.active input').val() == "All")
-                        map1.colorByYear(closestYear);
-                    else
-                        map1.colorByParty(closestYear, party);
-                })
+    $(document).ready(function() {
 
-            });
+        $("#year").slider({
+            ticks: electionYearsArray,
+            ticks_labels: ['1973', '', '', '', '', '', '1991', '', '', '', '', '', '2014'],
+            ticks_snap_bounds: 3,
+            selection: 'before',
+            value: 1973
+        });
 
-                $("#searchMun").click( function()
-                    {
-                        //var sliderYear = $('#year').slider('getValue')
-                        //var closestYear = closest(electionYearsArray, sliderYear);
+        /* binding the text box with the jQuery Auto complete function. */
+        //    $( "#fruits" ).autocomplete({
+        /*Source refers to the list of fruits that are available in the auto complete list. */
+        //      source:data,
+        /* auto focus true means, the first item in the auto complete list is selected by default. therefore when the user hits enter,
+        it will be loaded in the textbox */
+        //      autoFocus: true ,
 
-                        //alert('button clicked');
-                        var str = $('#searchfield').val()
-                        str1 = (str.substr(0, 1)).toUpperCase();
-                        str2 = (str.substr(1)).toLowerCase();
-                        console.log(str1+str2);
-                        //donut1.drawMun(str, closestYear);
-                    }
-                );
+        //    });
 
-            function closest(array,num){
-                var i=0;
-                var minDiff=1000;
-                var ans;
-                for(i in array){
-                     var m=Math.abs(num-array[i]);
-                     if(m<minDiff){ 
-                            minDiff=m; 
-                            ans=array[i]; 
-                        }
-                  }
-                return ans;
+    });
+
+
+    $('#year').on('slideStop', function() {
+        var sliderYear = $('#year').slider('getValue')
+
+        var closestYear = closest(electionYearsArray, sliderYear);
+
+        // Sets the slider circle to the 
+        // closest election year
+        $("#year").slider('setValue', closestYear, true);
+
+    });
+
+    $('#year').on('change', function() {
+
+        var sliderYear = $('#year').slider('getValue')
+
+        var closestYear = closest(electionYearsArray, sliderYear);
+
+        var party = $('#party label.active input').val()
+
+        if (party == "All") {
+            map1.colorByYear(closestYear);
+        } else {
+            map1.colorByParty(closestYear, party);
+        }
+    });
+
+
+    $("#searchMun").click(function() {
+        //var sliderYear = $('#year').slider('getValue')
+        //var closestYear = closest(electionYearsArray, sliderYear);
+
+        $('#formsearch').find('input:text, select, textarea').val('');
+
+        var str = $('#searchfield').val()
+        console.log(str);
+        str1 = (str.substr(0, 1)).toUpperCase();
+        str2 = (str.substr(1)).toLowerCase();
+        console.log(str1 + str2);
+        //donut1.drawMun(str, closestYear);
+    });
+
+    // Just nu behöver man trycka på en knapp två gånger för att värdet ska ändras
+    //$('#party').on("click",function(){ 
+    $("#party :input").change(function() {
+
+        var sliderYear = $('#year').slider('getValue')
+        var closestYear = closest(electionYearsArray, sliderYear);
+
+        var party = $('#party label.active input').val();
+
+        if ($('#party label.active input').val() == "All")
+            map1.colorByYear(closestYear);
+        else
+            map1.colorByParty(closestYear, party);
+    });
+
+
+    // Finds the closest value in an array
+    function closest(array, num) {
+        var i = 0;
+        var minDiff = 1000;
+        var ans;
+        for (i in array) {
+            var m = Math.abs(num - array[i]);
+            if (m < minDiff) {
+                minDiff = m;
+                ans = array[i];
             }
+        }
+        return ans;
+    }
+    </script>
+    <!--modules js-->
+    <script src="js/map.js"></script>
+    <script src="js/donut.js"></script>
+    <script src="js/main.js"></script>
+</body>
 
-            electionYearsArray = [1973, 1976, 1979, 1982, 1985, 1988, 1991, 1994, 1998, 2002, 2006, 2010, 2014];
-
-        </script>
-
-        <!--modules js-->
-        <script src="js/map.js"></script>
-        <script src="js/donut.js"></script>
-        <script src="js/main.js"></script>
-
-    </body>
 </html>

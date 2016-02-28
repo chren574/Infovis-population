@@ -1,11 +1,12 @@
-.swe_mun{ fill: rgb(0, 75, 151); }
-
-.swe_mun:hover{
-    stroke: #fff;
-    stroke-width: .7px;
-    cursor:pointer;
+.swe_mun {
+    fill: rgb(0, 75, 151);
 }
 
+.swe_mun:hover {
+    stroke: #fff;
+    stroke-width: .7px;
+    cursor: pointer;
+}
 
 .hidden {
     display: none;
@@ -21,4 +22,3 @@ div.tooltip {
     opacity: 0.9;
     position: absolute;
 }
-
