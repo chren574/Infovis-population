@@ -48,13 +48,16 @@
                 <!-- row 1 end -->
             </div>
             <br>
-            
             <!-- row 2 start -->
             <div class="row">
-                <input id="year" type="text" />
-                <br>
-                <br>
-                <div class="col-xs-3 col-md-3">
+                <div class="col-xs-5 col-md-3" align="center">
+                    <input id="year" type="text" align="center" />
+                    <br>
+                    <br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-5 col-md-3" align="center">
                     <div class="btn-group-vertical" id="party" data-toggle="buttons">
                         <label class="btn btn-default blue active">
                             <a href="#"></a>
@@ -89,10 +92,10 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-xs-3 col-md-3">
+                <div class="col-xs-7 col-md-3" align="center">
                     <div id="map" style="height: 80vh;width:50vh"></div>
                 </div>
-                <div class="col-xs-6 col-md-6">
+                <div class="col-xs-12 col-md-6" align="center">
                     <div id="donut" style="height:80vh;"></div>
                 </div>
                 <!-- row 2 end -->
@@ -139,7 +142,7 @@
             ticks_labels: ['1973', '', '', '', '', '', '1991', '', '', '', '', '', '2014'],
             ticks_snap_bounds: 3,
             selection: 'before',
-            value: 1973
+            value: 1973,
         });
 
         /* binding the text box with the jQuery Auto complete function. */
@@ -154,7 +157,6 @@
 
 
     });
-
 
     $('#year').on('slideStop', function() {
         var sliderYear = $('#year').slider('getValue')
