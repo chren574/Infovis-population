@@ -4,11 +4,6 @@ var donut1;
 d3.csv("data/Swedish_Election.csv", function(data) {
 
 
-    parseData(data);
-
-    map1 = new map(data);
-    donut1 = new donut(data);
-
     // Global colors
     color = new Map();
     color.set("Moderaterna", "#52BDEC");
@@ -20,6 +15,13 @@ d3.csv("data/Swedish_Election.csv", function(data) {
     color.set("Vänsterpartiet", "#DA291C");
     color.set("Sverigedemokraterna", "#DDDD00");
     color.set("övriga partier", "gray");
+    color.set("Odefinierad", "black");
+
+    parseData(data);
+
+    map1 = new map(data);
+    donut1 = new donut(data);
+
 });
 
 function parseData(electionData) {

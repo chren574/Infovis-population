@@ -14,19 +14,6 @@ function map(data) {
         width = mapDiv.width() - margin.right - margin.left,
         height = mapDiv.height() - margin.top - margin.bottom;
 
-    //initialize color scale
-    color = new Map();
-    color.set("Moderaterna", "#52BDEC");
-    color.set("Centerpartiet", "#016A3A");
-    color.set("Folkpartiet", "#0094D7");
-    color.set("Kristdemokraterna", "#231977");
-    color.set("Miljöpartiet", "#53A045");
-    color.set("Socialdemokraterna", "#ED1B34");
-    color.set("Vänsterpartiet", "#DA291C");
-    color.set("Sverigedemokraterna", "#DDDD00");
-    color.set("övriga partier", "gray");
-    color.set("Odefinierad", "white");
-
     //initialize tooltip
     var tooltip = d3.select("body").append("div")
         .attr("class", "tooltip")
