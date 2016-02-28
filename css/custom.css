@@ -18,7 +18,7 @@
 
 .btn-krist {
     color: #333333;
-    background-color: #0094D7;
+    background-color: #231977;
     border-color: #cccccc;
 }
 
@@ -51,15 +51,3 @@
     background-color: gray;
     border-color: #cccccc;
 }
-
-
-/*    color.set("Moderaterna", "#52BDEC");
-    color.set("Centerpartiet", "#016A3A");
-    color.set("Folkpartiet", "#0094D7");
-    color.set("Kristdemokraterna", "#231977");
-    color.set("Miljöpartiet", "#53A045");
-    color.set("Socialdemokraterna", "#ED1B34");
-    color.set("Vänsterpartiet", "#DA291C");
-    color.set("Sverigedemokraterna", "#DDDD00");
-    color.set("övriga partier", "gray");
-    */
