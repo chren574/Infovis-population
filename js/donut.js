@@ -6,9 +6,7 @@ function donut(data) {
         width = donutDiv.width() - margin.right - margin.left,
         height = donutDiv.height() - margin.top - margin.bottom;
 
-    var width = 800,
-        height = 400,
-        radius = Math.min(width, height) / 2;
+    var radius = Math.min(width, height) / 2;
 
 
     var legendRectSize = 18;
