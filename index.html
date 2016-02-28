@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
+    <title>Election Visulisation</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -58,6 +58,7 @@
                 <div class="col-xs-3 col-md-3">
                     <div class="btn-group-vertical" id="party" data-toggle="buttons">
                         <label class="btn btn-default blue active">
+                            <a href="#"></a>
                             <input type="radio" class="toggle" value="All" />Alla
                         </label>
                         <label class="btn btn-mod blue">
@@ -152,6 +153,7 @@
 
         //    });
 
+
     });
 
 
@@ -189,7 +191,7 @@
         $('#formsearch').find('input:text, select, textarea').val('');
 
         var str = $('#searchfield').val()
-        console.log(str);
+            //console.log(str);
         str1 = (str.substr(0, 1)).toUpperCase();
         str2 = (str.substr(1)).toLowerCase();
         console.log(str1 + str2);
@@ -197,15 +199,16 @@
     });
 
     // Just nu behöver man trycka på en knapp två gånger för att värdet ska ändras
-    //$('#party').on("click",function(){ 
     $("#party :input").change(function() {
 
-        var sliderYear = $('#year').slider('getValue')
+        var sliderYear = $('#year').slider('getValue');
         var closestYear = closest(electionYearsArray, sliderYear);
 
-        var party = $('#party label.active input').val();
+        //var party = $('#party label.active input').val();
+        var party = $(this).button().val();
+        //console.log(party)
 
-        if ($('#party label.active input').val() == "All")
+        if (party == "All")
             map1.colorByYear(closestYear);
         else
             map1.colorByParty(closestYear, party);
