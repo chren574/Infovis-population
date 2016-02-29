@@ -13,7 +13,6 @@ function donut(data) {
 
     var radius = Math.min(width, height) / 2;
 
-
     var legendRectSize = 18;
     var legendSpacing = 4;
 
@@ -47,15 +46,15 @@ function donut(data) {
             .attr("fill", function(d) {
                 return color.get(d.data.parti);
             })
-            .attr("d", arc);
-
+            .attr("d", arc)
+            .each(function(d) {
+                this._current = d;
+            });
     }
 
     function getMunData(mun, electionYear) {
 
-        //var year = $('#year').val();
-
-        var year = electionYear;
+        var year = $('#year').val();
 
         var nested_data = d3.nest()
             .key(function(d) {
@@ -63,7 +62,6 @@ function donut(data) {
             .sortValues(function(a, b) {
                 return b.parti - a.parti; })
             .entries(data);
-        //console.log(nested_data)
         nested_data = nested_data.filter(function(d) {
             return d.key == mun;
         })
@@ -86,28 +84,32 @@ function donut(data) {
             var filteredData = getMunData(mun, electionYear);
             pie.value(
                 function(p, i) {
-                    //console.log(p);
                     return !isNaN(filteredData[i].year) ? filteredData[i].year : 0;
                 });
             path = path.data(pie);
-            //path.attr("fill-opacity", 1)
             path.attr("d", arc);
+            path.transition().duration(750).attrTween("d", arcTween);
+            //path.attr("fill-opacity", 1)
         }
         /*
             this.validateMun = function(str) {
                 
-
                 var m = d3.map([{name: "Vallentuna"}, {name: "bar"}], function(d) { 
                     return d.name == str; 
                 });
                 var n1 = m.get("Vallentuna"); // {"name": "Vallentuna"}
                 var n2 = m.get("bar"); // {"name": "bar"}
                 var n3 = m.get("baz"); // undefined
-
-                console.log(n1);
-                console.log(n2);
-                console.log(n3);
-
             }
         */
+
+        function arcTween(a) {
+
+          var i = d3.interpolate(this._current, a);
+          this._current = i(0);
+          
+          return function(t) {
+            return arc(i(t));
+          };
+        }
 }
