@@ -46,7 +46,7 @@ function map(data) {
 
     function draw(mun, electionData) {
 
-        var regiondData = d3.nest()
+        regiondData = d3.nest()
             .key(function(d) {
                 return d.region;
             })
@@ -163,6 +163,21 @@ function map(data) {
                 }
 
             });
+            point.attr("title", function(d) {
+                var regionString = "";
+                for (var r = 0; r < regiondData.length; ++r) {
+                    if (regiondData[r].key == d.properties.name) {
+                        regionString = regiondData[r].key;
+                        regiondData[r].values.forEach(function(e) {
+                            if (!isNaN(e[year])) {
+                                regionString = regionString + "\n" + e.parti + ": " + e[year];
+                            }
+                        })
+                    }
+                    continue;
+                };
+                return regionString;
+            })
 
         });
     }
@@ -211,23 +226,33 @@ function map(data) {
                     }
                 };
             })
-
             point.style("fill-opacity", function(d) {
-
                 var opac = 0;
                 for (var i = 0; i < len; ++i) {
-
                     var region = nested_data[0].values[i];
                     // Compare region-name
                     if (d.properties.name == region.region) {
-
                         opac = (parseFloat(region[year]) - min) / (max - min);
                         break;
                     }
                 };
-
                 return opac;
             });
+            point.attr("title", function(d) {
+                var regionString = "";
+                for (var r = 0; r < regiondData.length; ++r) {
+                    if (regiondData[r].key == d.properties.name) {
+                        regionString = regiondData[r].key;
+                        regiondData[r].values.forEach(function(e) {
+                            if (!isNaN(e[year])) {
+                                regionString = regionString + "\n" + e.parti + ": " + e[year];
+                            }
+                        })
+                    }
+                    continue;
+                };
+                return regionString;
+            })
         });
 
     }
