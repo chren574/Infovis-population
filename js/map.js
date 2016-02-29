@@ -119,7 +119,7 @@ function map(data) {
         //console.log(electionYear);
         year = electionYear;
 
-        donut1.drawMun(CURRMUN, electionYear);
+        donut1.drawMun(currentMun(CURRMUN), electionYear);
 
         var colorOfParty = partyColor(electionData, year);
 
@@ -153,11 +153,6 @@ function map(data) {
     this.colorByParty = function(electionYear, party) {
 
         year = electionYear;
-        //party = party;
-        //var party = $('#party label.active input').val()
-
-
-        //var year = document.getElementById("year").value;
 
         // TEMP
         if (!party) {
@@ -217,8 +212,6 @@ function map(data) {
                 return opac;
             });
         });
-
-
 
     }
 
@@ -293,7 +286,7 @@ function map(data) {
 
         var electionYear = $('#year').slider('getValue');
 
-        donut1.drawMun(mun, electionYear);
+        donut1.drawMun(currentMun(mun), electionYear);
 
 
 

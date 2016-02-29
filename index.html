@@ -164,31 +164,16 @@
 
     });
 
-    $('#year').on('slideStop', function() {
-        var sliderYear = $('#year').slider('getValue')
+    $('#year').on('change', function() { 
+
+        var sliderYear = $('#year').slider('getValue');
+
 
         var closestYear = closest(electionYearsArray, sliderYear);
-
-        // Sets the slider circle to the 
-        // closest election year
         $("#year").slider('setValue', closestYear, true);
 
         var party = $('#party label.active input').val()
 
-        if (party == "All") {
-            map1.colorByYear(closestYear);
-        } else {
-            map1.colorByParty(closestYear, party);
-        }
-
-    });
-
-    $('#year').on('change', function() { 
-        var sliderYear = $('#year').slider('getValue')
-
-        var closestYear = closest(electionYearsArray, sliderYear);
-
-        var party = $('#party label.active input').val()
 
         if (party == "All") {
             map1.colorByYear(closestYear);
@@ -197,23 +182,11 @@
         }
 
 
-    });
-    $('#year').on('click', function() {
-        var sliderYear = $('#year').slider('getValue')
-
-        var closestYear = closest(electionYearsArray, sliderYear);
-
-        var party = $('#party label.active input').val()
-
-        if (party == "All") {
-            map1.colorByYear(closestYear);
-        } else {
-            map1.colorByParty(closestYear, party);
-        }
     });
 
 
     $("#searchMun").click(function() {
+
         //var sliderYear = $('#year').slider('getValue')
         //var closestYear = closest(electionYearsArray, sliderYear);
 
@@ -227,7 +200,6 @@
         //donut1.drawMun(str, closestYear);
     });
 
-    // Just nu behöver man trycka på en knapp två gånger för att värdet ska ändras
     $("#party :input").change(function() {
 
         var sliderYear = $('#year').slider('getValue');
@@ -238,7 +210,6 @@
 
         //var party = $('#party label.active input').val();
         var party = $(this).button().val();
-        //console.log(party)
 
         if (party == "All")
             map1.colorByYear(closestYear);
