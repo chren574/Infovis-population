@@ -1,0 +1,23 @@
+FEATURES
+
+Knapparna
+[ ] Tydliga partifärger
+[ ] Tydligare knapptext
+[ ] Tydligare button active
+
+Kartan
+[ ] Snyggare border
+[ ] Färga odefinerade kommuner svarta
+[ ] Förtydliga den aktiva kommunen i kartan
+[ ] Avmarkera kommun
+
+Donut
+[ ] Legend
+[M] Animation
+
+Övrigt
+[ ] Autocomplete
+[ ] Dra-släppa slider korrekt
+[ ] Euklidiskt avstånd
+
+Snygga till koden

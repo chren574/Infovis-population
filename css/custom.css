@@ -1,53 +1,62 @@
 .btn-mod {
-    color: #333333;
+    /*color: #333333;*/
+    color: black;
     background-color: #52BDEC;
     border-color: #cccccc;
 }
 
 .btn-cent {
-    color: #333333;
+        /*color: #333333;*/
+    color: black;
     background-color: #016A3A;
     border-color: #cccccc;
 }
 
 .btn-folk {
-    color: #333333;
+        /*color: #333333;*/
+    color: black;
     background-color: #52BDEC;
     border-color: #cccccc;
 }
 
 .btn-krist {
-    color: #333333;
+        /*color: #333333;*/
+    color: black;
     background-color: #231977;
     border-color: #cccccc;
 }
 
 .btn-mil {
-    color: #333333;
+        /*color: #333333;*/
+    color: black;
     background-color: #53A045;
     border-color: #cccccc;
 }
 
 .btn-soc {
-    color: #333333;
+        /*color: #333333;*/
+    color: black;
     background-color: #ED1B34;
     border-color: #cccccc;
 }
 
 .btn-van {
-    color: #333333;
+        /*color: #333333;*/
+    color: black;
     background-color: #DA291C;
     border-color: #cccccc;
 }
 
 .btn-sve {
-    color: #333333;
+        /*color: #333333;*/
+    color: black;
     background-color: #DDDD00;
     border-color: #cccccc;
 }
 
 .btn-ovr {
-    color: #333333;
+            /*color: #333333;*/
+    color: black;
     background-color: gray;
     border-color: #cccccc;
 }
