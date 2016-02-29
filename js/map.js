@@ -3,7 +3,7 @@ function map(data) {
     // Global varibale
     CURRMUN = "Upplands Väsby";
 
-    var scaleDiv = 0.7;
+    var scaleDiv = 0.80;
 
     var zoom = d3.behavior.zoom()
         .scaleExtent([1, 8])
@@ -21,13 +21,14 @@ function map(data) {
         .style("opacity", 0);
 
     var projection = d3.geo.mercator()
-        .center([50, 60])
-        .scale(600);
+        .center([40, 62])
+        .scale(850);
 
     var svg = d3.select("#map").append("svg")
         .attr("width", width*scaleDiv)
         .attr("height", height*scaleDiv)
-        .attr("style", "outline: thin dotted black;")
+        //.attr("style", "outline: thin dotted black;")
+        .style("border", "1px solid black")
         .call(zoom);
 
     var path = d3.geo.path()

@@ -2,7 +2,7 @@ function donut(data) {
 
     var donutDiv = $("#donut");
 
-    var scaleDiv = 0.7;
+    var scaleDiv = 0.85;
 
     var margin = { top: 20, right: 20, bottom: 20, left: 20 },
         width = donutDiv.width() - margin.right - margin.left,

@@ -55,9 +55,11 @@
                     <br>
                     <br>
                 </div>
+            <!-- row 3 end -->
             </div>
+             <!-- row 3 start -->
             <div class="row">
-                <div class="col-xs-5 col-md-3" align="center">
+                <div class="col-xs-5 col-md-3" align="center" id="party1">
                     <div class="btn-group-vertical" id="party" data-toggle="buttons">
                         <label class="btn btn-default blue active">
                             <a href="#"></a>
@@ -98,17 +100,21 @@
                 <div class="col-xs-12 col-md-6" align="center">
                     <div id="donut" style="height:80vh;"></div>
                 </div>
-                <!-- row 2 end -->
+                <!-- row 3 end -->
             </div>
             <!--label for="fruits">Fruit <input type="text" name="fruits" id="fruits" /></label-->
-            <!-- container end -->
+        <!-- container end -->
         </div>
-        <!-- Wrap end -->
+    <!-- Wrap end -->
     </div>
     <!-- Footer start -->
     <div id="footer">
-        <div class="container"> </div>
-        <!-- Footer end -->
+        <div class="container"> 
+            <nav class = "navbar navbar-default navbar-fixed-bottom" role = "navigation">
+        <p class="muted credit">Example courtesy <a href="http://martinbean.co.uk">Martin Bean</a> and <a href="http://ryanfait.com/sticky-footer/">Ryan Fait</a>.</p>
+        </nav>
+        </div>
+    <!-- Footer end -->
     </div>
     <script>
     window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')
@@ -167,10 +173,32 @@
         // closest election year
         $("#year").slider('setValue', closestYear, true);
 
+        var party = $('#party label.active input').val()
+
+        if (party == "All") {
+            map1.colorByYear(closestYear);
+        } else {
+            map1.colorByParty(closestYear, party);
+        }
+
     });
 
-    $('#year').on('change', function() {
+    $('#year').on('change', function() { 
+        var sliderYear = $('#year').slider('getValue')
 
+        var closestYear = closest(electionYearsArray, sliderYear);
+
+        var party = $('#party label.active input').val()
+
+        if (party == "All") {
+            map1.colorByYear(closestYear);
+        } else {
+            map1.colorByParty(closestYear, party);
+        }
+
+
+    });
+    $('#year').on('click', function() {
         var sliderYear = $('#year').slider('getValue')
 
         var closestYear = closest(electionYearsArray, sliderYear);
@@ -204,6 +232,9 @@
 
         var sliderYear = $('#year').slider('getValue');
         var closestYear = closest(electionYearsArray, sliderYear);
+
+         
+    //$(this).modal({show:true})
 
         //var party = $('#party label.active input').val();
         var party = $(this).button().val();
