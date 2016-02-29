@@ -8,8 +8,8 @@ function donut(data) {
         width = donutDiv.width() - margin.right - margin.left,
         height = donutDiv.height() - margin.top - margin.bottom;
 
-        width = width*scaleDiv;
-        height = height*scaleDiv;
+    width = width * scaleDiv;
+    height = height * scaleDiv;
 
     var radius = Math.min(width, height) / 2;
 
@@ -27,12 +27,12 @@ function donut(data) {
         .outerRadius(radius - 10)
         .innerRadius(radius - 70);
 
-/*    var tip = d3.tip()
-    .attr('class', 'd3-tip')
-    .offset([-10,0])
-    .html(function(d) {
-    return "<span style='color:white'>" + d.data.parti + "<strong>:</strong> <span style='color:orange'>" + d.data.year + "%" +"</span>";
-  }); */
+    /*    var tip = d3.tip()
+        .attr('class', 'd3-tip')
+        .offset([-10,0])
+        .html(function(d) {
+        return "<span style='color:white'>" + d.data.parti + "<strong>:</strong> <span style='color:orange'>" + d.data.year + "%" +"</span>";
+      }); */
 
     var svg = d3.select("#donut").append("svg")
         .attr("width", width)
@@ -40,7 +40,7 @@ function donut(data) {
         .append("g")
         .attr("transform", "translate(" + width / 3 + "," + height / 2 + ")");
 
-   //     svg.call(tip);
+    //     svg.call(tip);
 
     var firstMun = "Upplands Väsby";
 
@@ -65,36 +65,37 @@ function donut(data) {
             .each(function(d) {
                 this._current = d;
             })
-  /*          .on('mouseover', tip.show)
-            .on('mouseout', tip.hide); */
+            /*          .on('mouseover', tip.show)
+                      .on('mouseout', tip.hide); */
 
-       var legend = svg.selectAll('.legend')
-      .data(partyArray)
-      .enter()
-      .append('g')
-      .attr('class', 'legend')
-      .attr('transform', function(d, i) {
-        var height = legendRectSize + legendSpacing;
-        var offset =  height * color.size / 2;
-        var horz = 12 * legendRectSize;
-        var vert = i * height - offset;
-        return 'translate(' + horz + ',' + vert + ')';
-  });
+        var legend = svg.selectAll('.legend')
+            .data(partyArray)
+            .enter()
+            .append('g')
+            .attr('class', 'legend')
+            .attr('transform', function(d, i) {
+                var height = legendRectSize + legendSpacing;
+                var offset = height * color.size / 2;
+                var horz = 12 * legendRectSize;
+                var vert = i * height - offset;
+                return 'translate(' + horz + ',' + vert + ')';
+            });
 
-   legend.append('rect')
-      .attr('width', legendRectSize)
-      .attr('height', legendRectSize)
-      .style('fill', function(d) {
-        return color.get(d);
-      })                                  
-      .style('stroke', function(d) {
-        return color.get(d);
-      });
-      
-    legend.append('text')
-      .attr('x', legendRectSize + legendSpacing)
-      .attr('y', legendRectSize - legendSpacing)
-      .text(function(d) { return d; });
+        legend.append('rect')
+            .attr('width', legendRectSize)
+            .attr('height', legendRectSize)
+            .style('fill', function(d) {
+                return color.get(d);
+            })
+            .style('stroke', function(d) {
+                return color.get(d);
+            });
+
+        legend.append('text')
+            .attr('x', legendRectSize + legendSpacing)
+            .attr('y', legendRectSize - legendSpacing)
+            .text(function(d) {
+                return d; });
     }
 
     function getMunData(mun, electionYear) {
@@ -103,9 +104,11 @@ function donut(data) {
 
         var nested_data = d3.nest()
             .key(function(d) {
-                return d.region; })
+                return d.region;
+            })
             .sortValues(function(a, b) {
-                return b.parti - a.parti; })
+                return b.parti - a.parti;
+            })
             .entries(data);
         nested_data = nested_data.filter(function(d) {
             return d.key == mun;
@@ -125,33 +128,33 @@ function donut(data) {
     // Sends the name of the mun to other .js-files
     this.drawMun = function(mun, electionYear) {
 
-            var filteredData = getMunData(mun, electionYear);
-            pie.value(
-                function(p, i) {
-                    return !isNaN(filteredData[i].year) ? filteredData[i].year : 0;
-                });
-            path = path.data(pie);
-            path.attr("d", arc);
-            path.transition().duration(750).attrTween("d", arcTween);
+        var filteredData = getMunData(mun, electionYear);
+        pie.value(
+            function(p, i) {
+                return !isNaN(filteredData[i].year) ? filteredData[i].year : 0;
+            });
+        path = path.data(pie);
+        path.attr("d", arc);
+        path.transition().duration(750).attrTween("d", arcTween);
 
-/*            var tip = d3.tip()
-            .attr('class', 'd3-tip')
-            .offset([-10,0])
-            .html(function(d) {
-            return "<span style='color:white'>" + d.data.parti + "<strong>:</strong> <span style='color:orange'>" + d.data.year + "%" +"</span>";
-          }); */
+        /*            var tip = d3.tip()
+                    .attr('class', 'd3-tip')
+                    .offset([-10,0])
+                    .html(function(d) {
+                    return "<span style='color:white'>" + d.data.parti + "<strong>:</strong> <span style='color:orange'>" + d.data.year + "%" +"</span>";
+                  }); */
 
 
-            //path.attr("fill-opacity", 1)
-        }
+        //path.attr("fill-opacity", 1)
+    }
 
-        function arcTween(a) {
+    function arcTween(a) {
 
-          var i = d3.interpolate(this._current, a);
-          this._current = i(0);
-          
-          return function(t) {
+        var i = d3.interpolate(this._current, a);
+        this._current = i(0);
+
+        return function(t) {
             return arc(i(t));
-          };
-        }
+        };
+    }
 }

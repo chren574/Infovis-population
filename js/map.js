@@ -25,9 +25,8 @@ function map(data) {
         .scale(850);
 
     var svg = d3.select("#map").append("svg")
-        .attr("width", width*scaleDiv)
-        .attr("height", height*scaleDiv)
-        //.attr("style", "outline: thin dotted black;")
+        .attr("width", width * scaleDiv)
+        .attr("height", height * scaleDiv)
         .style("border", "1px solid black")
         .call(zoom);
 
@@ -47,18 +46,35 @@ function map(data) {
 
     function draw(mun, electionData) {
 
+        var regiondData = d3.nest()
+            .key(function(d) {
+                return d.region;
+            })
+            .entries(electionData);
+
         self.electionData = electionData;
         var year = document.getElementById("year").value;
 
         var mun = g.selectAll(".swe_mun").data(mun);
         var colorOfParty = partyColor(electionData, year);
 
-
         mun.enter().insert("path")
             .attr("class", "mun")
             .attr("d", path)
             .attr("title", function(d) {
-                return d.properties.name;
+                var regionString = "";
+                for (var r = 0; r < regiondData.length; ++r) {
+                    if (regiondData[r].key == d.properties.name) {
+                        regionString = regiondData[r].key;
+                        regiondData[r].values.forEach(function(e) {
+                            if (!isNaN(e[year])) {
+                                regionString = regionString + "\n" + e.parti + ": " + e[year];
+                            }
+                        })
+                    }
+                    continue;
+                };
+                return regionString;
             })
             .style("fill", function(d, i) {
                 var index = 0;
@@ -75,29 +91,30 @@ function map(data) {
             .attr("stroke-width", 0.1)
             .attr("stroke", "black")
 
-        /*          // Fungerar inte, css krånglar
-                    //tooltip
-                    .on("mousemove", function(d) {
-                        tooltip.transition()
-                        .duration(200)
-                        .style("opacity", 0.9);
-                    })
-                    .on("mouseout", function(d) {
-                        tooltip.transition()
-                        .duration(200)
-                        .style("opacity", 0); 
-                    }) 
-        */
+        // Fungerar inte, css krånglar
+        //tooltip
+        .on("mousemove", function(d) {
+                tooltip.transition()
+                    .duration(200)
+                    .style("opacity", 0.9);
+
+            })
+            .on("mouseout", function(d) {
+                tooltip.transition()
+                    .duration(200)
+                    .style("opacity", 0);
+            })
+
         .on("click", function(d) {
 
             //console.log($('#map').click());
-/*
-            d3.selectAll(".mun")
-                .style("stroke", "black")
+            /*
+                        d3.selectAll(".mun")
+                            .style("stroke", "black")
 
-            d3.select(this)
-                .style("stroke", "white")
-*/
+                        d3.select(this)
+                            .style("stroke", "white")
+            */
             selectedMun(d.properties.name);
 
         })
@@ -231,9 +248,6 @@ function map(data) {
         var nested_data = d3.nest()
             .key(function(d) {
                 return d.region;
-            })
-            .sortValues(function(a, b) {
-                return b[year] - a[year];
             })
             .entries(electionData);
 
