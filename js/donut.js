@@ -14,7 +14,8 @@ function donut(data) {
     var radius = Math.min(width, height) / 2;
 
     var legendRectSize = 18;
-    var legendSpacing = 4;
+    var legendSpacing = 2;
+    var color1 = d3.scale.category20b();
 
     var pie = d3.layout.pie()
         .sort(null)
@@ -26,11 +27,20 @@ function donut(data) {
         .outerRadius(radius - 10)
         .innerRadius(radius - 70);
 
+/*    var tip = d3.tip()
+    .attr('class', 'd3-tip')
+    .offset([-10,0])
+    .html(function(d) {
+    return "<span style='color:white'>" + d.data.parti + "<strong>:</strong> <span style='color:orange'>" + d.data.year + "%" +"</span>";
+  }); */
+
     var svg = d3.select("#donut").append("svg")
         .attr("width", width)
         .attr("height", height)
         .append("g")
-        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+        .attr("transform", "translate(" + width / 3 + "," + height / 2 + ")");
+
+   //     svg.call(tip);
 
     var firstMun = "Upplands Väsby";
 
@@ -39,6 +49,11 @@ function donut(data) {
     draw(arr);
 
     function draw(data_arr) {
+
+        var partyArray = [];
+        data_arr.forEach(function(d) {
+            partyArray.push(d.parti);
+        });
 
         path = svg.datum(data_arr).selectAll("path")
             .data(pie)
@@ -49,7 +64,37 @@ function donut(data) {
             .attr("d", arc)
             .each(function(d) {
                 this._current = d;
-            });
+            })
+  /*          .on('mouseover', tip.show)
+            .on('mouseout', tip.hide); */
+
+       var legend = svg.selectAll('.legend')
+      .data(partyArray)
+      .enter()
+      .append('g')
+      .attr('class', 'legend')
+      .attr('transform', function(d, i) {
+        var height = legendRectSize + legendSpacing;
+        var offset =  height * color.size / 2;
+        var horz = 10 * legendRectSize;
+        var vert = i * height - offset;
+        return 'translate(' + horz + ',' + vert + ')';
+  });
+
+   legend.append('rect')
+      .attr('width', legendRectSize)
+      .attr('height', legendRectSize)
+      .style('fill', function(d) {
+        return color.get(d);
+      })                                  
+      .style('stroke', function(d) {
+        return color.get(d);
+      });
+      
+    legend.append('text')
+      .attr('x', legendRectSize + legendSpacing)
+      .attr('y', legendRectSize - legendSpacing)
+      .text(function(d) { return d; });
     }
 
     function getMunData(mun, electionYear) {
@@ -89,6 +134,15 @@ function donut(data) {
             path = path.data(pie);
             path.attr("d", arc);
             path.transition().duration(750).attrTween("d", arcTween);
+
+/*            var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-10,0])
+            .html(function(d) {
+            return "<span style='color:white'>" + d.data.parti + "<strong>:</strong> <span style='color:orange'>" + d.data.year + "%" +"</span>";
+          }); */
+
+
             //path.attr("fill-opacity", 1)
         }
         /*
