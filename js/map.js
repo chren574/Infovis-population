@@ -3,7 +3,7 @@ function map(data) {
     // Global varibale
     CURRMUN = "Upplands Väsby";
 
-    var scaleDiv = 0.7;
+    var scaleDiv = 0.80;
 
     var zoom = d3.behavior.zoom()
         .scaleExtent([1, 8])
@@ -21,13 +21,14 @@ function map(data) {
         .style("opacity", 0);
 
     var projection = d3.geo.mercator()
-        .center([50, 60])
-        .scale(600);
+        .center([40, 62])
+        .scale(850);
 
     var svg = d3.select("#map").append("svg")
         .attr("width", width*scaleDiv)
         .attr("height", height*scaleDiv)
-        .attr("style", "outline: thin dotted black;")
+        //.attr("style", "outline: thin dotted black;")
+        .style("border", "1px solid black")
         .call(zoom);
 
     var path = d3.geo.path()
@@ -118,7 +119,7 @@ function map(data) {
         //console.log(electionYear);
         year = electionYear;
 
-        donut1.drawMun(CURRMUN, electionYear);
+        donut1.drawMun(currentMun(CURRMUN), electionYear);
 
         var colorOfParty = partyColor(electionData, year);
 
@@ -152,11 +153,6 @@ function map(data) {
     this.colorByParty = function(electionYear, party) {
 
         year = electionYear;
-        //party = party;
-        //var party = $('#party label.active input').val()
-
-
-        //var year = document.getElementById("year").value;
 
         // TEMP
         if (!party) {
@@ -216,8 +212,6 @@ function map(data) {
                 return opac;
             });
         });
-
-
 
     }
 
@@ -292,7 +286,7 @@ function map(data) {
 
         var electionYear = $('#year').slider('getValue');
 
-        donut1.drawMun(mun, electionYear);
+        donut1.drawMun(currentMun(mun), electionYear);
 
 
 

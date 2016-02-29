@@ -2,7 +2,7 @@ function donut(data) {
 
     var donutDiv = $("#donut");
 
-    var scaleDiv = 0.7;
+    var scaleDiv = 0.85;
 
     var margin = { top: 20, right: 20, bottom: 20, left: 20 },
         width = donutDiv.width() - margin.right - margin.left,
@@ -44,7 +44,7 @@ function donut(data) {
 
     var firstMun = "Upplands Väsby";
 
-    var arr = getMunData(firstMun);
+    var arr = getMunData(firstMun, "1973");
 
     draw(arr);
 
@@ -76,7 +76,7 @@ function donut(data) {
       .attr('transform', function(d, i) {
         var height = legendRectSize + legendSpacing;
         var offset =  height * color.size / 2;
-        var horz = 10 * legendRectSize;
+        var horz = 12 * legendRectSize;
         var vert = i * height - offset;
         return 'translate(' + horz + ',' + vert + ')';
   });
@@ -99,7 +99,7 @@ function donut(data) {
 
     function getMunData(mun, electionYear) {
 
-        var year = $('#year').val();
+        var year = electionYear;
 
         var nested_data = d3.nest()
             .key(function(d) {
@@ -120,7 +120,6 @@ function donut(data) {
         }
 
         return munData;
-        // }
     }
 
     // Sends the name of the mun to other .js-files
@@ -145,17 +144,6 @@ function donut(data) {
 
             //path.attr("fill-opacity", 1)
         }
-        /*
-            this.validateMun = function(str) {
-                
-                var m = d3.map([{name: "Vallentuna"}, {name: "bar"}], function(d) { 
-                    return d.name == str; 
-                });
-                var n1 = m.get("Vallentuna"); // {"name": "Vallentuna"}
-                var n2 = m.get("bar"); // {"name": "bar"}
-                var n3 = m.get("baz"); // undefined
-            }
-        */
 
         function arcTween(a) {
 
