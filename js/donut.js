@@ -11,7 +11,7 @@ function donut(data) {
     width = width * scaleDiv;
     height = height * scaleDiv;
 
-    var radius = Math.min(width, height) / 2;
+    var radius = Math.min(width, height) / 3;
 
     var legendRectSize = 18;
     var legendSpacing = 2;

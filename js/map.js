@@ -1,6 +1,6 @@
 function map(data) {
 
-    // Global varibale
+    // Global variable
     CURRMUN = "Upplands Väsby";
 
     var scaleDiv = 0.80;
@@ -11,7 +11,7 @@ function map(data) {
 
     var mapDiv = $("#map");
 
-    var margin = { top: 20, right: 20, bottom: 20, left: 20 },
+    var margin = { top: 10, right: 0, bottom: 10, left: 0 },
         width = mapDiv.width() - margin.right - margin.left,
         height = mapDiv.height() - margin.top - margin.bottom;
 
@@ -41,7 +41,6 @@ function map(data) {
         var mun = topojson.feature(sweden, sweden.objects.swe_mun).features;
 
         draw(mun, data);
-
     });
 
     function draw(mun, electionData) {
@@ -178,7 +177,6 @@ function map(data) {
                 };
                 return regionString;
             })
-
         });
     }
 
@@ -220,9 +218,7 @@ function map(data) {
                     var region = nested_data[0].values[i];
 
                     if (d.properties.name == region.region) {
-
                         return !(isNaN(region[year])) ? color.get(party) : "white";
-
                     }
                 };
             })
@@ -326,8 +322,5 @@ function map(data) {
         var electionYear = $('#year').slider('getValue');
 
         donut1.drawMun(currentMun(mun), electionYear);
-
-
-
     }
 }

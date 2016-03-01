@@ -5,7 +5,7 @@ d3.csv("data/Swedish_Election.csv", function(data) {
 
     // Global colors
     color = new Map();
-    color.set("Moderaterna", "#52BDEC");
+    color.set("Moderaterna", "blue");
     color.set("Centerpartiet", "#016A3A");
     color.set("Folkpartiet", "#0094D7");
     color.set("Kristdemokraterna", "#231977");
