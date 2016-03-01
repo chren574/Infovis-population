@@ -59,7 +59,7 @@
             <!-- row 3 start -->
             <div class="row">
                 <div class="col-xs-5 col-md-2" align="center">
-                    <div class="btn-group-vertical" id="party" data-toggle="buttons">
+                    <div class="btn-group-vertical" id="party" data-toggle="buttons-checkbox">
                         <button type="button" class="btn btn-default blue active" value="All">Alla</button>
                         <button type="button" class="btn btn-mod" value="Moderaterna">Moderaterna</button>
                         <button type="button" class="btn btn-cent" value="Centerpartiet">Centerpartiet</button>
@@ -199,6 +199,8 @@
         }
 
         var party = $('#party button.active').val();
+        console.log($('#party button.active'));
+        console.log($('.btn-group-vertical button.active'));
 
         if (party == "All") {
             map1.colorByYear(closestYear);
@@ -223,22 +225,25 @@
         console.log(str1 + str2);
         //donut1.drawMun(str, closestYear);
     });
-    $('#party').on('click', function() {
 
+    //$('#party btn').on('click', function() {
+    $("#party > .btn").on("click",function(){   
+        
+        console.log(this)
         $(this).addClass("active").siblings().removeClass("active");
 
         var sliderYear = $('#year').slider('getValue');
         var closestYear = closest(electionYearsArray, sliderYear);
 
         var party = $('#party button.active').val();
-
+        console.log($('#party button.active'));
+        console.log($('.btn-group-vertical button.active'));
 
         if (party == "All")
             map1.colorByYear(closestYear);
         else
             map1.colorByParty(closestYear, party);
     });
-
 
     // Finds the closest value in an array
     function closest(array, num) {
