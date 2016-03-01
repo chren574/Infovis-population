@@ -60,7 +60,17 @@
             <div class="row">
                 <div class="col-xs-5 col-md-2" align="center">
                     <div class="btn-group-vertical" id="party" data-toggle="buttons">
-                        <label class="btn btn-default blue active">
+                        <button type="button" class="btn btn-default blue active" value="All">Alla</button>
+                        <button type="button" class="btn btn-mod" value="Moderaterna">Moderaterna</button>
+                        <button type="button" class="btn btn-cent" value="Centerpartiet">Centerpartiet</button>
+                        <button type="button" class="btn btn-folk" value="Folkpartiet">Folkpartiet</button>
+                        <button type="button" class="btn btn-krist" value="Kristdemokraterna">Kristdemokraterna</button>
+                        <button type="button" class="btn btn-mil" value="Miljöpartiet">Miljöpartiet</button>
+                        <button type="button" class="btn btn-soc" value="Socialdemokraterna">Socialdemokraterna</button>
+                        <button type="button" class="btn btn-van" value="Vänsterpartiet">Vänsterpartiet</button>
+                        <button type="button" class="btn btn-sve" value="Sverigedemokraterna">Sverigedemokraterna</button>
+                        <button type="button" class="btn btn-ovr" value="övriga partier">övriga partier</button>
+                        <!--label class="btn btn-default blue active">
                             <a href="#"></a>
                             <input type="radio" class="toggle" value="All" />Alla
                         </label>
@@ -90,7 +100,7 @@
                         </label>
                         <label class="btn btn-ovr blue">
                             <input type="radio" class="toggle" value="övriga partier" />Övriga partier
-                        </label>
+                        </label-->
                     </div>
                 </div>
                 <div class="col-xs-7 col-md-2" align="center">
@@ -167,12 +177,28 @@
 
         var sliderYear = $('#year').slider('getValue');
 
-
         var closestYear = closest(electionYearsArray, sliderYear);
         $("#year").slider('setValue', closestYear, true);
 
-        var party = $('#party label.active input').val()
+        if (closestYear < 1998) {
+            $('.btn-sve').prop('disabled', true);
+        } else {
+            $('.btn-sve').prop('disabled', false);
+        }
 
+        if (closestYear < 1982) {
+            $('.btn-mil').prop('disabled', true);
+        } else {
+            $('.btn-mil').prop('disabled', false);
+        }
+
+        if (closestYear == 1988) {
+            $('.btn-krist').prop('disabled', true);
+        } else {
+            $('.btn-krist').prop('disabled', false);
+        }
+
+        var party = $('#party button.active').val();
 
         if (party == "All") {
             map1.colorByYear(closestYear);
@@ -182,7 +208,6 @@
 
 
     });
-
 
     $("#searchMun").click(function() {
 
@@ -198,17 +223,15 @@
         console.log(str1 + str2);
         //donut1.drawMun(str, closestYear);
     });
+    $('#party').on('click', function() {
 
-    $("#party :input").change(function() {
+        $(this).addClass("active").siblings().removeClass("active");
 
         var sliderYear = $('#year').slider('getValue');
         var closestYear = closest(electionYearsArray, sliderYear);
 
+        var party = $('#party button.active').val();
 
-        //$(this).modal({show:true})
-
-        //var party = $('#party label.active input').val();
-        var party = $(this).button().val();
 
         if (party == "All")
             map1.colorByYear(closestYear);
