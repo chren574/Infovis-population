@@ -50,9 +50,10 @@ function map(data) {
                 return d.region;
             })
             .entries(electionData);
-
         self.electionData = electionData;
-        var year = document.getElementById("year").value;
+        //var year = document.getElementById("year").value;
+        var year = 1973;
+        //var arrayIndex = $( "#year" ).slider( "value" );  
 
         var mun = g.selectAll(".swe_mun").data(mun);
         var colorOfParty = partyColor(electionData, year);
@@ -284,8 +285,14 @@ function map(data) {
     }
 
     function compare(a, b) {
-        var year = document.getElementById("year").value;
+        //var year = document.getElementById("year").value;
         //var year = $('#year').slider('getValue')
+
+        var trueVal = $( "#year" ).slider( "value" );  
+        //var closestYear = closest(electionYearsArray, sliderYear);
+        var year = electionYearsArray[trueVal];
+
+        var year = closest(electionYearsArray, year);
 
         if (isNaN(a[year]) && isNaN(b[year]))
             return 0;
@@ -319,8 +326,29 @@ function map(data) {
     // Sends the name of the mun to other .js-files
     function selectedMun(mun) {
 
-        var electionYear = $('#year').slider('getValue');
+        //var electionYear = $('#year').slider('getValue');
+
+        var trueVal = $( "#year" ).slider( "value" );  
+        //var closestYear = closest(electionYearsArray, sliderYear);
+        var year = electionYearsArray[trueVal];
+
+        var electionYear = closest(electionYearsArray, year);
 
         donut1.drawMun(currentMun(mun), electionYear);
+    }
+electionYearsArray = [1973, 1976, 1979, 1982, 1985, 1988, 1991, 1994, 1998, 2002, 2006, 2010, 2014];
+    // Finds the closest value in an array
+    function closest(array, num) {
+        var i = 0;
+        var minDiff = 1000;
+        var ans;
+        for (i in array) {
+            var m = Math.abs(num - array[i]);
+            if (m < minDiff) {
+                minDiff = m;
+                ans = array[i];
+            }
+        }
+        return ans;
     }
 }

@@ -14,11 +14,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/colorbrewer.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/6.0.16/css/bootstrap-slider.min.css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="css/bootstrap-slider.min.css">
+    
     <!--modules css-->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/map.css">
@@ -39,9 +39,9 @@
                     </div>
                     <form class="navbar-form navbar-left" role="search">
                         <div class="form-group" id="formsearch">
-                            <input type="text" class="form-control" id="searchfield" placeholder="Municipality">
+                            <input type="text" class="form-control" id="searchfield" style="z-index:3;" placeholder="Municipality">
                         </div>
-                        <button type="Search" id="searchMun" class="btn btn-default">Search</button>
+                        <button type="button" id="searchMun" class="btn btn-primary">Search</button>
                     </form>
                 </nav>
                 <!-- row 1 end -->
@@ -50,68 +50,37 @@
             <!-- row 2 start -->
             <div class="row">
                 <div class="col-xs-5 col-md-3" align="center">
-                    <input id="year" type="text" align="center" />
+                    <input type="text" id="currYear" value="1973" align="center"/>
+                    <div id="year"></div>
                     <br>
                     <br>
                 </div>
                 <!-- row 3 end -->
             </div>
             <!-- row 3 start -->
-            <div class="row">
-                <div class="col-xs-5 col-md-2" align="center">
-                    <div class="btn-group-vertical" id="party" data-toggle="buttons-checkbox">
+            <div class="row vertical-align">
+                <div class="col-xs-5 col-md-3" align="center">
+                    <div class="btn-group-vertical" role="group" align="center" style="height:80vh;" id="party">
                         <button type="button" class="btn btn-default blue active" value="All">Alla</button>
                         <button type="button" class="btn btn-mod" value="Moderaterna">Moderaterna</button>
                         <button type="button" class="btn btn-cent" value="Centerpartiet">Centerpartiet</button>
                         <button type="button" class="btn btn-folk" value="Folkpartiet">Folkpartiet</button>
                         <button type="button" class="btn btn-krist" value="Kristdemokraterna">Kristdemokraterna</button>
                         <button type="button" class="btn btn-mil" value="Miljöpartiet">Miljöpartiet</button>
-                        <button type="button" class="btn btn-soc" value="Socialdemokraterna">Socialdemokraterna</button>
+                        <button type="button" class="btn btn-block form-control btn-soc" value="Socialdemokraterna">Socialdemokraterna</button>
                         <button type="button" class="btn btn-van" value="Vänsterpartiet">Vänsterpartiet</button>
-                        <button type="button" class="btn btn-sve" value="Sverigedemokraterna">Sverigedemokraterna</button>
+                        <button type="button" class="btn btn-block btn-sve" value="Sverigedemokraterna">Sverigedemokraterna</button>
                         <button type="button" class="btn btn-ovr" value="övriga partier">Övriga partier</button>
-                        <!--label class="btn btn-default blue active">
-                            <a href="#"></a>
-                            <input type="radio" class="toggle" value="All" />Alla
-                        </label>
-                        <label class="btn btn-mod blue">
-                            <input type="radio" class="toggle" value="Moderaterna" />Moderaterna
-                        </label>
-                        <label class="btn btn-cent blue">
-                            <input type="radio" class="toggle" value="Centerpartiet" />Centerpartiet
-                        </label>
-                        <label class="btn btn-folk blue">
-                            <input type="radio" class="toggle" value="Folkpartiet" />Folkpartiet
-                        </label>
-                        <label class="btn btn-krist blue">
-                            <input type="radio" class="toggle" value="Kristdemokraterna" />Kristdemokraterna
-                        </label>
-                        <label class="btn btn-mil blue">
-                            <input type="radio" class="toggle" value="Miljöpartiet" />Miljöpartiet
-                        </label>
-                        <label class="btn btn-soc blue">
-                            <input type="radio" class="toggle" value="Socialdemokraterna" />Socialdemokraterna
-                        </label>
-                        <label class="btn btn-van blue">
-                            <input type="radio" class="toggle" value="Vänsterpartiet" />Vänsterpartiet
-                        </label>
-                        <label class="btn btn-sve blue">
-                            <input type="radio" class="toggle" value="Sverigedemokraterna" />Sverigedemokraterna
-                        </label>
-                        <label class="btn btn-ovr blue">
-                            <input type="radio" class="toggle" value="övriga partier" />Övriga partier
-                        </label-->
                     </div>
                 </div>
-                <div class="col-xs-7 col-md-2" align="center">
+                <div class="col-xs-7 col-md-3" align="center">
                     <div id="map" style="height: 80vh;width:50vh"></div>
                 </div>
-                <div class="col-xs-12 col-md-8" align="right">
+                <div class="col-xs-12 col-md-6" align="right">
                     <div id="donut" style="height:80vh;"></div>
                 </div>
                 <!-- row 3 end -->
             </div>
-            <!--label for="fruits">Fruit <input type="text" name="fruits" id="fruits" /></label-->
             <!-- container end -->
         </div>
         <!-- Wrap end -->
@@ -126,16 +95,15 @@
         <!-- Footer end -->
     </div>
     <script>
-    window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')
+    window.jQuery || document.write('<script src="js/vendor/jquery-2.2.1.min.js"><\/script>')
     </script>
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script src="js/vendor/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/6.0.16/bootstrap-slider.min.js"></script>
+    <!--script src="js/vendor/bootstrap-slider.min.js"></script-->
     <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     <script src="js/vendor/d3.min.js"></script>
     <script src="js/vendor/topojson.v1.min.js"></script>
     <script src="js/vendor/underscore-min.js"></script>
-    <script src="js/vendor/colorbrewer.js"></script>
     <script src="js/vendor/d3.tip.v0.6.3.js"></script>
     <script type='text/javascript'>
     var data = [
@@ -150,36 +118,57 @@
     var electionYearsArray = [1973, 1976, 1979, 1982, 1985, 1988, 1991, 1994, 1998, 2002, 2006, 2010, 2014];
 
 
-    $(document).ready(function() {
-
-        $("#year").slider({
-            ticks: electionYearsArray,
-            ticks_labels: ['1973', '', '', '', '', '', '1991', '', '', '', '', '', '2014'],
-            ticks_snap_bounds: 3,
-            selection: 'before',
-            value: 1973,
-        });
+    $(function() {
 
         /* binding the text box with the jQuery Auto complete function. */
-        //    $( "#fruits" ).autocomplete({
+        $( "#searchfield" ).autocomplete({
         /*Source refers to the list of fruits that are available in the auto complete list. */
-        //      source:data,
+        source: data,
         /* auto focus true means, the first item in the auto complete list is selected by default. therefore when the user hits enter,
         it will be loaded in the textbox */
-        //      autoFocus: true ,
+        open: function(event, ui) { $(".ui-slider-handle").css("z-index", -1); },
+        close: function(event, ui) { $(".ui-slider-handle").css("z-index", 2); }
+        });
 
-        //    });
-
+        $("#year").slider({
+            animate: "slow",
+            min: 0,
+            max: electionYearsArray.length - 1,
+            value: 1973,  
+            });
 
     });
 
-    $('#year').on('change', function() {
+    $("#searchMun").click(function() {
 
-        var sliderYear = $('#year').slider('getValue');
+        var trueVal = $( "#year" ).slider( "value" );  
+        var sliderYear = electionYearsArray[trueVal];
 
         var closestYear = closest(electionYearsArray, sliderYear);
-        $("#year").slider('setValue', closestYear, true);
 
+        //Get
+        var str = $('#searchfield').val();
+
+        //Set
+        $('#searchfield').val('');
+
+        str1 = (str.substr(0, 1)).toUpperCase();
+        str2 = (str.substr(1)).toLowerCase();
+        console.log(str1 + str2);
+        //donut1.drawMun(str, closestYear);
+    
+    });
+
+    $('#year').on('slidestop', function(event, ui) {                  
+        
+        $("#currYear").val(electionYearsArray[ui.value]);  
+        
+        //var sliderYear = $("#currYear").val(electionYearsArray[ui.value]);
+        var trueVal = $( "#year" ).slider( "value" );  
+        var sliderYear = electionYearsArray[trueVal];
+
+        var closestYear = closest(electionYearsArray, sliderYear);
+        
         if (closestYear < 1998) {
             $('.btn-sve').prop('disabled', true);
         } else {
@@ -199,8 +188,6 @@
         }
 
         var party = $('#party button.active').val();
-        console.log($('#party button.active'));
-        console.log($('.btn-group-vertical button.active'));
 
         if (party == "All") {
             map1.colorByYear(closestYear);
@@ -208,41 +195,28 @@
             map1.colorByParty(closestYear, party);
         }
 
-
     });
-
-    $("#searchMun").click(function() {
-
-        //var sliderYear = $('#year').slider('getValue')
-        //var closestYear = closest(electionYearsArray, sliderYear);
-
-        $('#formsearch').find('input:text, select, textarea').val('');
-
-        var str = $('#searchfield').val()
-            //console.log(str);
-        str1 = (str.substr(0, 1)).toUpperCase();
-        str2 = (str.substr(1)).toLowerCase();
-        console.log(str1 + str2);
-        //donut1.drawMun(str, closestYear);
-    });
-
-    //$('#party btn').on('click', function() {
+        
     $("#party > .btn").on("click",function(){   
         
-        console.log(this)
         $(this).addClass("active").siblings().removeClass("active");
+   
+        //console.log($('#party button.active'));
 
-        var sliderYear = $('#year').slider('getValue');
+        var trueVal = $( "#year" ).slider( "value" );  
+        var sliderYear = electionYearsArray[trueVal];
+
+        //var sliderYear = $('#year').slider('getValue');
         var closestYear = closest(electionYearsArray, sliderYear);
 
         var party = $('#party button.active').val();
-        console.log($('#party button.active'));
-        console.log($('.btn-group-vertical button.active'));
 
-        if (party == "All")
+        if (party == "All") {
             map1.colorByYear(closestYear);
-        else
+        } else {
             map1.colorByParty(closestYear, party);
+        }
+
     });
 
     // Finds the closest value in an array
