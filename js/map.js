@@ -39,7 +39,7 @@ function map(data) {
     d3.json("data/sweden_mun.topojson", function(error, sweden) {
 
         var mun = topojson.feature(sweden, sweden.objects.swe_mun).features;
-
+        
         draw(mun, data);
     });
 
@@ -116,6 +116,7 @@ function map(data) {
                             .style("stroke", "white")
             */
             selectedMun(d.properties.name);
+            $("#searchfield").attr("placeholder", d.properties.name).val("").focus().blur();
 
         })
 

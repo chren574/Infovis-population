@@ -38,8 +38,8 @@
                         <a class="navbar-brand" href="#">Swedish Election</a>
                     </div>
                     <form class="navbar-form navbar-left" role="search">
-                        <div class="form-group" id="formsearch">
-                            <input type="text" class="form-control" id="searchfield" style="z-index:3;" placeholder="Municipality">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="searchfield" placeholder="Municipality">
                         </div>
                         <button type="button" id="searchMun" class="btn btn-primary">Search</button>
                     </form>
@@ -105,27 +105,25 @@
     <script src="js/vendor/topojson.v1.min.js"></script>
     <script src="js/vendor/underscore-min.js"></script>
     <script src="js/vendor/d3.tip.v0.6.3.js"></script>
+
+    <!--modules js-->
+    <script src="js/main.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/donut.js"></script>
+    
+
     <script type='text/javascript'>
-    var data = [
-        "Apple",
-        "Orange",
-        "Pineapple",
-        "Strawberry",
-        "Mango"
-    ];
-
-
-    var electionYearsArray = [1973, 1976, 1979, 1982, 1985, 1988, 1991, 1994, 1998, 2002, 2006, 2010, 2014];
-
 
     $(function() {
 
-        /* binding the text box with the jQuery Auto complete function. */
         $( "#searchfield" ).autocomplete({
         /*Source refers to the list of fruits that are available in the auto complete list. */
-        source: data,
-        /* auto focus true means, the first item in the auto complete list is selected by default. therefore when the user hits enter,
-        it will be loaded in the textbox */
+        source: function(request, response) {
+        var results = $.ui.autocomplete.filter(REGIONARRAY, request.term);
+        
+            response(results.slice(0, 5));
+        },
+        // Must have to get it runnung with slider
         open: function(event, ui) { $(".ui-slider-handle").css("z-index", -1); },
         close: function(event, ui) { $(".ui-slider-handle").css("z-index", 2); }
         });
@@ -133,7 +131,7 @@
         $("#year").slider({
             animate: "slow",
             min: 0,
-            max: electionYearsArray.length - 1,
+            max: ELECTIONYEARSARRAY.length - 1,
             value: 1973,  
             });
 
@@ -142,9 +140,9 @@
     $("#searchMun").click(function() {
 
         var trueVal = $( "#year" ).slider( "value" );  
-        var sliderYear = electionYearsArray[trueVal];
+        var sliderYear = ELECTIONYEARSARRAY[trueVal];
 
-        var closestYear = closest(electionYearsArray, sliderYear);
+        var closestYear = closest(ELECTIONYEARSARRAY, sliderYear);
 
         //Get
         var str = $('#searchfield').val();
@@ -153,21 +151,46 @@
         $('#searchfield').val('');
 
         str1 = (str.substr(0, 1)).toUpperCase();
+
         str2 = (str.substr(1)).toLowerCase();
-        console.log(str1 + str2);
-        //donut1.drawMun(str, closestYear);
+
+        str = str1 + str2;
+
+        if(!str.indexOf(" ").length) {
+            var i = str.indexOf(" ");
+            str = str.replace(str[i+1], str[i+1].toUpperCase());    
+        } 
+        if(!str.indexOf("-").length) {
+            var i = str.indexOf("-");
+            str = str.replace(str[i+1], str[i+1].toUpperCase());
+        };
+
+        
+        var formatString = str;
+
+        var validReg = validateRegion(formatString);
+       
+        if(validReg) {
+            donut1.drawMun(formatString, closestYear);
+            $("#searchfield").attr("placeholder", formatString).val("").focus().blur();
+        } else {
+            $("#searchfield").attr("placeholder", "Not a region").val("").focus().blur();
+
+        }
+
     
     });
 
+
     $('#year').on('slidestop', function(event, ui) {                  
         
-        $("#currYear").val(electionYearsArray[ui.value]);  
+        $("#currYear").val(ELECTIONYEARSARRAY[ui.value]);  
         
         //var sliderYear = $("#currYear").val(electionYearsArray[ui.value]);
         var trueVal = $( "#year" ).slider( "value" );  
-        var sliderYear = electionYearsArray[trueVal];
+        var sliderYear = ELECTIONYEARSARRAY[trueVal];
 
-        var closestYear = closest(electionYearsArray, sliderYear);
+        var closestYear = closest(ELECTIONYEARSARRAY, sliderYear);
         
         if (closestYear < 1998) {
             $('.btn-sve').prop('disabled', true);
@@ -200,14 +223,13 @@
     $("#party > .btn").on("click",function(){   
         
         $(this).addClass("active").siblings().removeClass("active");
-   
-        //console.log($('#party button.active'));
+
 
         var trueVal = $( "#year" ).slider( "value" );  
-        var sliderYear = electionYearsArray[trueVal];
+        var sliderYear = ELECTIONYEARSARRAY[trueVal];
 
         //var sliderYear = $('#year').slider('getValue');
-        var closestYear = closest(electionYearsArray, sliderYear);
+        var closestYear = closest(ELECTIONYEARSARRAY, sliderYear);
 
         var party = $('#party button.active').val();
 
@@ -234,10 +256,7 @@
         return ans;
     }
     </script>
-    <!--modules js-->
-    <script src="js/map.js"></script>
-    <script src="js/donut.js"></script>
-    <script src="js/main.js"></script>
+    
 </body>
 
 </html>

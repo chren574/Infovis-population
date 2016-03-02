@@ -21,24 +21,37 @@ d3.csv("data/Swedish_Election.csv", function(data) {
     map1 = new map(data);
     donut1 = new donut(data);
 
-    regionArray(data);
+
+
+
+    // Array for autocomplete
+    var nested_data = d3.nest()
+        .key(function(d) {
+            return d.region;
+        })
+        .sortKeys(d3.ascending)
+        .entries(data);
+
+    REGIONARRAY = [];
+
+    nested_data.forEach(function(d) {
+        REGIONARRAY.push(d.values[0].region);
+    });
+
+    //console.log(REGIONARRAY);
 
 });
 
-function parseData(electionData) {
 
-    var yearArr = ["1973", "1976", "1979", "1982", "1985",
-        "1988", "1991", "1994", "1998", "2002",
-        "2006", "2010", "2014"
-    ];
+function parseData(electionData) {
 
     electionData.forEach(function(data) {
 
         data.region = data.region.slice(5);
-        for (var i = 0; i < yearArr.length; ++i) {
+        for (var i = 0; i < ELECTIONYEARSARRAY.length; ++i) {
 
-            if (data[yearArr[i]] != "..") {
-                data[yearArr[i]] = +data[yearArr[i]];
+            if (data[ELECTIONYEARSARRAY[i]] != "..") {
+                data[ELECTIONYEARSARRAY[i]] = +data[ELECTIONYEARSARRAY[i].toString()];
             };
 
         };
@@ -46,21 +59,20 @@ function parseData(electionData) {
 
 };
 
-// Array for autocomplete
-this.regionArray = function(data) {
 
-    var nested_data = d3.nest()
-        .key(function(d) {
-            return d.region;
-        })
-        .entries(data);
+ELECTIONYEARSARRAY = [1973, 1976, 1979, 1982, 1985, 1988, 1991, 1994, 1998, 2002, 2006, 2010, 2014];
 
-    var regArr = [];
 
-    nested_data.forEach(function(d) {
-        regArr.push(d.values[0].region);
+this.validateRegion = function(inputString) {
+
+    var valid = false;
+
+    REGIONARRAY.forEach(function(r) {
+    
+        if(inputString == r) { valid = true; }
+
     });
 
-    console.log(regArr);
-
+    return valid;  
+   
 };

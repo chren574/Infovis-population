@@ -49,7 +49,7 @@ function donut(data) {
     draw(arr);
 
     function draw(data_arr) {
-//console.log(data_arr)
+
         var partyArray = [];
         data_arr.forEach(function(d) {
           if(!isNaN(d.year)) {
