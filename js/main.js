@@ -59,20 +59,33 @@ function parseData(electionData) {
 
 };
 
-
 ELECTIONYEARSARRAY = [1973, 1976, 1979, 1982, 1985, 1988, 1991, 1994, 1998, 2002, 2006, 2010, 2014];
-
 
 this.validateRegion = function(inputString) {
 
     var valid = false;
 
     REGIONARRAY.forEach(function(r) {
-    
-        if(inputString == r) { valid = true; }
+
+        if (inputString == r) { valid = true; }
 
     });
 
-    return valid;  
-   
+    return valid;
+
+};
+
+// Finds the closest value in an array
+this.closest = function(array, num) {
+    var i = 0;
+    var minDiff = 1000;
+    var ans;
+    for (i in array) {
+        var m = Math.abs(num - array[i]);
+        if (m < minDiff) {
+            minDiff = m;
+            ans = array[i];
+        }
+    }
+    return ans;
 };

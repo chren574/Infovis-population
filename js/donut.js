@@ -52,9 +52,9 @@ function donut(data) {
 
         var partyArray = [];
         data_arr.forEach(function(d) {
-          if(!isNaN(d.year)) {
-            partyArray.push(d.parti);
-          }
+            if (!isNaN(d.year)) {
+                partyArray.push(d.parti);
+            }
         });
 
         path = svg.datum(data_arr).selectAll("path")
@@ -76,8 +76,8 @@ function donut(data) {
             .append('g')
             .attr('class', 'legend')
             .attr('transform', function(d, i) {
-              //console.log(d)
-              //console.log(i)
+                //console.log(d)
+                //console.log(i)
                 var height = legendRectSize + legendSpacing;
                 var offset = height * color.size / 2;
                 var horz = 12 * legendRectSize;
@@ -99,7 +99,8 @@ function donut(data) {
             .attr('x', legendRectSize + legendSpacing)
             .attr('y', legendRectSize - legendSpacing)
             .text(function(d) {
-                return d; });
+                return d;
+            });
     }
 
     function getMunData(mun, electionYear) {
@@ -154,12 +155,12 @@ function donut(data) {
         svg.selectAll(".legend").remove();
 
         var data_arr = getMunData(mun, electionYear);
-      
+
         var partyArray = [];
         data_arr.forEach(function(d) {
-          if(!isNaN(d.year)) {
-            partyArray.push(d.parti);
-          }
+            if (!isNaN(d.year)) {
+                partyArray.push(d.parti);
+            }
         });
 
         var legend = svg.selectAll('.legend')
@@ -189,7 +190,8 @@ function donut(data) {
             .attr('x', legendRectSize + legendSpacing)
             .attr('y', legendRectSize - legendSpacing)
             .text(function(d) {
-                return d; });
+                return d;
+            });
 
     }
 

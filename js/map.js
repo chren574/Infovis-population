@@ -108,25 +108,25 @@ function map(data) {
         .on("click", function(d) {
 
             //console.log($('#map').click());
-            /*
+            
                         d3.selectAll(".mun")
-                            .style("stroke", "black")
+                            .style("stroke-width", .1)
 
                         d3.select(this)
-                            .style("stroke", "white")
-            */
+                            .style("stroke-width", 1)
+            
             selectedMun(d.properties.name);
             $("#searchfield").attr("placeholder", d.properties.name).val("").focus().blur();
 
         })
 
-        .on('mouseover', function(d) {
+            .on('mouseover', function(d) {
                 d3.select(this)
-                    .style('stroke-width', .5);
+                    .style('stroke', "white");
             })
             .on('mouseout', function(d) {
                 d3.selectAll('path')
-                    .style('stroke-width', 0.1);
+                    .style('stroke', "black");
             });
 
     }
@@ -185,6 +185,8 @@ function map(data) {
     this.colorByParty = function(electionYear, party) {
 
         year = electionYear;
+
+        donut1.drawMun(currentMun(CURRMUN), electionYear);
 
         // TEMP
         if (!party) {
@@ -255,6 +257,16 @@ function map(data) {
 
     }
 
+    this.munBorder = function(mun) {
+
+        d3.selectAll(".mun")
+            .style("stroke-width", function(b) {
+                return (b.properties.name == mun) ? 1 : 0.1;
+            });
+
+
+    };
+
     function currentMun(mun) {
 
         if (mun) {
@@ -291,9 +303,9 @@ function map(data) {
 
         var trueVal = $( "#year" ).slider( "value" );  
         //var closestYear = closest(electionYearsArray, sliderYear);
-        var year = electionYearsArray[trueVal];
+        var year = ELECTIONYEARSARRAY[trueVal];
 
-        var year = closest(electionYearsArray, year);
+        var year = closest(ELECTIONYEARSARRAY, year);
 
         if (isNaN(a[year]) && isNaN(b[year]))
             return 0;
@@ -327,17 +339,14 @@ function map(data) {
     // Sends the name of the mun to other .js-files
     function selectedMun(mun) {
 
-        //var electionYear = $('#year').slider('getValue');
-
         var trueVal = $( "#year" ).slider( "value" );  
-        //var closestYear = closest(electionYearsArray, sliderYear);
-        var year = electionYearsArray[trueVal];
+        var year = ELECTIONYEARSARRAY[trueVal];
 
-        var electionYear = closest(electionYearsArray, year);
+        var electionYear = closest(ELECTIONYEARSARRAY, year);
 
         donut1.drawMun(currentMun(mun), electionYear);
     }
-electionYearsArray = [1973, 1976, 1979, 1982, 1985, 1988, 1991, 1994, 1998, 2002, 2006, 2010, 2014];
+
     // Finds the closest value in an array
     function closest(array, num) {
         var i = 0;
@@ -352,4 +361,104 @@ electionYearsArray = [1973, 1976, 1979, 1982, 1985, 1988, 1991, 1994, 1998, 2002
         }
         return ans;
     }
+
+
+    this.regionsimilarities = function(electionYear, mun) {
+
+        //hämta från sökfältet
+
+        //sortera efter regioner
+        var nested_data = d3.nest()
+            .key(function(d) {
+                return d.region;
+            })
+            .entries(electionData);
+
+        //beräkna för vald region spara object i variable
+
+        var vald;
+        nested_data.forEach(function(m) {
+            if(m.key == mun) {
+                var mu, cal = 0;
+                mu = m.key;
+                m.values.forEach(function(y) {
+                    if(!isNaN(y[electionYear])){
+                        cal += Math.pow(y[electionYear], 2);
+                    }
+                })
+            vald = { reg: mu, value: Math.sqrt(cal) };
+            };
+
+        });
+
+        //beräkna för övriga regioner och jämför med vald
+        //lägg in i en array
+        var simmun = [];
+        nested_data.forEach(function(m) {
+            if(m.key != mun) {
+            var mu, cal = 0;
+            mu = m.key;
+            m.values.forEach(function(y) {
+                if(!isNaN(y[electionYear])){
+                        cal += Math.pow(y[electionYear], 2);
+                    }
+                });
+            simmun.push({reg: mu, value: Math.sqrt(cal)});
+            }
+
+        });
+
+        simmun.forEach(function(m) {
+            if(!isNaN(m.value)){
+                m.value = Math.abs( vald.value - m.value );
+            }
+
+        })
+
+        simmun.sort(function (a, b) {
+            if (a.value > b.value) {
+                return 1;
+            }
+            if (a.value < b.value) {
+                return -1;
+            }
+            // a must be equal to b
+            return 0;
+        });
+
+        var len = simmun.length;
+
+        g.selectAll(".mun").each(function(p) {
+
+            var point = d3.select(this);
+
+            point.style("fill", function(d) {
+
+                if(d.properties.name == vald.reg) {
+                    return "white"
+                }
+
+                for (var i = 0; i < 30; ++i) {
+
+                    var region = simmun[i];
+
+                    if (d.properties.name == region.reg) {
+                        return "green";
+                    }
+                };
+
+                for (var i = len-1; i > (len -30);  --i) {
+
+                    var region = simmun[i];
+                    if (d.properties.name == region.reg) {
+                        return "red";
+                    }
+
+                }
+            })
+        });
+
+    };
+
+
 }
