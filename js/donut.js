@@ -27,12 +27,12 @@ function donut(data) {
         .outerRadius(radius - 10)
         .innerRadius(radius - 70);
 
-    /*    var tip = d3.tip()
+        var tip = d3.tip()
         .attr('class', 'd3-tip')
         .offset([-10,0])
         .html(function(d) {
         return "<span style='color:white'>" + d.data.parti + "<strong>:</strong> <span style='color:orange'>" + d.data.year + "%" +"</span>";
-      }); */
+      }); 
 
     var svg = d3.select("#donut").append("svg")
         .attr("width", width)
@@ -40,7 +40,7 @@ function donut(data) {
         .append("g")
         .attr("transform", "translate(" + width / 3 + "," + height / 2 + ")");
 
-    //     svg.call(tip);
+         svg.call(tip);
 
     var firstMun = "Upplands Väsby";
 
@@ -67,8 +67,8 @@ function donut(data) {
             .each(function(d) {
                 this._current = d;
             })
-            /*          .on('mouseover', tip.show)
-                      .on('mouseout', tip.hide); */
+                      .on('mouseover', tip.show)
+                      .on('mouseout', tip.hide); 
 
         var legend = svg.selectAll('.legend')
             .data(partyArray)
@@ -142,13 +142,16 @@ function donut(data) {
         path.attr("d", arc);
         path.transition().duration(750).attrTween("d", arcTween);
 
-        /*            var tip = d3.tip()
+//Funkar inte
+/*
+                    var tip = d3.tip()
                     .attr('class', 'd3-tip')
                     .offset([-10,0])
                     .html(function(d) {
+                        console.log(d)
                     return "<span style='color:white'>" + d.data.parti + "<strong>:</strong> <span style='color:orange'>" + d.data.year + "%" +"</span>";
-                  }); */
-
+                  }); 
+*/
 
         //path.attr("fill-opacity", 1)
 
@@ -167,7 +170,6 @@ function donut(data) {
             .data(partyArray)
             .enter()
             .append('g')
-            .attr('class', 'legend')
             .attr('transform', function(d, i) {
                 var height = legendRectSize + legendSpacing;
                 var offset = height * color.size / 2;
