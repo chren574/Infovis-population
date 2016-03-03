@@ -27,11 +27,11 @@ function donut(data) {
         .outerRadius(radius - 10)
         .innerRadius(radius - 70);
 
-        var tip = d3.tip()
+    var tip = d3.tip()
         .attr('class', 'd3-tip')
         .offset([-10,0])
         .html(function(d) {
-        return "<span style='color:white'>" + d.data.parti + "<strong>:</strong> <span style='color:orange'>" + d.data.year + "%" +"</span>";
+        return "<span style='color:" + color.get(d.data.parti) + "'>" + d.data.parti + "<strong>:</strong> <span style='color:white'>" + d.data.year + "%" +"</span>";
       }); 
 
     var svg = d3.select("#donut").append("svg")
@@ -76,8 +76,6 @@ function donut(data) {
             .append('g')
             .attr('class', 'legend')
             .attr('transform', function(d, i) {
-                //console.log(d)
-                //console.log(i)
                 var height = legendRectSize + legendSpacing;
                 var offset = height * color.size / 2;
                 var horz = 12 * legendRectSize;

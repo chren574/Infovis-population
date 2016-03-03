@@ -61,6 +61,7 @@ function map(data) {
         mun.enter().insert("path")
             .attr("class", "mun")
             .attr("d", path)
+            /*
             .attr("title", function(d) {
                 var regionString = "";
                 for (var r = 0; r < regiondData.length; ++r) {
@@ -76,6 +77,7 @@ function map(data) {
                 };
                 return regionString;
             })
+*/
             .style("fill", function(d, i) {
                 var index = 0;
                 for (var l = 0; l < colorOfParty.length; ++l) {
@@ -92,13 +94,22 @@ function map(data) {
             .attr("stroke", "black")
 
         // Fungerar inte, css krånglar
-        //tooltip
-        .on("mousemove", function(d) {
-                tooltip.transition()
-                    .duration(200)
-                    .style("opacity", 0.9);
-
+    // Tooltip stuff after this
+        .on("mouseover", function(d) { 
+            tooltip.transition()
+                .duration(500)  
+                .style("opacity", 0);
+            tooltip.transition()
+                .duration(200)  
+                .style("opacity", .9);  
+            tooltip .html(
+                "<span style='color:" + color.get("Moderaterna") + "'>" +
+                 "<strong>" + d.properties.name + "</strong>")
+                .style("left", (d3.event.pageX) + "px")          
+                .style("top", (d3.event.pageY - 28) + "px");
             })
+
+          
             .on("mouseout", function(d) {
                 tooltip.transition()
                     .duration(200)
@@ -106,8 +117,6 @@ function map(data) {
             })
 
         .on("click", function(d) {
-
-            //console.log($('#map').click());
             
                         d3.selectAll(".mun")
                             .style("stroke-width", .1)
@@ -119,16 +128,6 @@ function map(data) {
             $("#searchfield").attr("placeholder", d.properties.name).val("").focus().blur();
 
         })
-
-            .on('mouseover', function(d) {
-                d3.select(this)
-                    .style('stroke', "white");
-            })
-            .on('mouseout', function(d) {
-                d3.selectAll('path')
-                    .style('stroke', "black");
-            });
-
     }
 
     this.colorByYear = function(electionYear) {
