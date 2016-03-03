@@ -15,7 +15,6 @@ function donut(data) {
 
     var legendRectSize = 18;
     var legendSpacing = 2;
-    var color1 = d3.scale.category20b();
 
     var pie = d3.layout.pie()
         .sort(null)

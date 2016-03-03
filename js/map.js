@@ -402,7 +402,7 @@ function map(data) {
         g.selectAll(".mun").each(function(p) {
 
             var point = d3.select(this);
-
+            //OPTIMERA
             point.style("fill", function(d) {
 
                 if (d.properties.name == vald.key) {
