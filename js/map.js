@@ -28,6 +28,7 @@ function map(data) {
         .attr("width", width * scaleDiv)
         .attr("height", height * scaleDiv)
         .style("border", "1px solid black")
+        .append("g")
         .call(zoom);
 
     var path = d3.geo.path()

@@ -37,10 +37,11 @@ function donut(data) {
     var svg = d3.select("#donut").append("svg")
         .attr("width", width)
         .attr("height", height)
+        .style("border", "1px solid black")
         .append("g")
         .attr("transform", "translate(" + width / 3 + "," + height / 2 + ")");
-
-         svg.call(tip);
+        
+        svg.call(tip);
 
     var firstMun = "Upplands Väsby";
 
