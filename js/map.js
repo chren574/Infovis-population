@@ -98,7 +98,7 @@ function map(data) {
                     "<strong>" + d.properties.name + "</strong>" + "<br>" +
                     regArr[0].parti
                 )
-                .style("left", (d3.event.pageX + 10) + "px")
+                .style("left", (d3.event.pageX + 20) + "px")
                 .style("top", (d3.event.pageY - 200) + "px");
         })
 
@@ -110,7 +110,6 @@ function map(data) {
         })
 
         .on("click", function(d) {
-            console.log(d)
             d3.selectAll(".mun")
                 .style("stroke-width", .1)
 
@@ -379,10 +378,10 @@ function map(data) {
                 mu = m.key;
                 m.values.forEach(function(y, i) {
                     if (!isNaN(vald.values[i][electionYear]) || !isNaN(y[electionYear])) {
-                        dif += Math.abs(Math.pow(vald.values[i][electionYear], 2) - Math.pow(y[electionYear], 2));
+                        dif += Math.sqrt(Math.pow(vald.values[i][electionYear] - y[electionYear], 2));
                     }
                 });
-                simmun.push({ reg: mu, value: Math.sqrt(dif) });
+                simmun.push( { reg: mu, value: dif } );
             }
 
         });
