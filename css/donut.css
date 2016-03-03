@@ -1,17 +1,16 @@
 .arc text {
-  font: 10px sans-serif;
-  text-anchor: middle;
+    font: 10px sans-serif;
+    text-anchor: middle;
 }
 
 .arc path {
-  stroke: #fff;
+    stroke: #fff;
 }
 
- .legend {
+.legend {
     font-size: 12px;
-  }
-  rect {
-    stroke-width: 2;
- }
+}
 
- 
+rect {
+    stroke-width: 2;
+}

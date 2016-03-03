@@ -1,7 +1,7 @@
 function donut(data) {
 
     var donutDiv = $("#donut");
-var partyDiv = $("#party");
+    var partyDiv = $("#party");
     var scaleDiv = 1;
 
     var margin = { top: 0, right: 0, bottom: 0, left: 0 },
@@ -29,10 +29,10 @@ var partyDiv = $("#party");
 
     var tip = d3.tip()
         .attr('class', 'd3-tip')
-        .offset([-10,0])
+        .offset([-10, 0])
         .html(function(d) {
-        return "<span style='color:" + color.get(d.data.parti) + "'>" + d.data.parti + "<strong>:</strong> <span style='color:white'>" + d.data.year + "%" +"</span>";
-      }); 
+            return "<span style='color:" + color.get(d.data.parti) + "'>" + d.data.parti + "<strong>:</strong> <span style='color:white'>" + d.data.year + "%" + "</span>";
+        });
 
     var svg = d3.select("#donut").append("svg")
         .attr("width", width)
@@ -40,12 +40,12 @@ var partyDiv = $("#party");
         .style("border", "1px solid black")
         .append("g")
         .attr("transform", "translate(" + width / 3 + "," + height / 2 + ")");
-        
-        svg.call(tip);
+
+    svg.call(tip);
 
     var firstMun = "Upplands Väsby";
 
-    var arr = getMunData(firstMun, "1973");
+    var arr = getMunData(firstMun, "2014");
 
     draw(arr);
 
@@ -68,8 +68,8 @@ var partyDiv = $("#party");
             .each(function(d) {
                 this._current = d;
             })
-                      .on('mouseover', tip.show)
-                      .on('mouseout', tip.hide); 
+            .on('mouseover', tip.show)
+            .on('mouseout', tip.hide);
 
         var legend = svg.selectAll('.legend')
             .data(partyArray)
@@ -141,16 +141,16 @@ var partyDiv = $("#party");
         path.attr("d", arc);
         path.transition().duration(750).attrTween("d", arcTween);
 
-//Funkar inte
-/*
-                    var tip = d3.tip()
-                    .attr('class', 'd3-tip')
-                    .offset([-10,0])
-                    .html(function(d) {
-                        console.log(d)
-                    return "<span style='color:white'>" + d.data.parti + "<strong>:</strong> <span style='color:orange'>" + d.data.year + "%" +"</span>";
-                  }); 
-*/
+        //Funkar inte
+        /*
+                            var tip = d3.tip()
+                            .attr('class', 'd3-tip')
+                            .offset([-10,0])
+                            .html(function(d) {
+                                console.log(d)
+                            return "<span style='color:white'>" + d.data.parti + "<strong>:</strong> <span style='color:orange'>" + d.data.year + "%" +"</span>";
+                          }); 
+        */
 
         //path.attr("fill-opacity", 1)
 

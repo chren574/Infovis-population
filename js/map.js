@@ -2,7 +2,7 @@ function map(data) {
 
     // Global variable
     CURRMUN = "Upplands Väsby";
-var partyDiv = $("#party");
+    var partyDiv = $("#party");
     var scaleDiv = 1;
 
     var zoom = d3.behavior.zoom()
@@ -14,7 +14,7 @@ var partyDiv = $("#party");
     var margin = { top: 0, right: 0, bottom: 0, left: 0 },
         width = mapDiv.width() - margin.right - margin.left,
         height = partyDiv.height() - margin.top - margin.bottom;
-//height = 200;
+    //height = 200;
     //initialize tooltip
     var tooltip = d3.select("body").append("div")
         .attr("class", "tooltip")
@@ -227,23 +227,23 @@ var partyDiv = $("#party");
                 };
                 return opac;
             });
-/*
-            point.attr("title", function(d) {
-                var regionString = "";
-                for (var r = 0; r < regiondData.length; ++r) {
-                    if (regiondData[r].key == d.properties.name) {
-                        regionString = regiondData[r].key;
-                        regiondData[r].values.forEach(function(e) {
-                            if (!isNaN(e[year])) {
-                                regionString = regionString + "\n" + e.parti + ": " + e[year];
-                            }
+            /*
+                        point.attr("title", function(d) {
+                            var regionString = "";
+                            for (var r = 0; r < regiondData.length; ++r) {
+                                if (regiondData[r].key == d.properties.name) {
+                                    regionString = regiondData[r].key;
+                                    regiondData[r].values.forEach(function(e) {
+                                        if (!isNaN(e[year])) {
+                                            regionString = regionString + "\n" + e.parti + ": " + e[year];
+                                        }
+                                    })
+                                }
+                                continue;
+                            };
+                            return regionString;
                         })
-                    }
-                    continue;
-                };
-                return regionString;
-            })
-        */
+                    */
         });
 
     }
@@ -381,7 +381,7 @@ var partyDiv = $("#party");
                         dif += Math.sqrt(Math.pow(vald.values[i][electionYear] - y[electionYear], 2));
                     }
                 });
-                simmun.push( { reg: mu, value: dif } );
+                simmun.push({ reg: mu, value: dif });
             }
 
         });

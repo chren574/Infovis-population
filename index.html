@@ -48,7 +48,9 @@
             <!-- row 2 start -->
             <div class="row vertical-align">
                 <div class="col-xs-5 col-md-3" align="center">
-                    <input type="text" id="currYear" value="2014" align="center" />
+                    Chosen year: <span type="text" id="currYear">2014</span>
+                    </br>
+                    </br>
                     <div id="year"></div>
                     </br>
                     <div class="btn-group-vertical" role="group" style="height:60vh" align="center" id="party">
@@ -219,7 +221,7 @@
 
 
     $('#year').on('slidestop', function(event, ui) {
-
+        $("#currYear").text(ELECTIONYEARSARRAY[ui.value]);
         $("#currYear").val(ELECTIONYEARSARRAY[ui.value]);
 
         var trueVal = $("#year").slider("value");

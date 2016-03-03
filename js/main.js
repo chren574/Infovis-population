@@ -21,7 +21,6 @@ d3.csv("data/Swedish_Election.csv", function(data) {
     map1 = new map(data);
     donut1 = new donut(data);
 
-
     // Array for autocomplete
     var nested_data = d3.nest()
         .key(function(d) {
