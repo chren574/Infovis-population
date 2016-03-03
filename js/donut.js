@@ -1,12 +1,12 @@
 function donut(data) {
 
     var donutDiv = $("#donut");
+var partyDiv = $("#party");
+    var scaleDiv = 1;
 
-    var scaleDiv = 0.85;
-
-    var margin = { top: 20, right: 20, bottom: 20, left: 20 },
+    var margin = { top: 0, right: 0, bottom: 0, left: 0 },
         width = donutDiv.width() - margin.right - margin.left,
-        height = donutDiv.height() - margin.top - margin.bottom;
+        height = partyDiv.height() - margin.top - margin.bottom;
 
     width = width * scaleDiv;
     height = height * scaleDiv;
@@ -79,7 +79,7 @@ function donut(data) {
             .attr('transform', function(d, i) {
                 var height = legendRectSize + legendSpacing;
                 var offset = height * color.size / 2;
-                var horz = 12 * legendRectSize;
+                var horz = 10 * legendRectSize;
                 var vert = i * height - offset;
                 return 'translate(' + horz + ',' + vert + ')';
             });

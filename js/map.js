@@ -2,8 +2,8 @@ function map(data) {
 
     // Global variable
     CURRMUN = "Upplands Väsby";
-
-    var scaleDiv = 0.80;
+var partyDiv = $("#party");
+    var scaleDiv = 1;
 
     var zoom = d3.behavior.zoom()
         .scaleExtent([1, 8])
@@ -11,10 +11,10 @@ function map(data) {
 
     var mapDiv = $("#map");
 
-    var margin = { top: 10, right: 0, bottom: 10, left: 0 },
+    var margin = { top: 0, right: 0, bottom: 0, left: 0 },
         width = mapDiv.width() - margin.right - margin.left,
-        height = mapDiv.height() - margin.top - margin.bottom;
-
+        height = partyDiv.height() - margin.top - margin.bottom;
+//height = 200;
     //initialize tooltip
     var tooltip = d3.select("body").append("div")
         .attr("class", "tooltip")

@@ -45,21 +45,13 @@
                 </nav>
                 <!-- row 1 end -->
             </div>
-            <br>
             <!-- row 2 start -->
-            <div class="row">
+            <div class="row vertical-align">
                 <div class="col-xs-5 col-md-3" align="center">
                     <input type="text" id="currYear" value="2014" align="center" />
                     <div id="year"></div>
-                    <br>
-                    <br>
-                </div>
-                <!-- row 3 end -->
-            </div>
-            <!-- row 3 start -->
-            <div class="row vertical-align">
-                <div class="col-xs-5 col-md-3" align="center">
-                    <div class="btn-group-vertical" role="group" align="center" style="height:80vh;" id="party">
+                    </br>
+                    <div class="btn-group-vertical" role="group" style="height:60vh" align="center" id="party">
                         <button type="button" class="btn btn-default blue active" value="All">Majoritet</button>
                         <button type="button" class="btn btn-mod" value="Moderaterna">Moderaterna</button>
                         <button type="button" class="btn btn-cent" value="Centerpartiet">Centerpartiet</button>
@@ -72,13 +64,13 @@
                         <button type="button" class="btn btn-ovr" value="övriga partier">Övriga partier</button>
                     </div>
                 </div>
-                <div class="col-xs-7 col-md-3" align="center">
-                    <div id="map" style="height: 80vh;width:50vh"></div>
+                <div class="col-xs-7 col-md-3">
+                    <div id="map"></div>
                 </div>
-                <div class="col-xs-12 col-md-6" align="right">
-                    <div id="donut" style="height:80vh;"></div>
+                <div class="col-xs-12 col-md-6">
+                    <div id="donut"></div>
                 </div>
-                <!-- row 3 end -->
+                <!-- row 2 end -->
             </div>
             <!-- container end -->
         </div>
@@ -188,6 +180,11 @@
 
         //Get
         var str = $('#searchfield').val();
+        if (str.trim() || str == "Municipality") {
+            var str = $('#searchfield').val();
+        } else {
+            var str = $("#searchfield").attr("placeholder");
+        }
 
         //Set
         $('#searchfield').val('');
