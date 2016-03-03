@@ -40,7 +40,7 @@ function map(data) {
     d3.json("data/sweden_mun.topojson", function(error, sweden) {
 
         var mun = topojson.feature(sweden, sweden.objects.swe_mun).features;
-        
+
         draw(mun, data);
     });
 
@@ -52,7 +52,7 @@ function map(data) {
             })
             .entries(electionData);
         self.electionData = electionData;
-        //var year = document.getElementById("year").value;
+
         var year = 1973;
         //var arrayIndex = $( "#year" ).slider( "value" );  
 
@@ -62,24 +62,8 @@ function map(data) {
         mun.enter().insert("path")
             .attr("class", "mun")
             .attr("d", path)
-            /*
-            .attr("title", function(d) {
-                var regionString = "";
-                for (var r = 0; r < regiondData.length; ++r) {
-                    if (regiondData[r].key == d.properties.name) {
-                        regionString = regiondData[r].key;
-                        regiondData[r].values.forEach(function(e) {
-                            if (!isNaN(e[year])) {
-                                regionString = regionString + "\n" + e.parti + ": " + e[year];
-                            }
-                        })
-                    }
-                    continue;
-                };
-                return regionString;
-            })
-*/
-            .style("fill", function(d, i) {
+
+        .style("fill", function(d, i) {
                 var index = 0;
                 for (var l = 0; l < colorOfParty.length; ++l) {
                     // Compare region-name
@@ -94,37 +78,45 @@ function map(data) {
             .attr("stroke-width", 0.1)
             .attr("stroke", "black")
 
-        // Fungerar inte, css krånglar
-    // Tooltip stuff after this
-        .on("mouseover", function(d) { 
-            tooltip.transition()
-                .duration(500)  
-                .style("opacity", 0);
-            tooltip.transition()
-                .duration(200)  
-                .style("opacity", .9);  
-            tooltip .html(
-                "<span style='color:" + color.get("Moderaterna") + "'>" +
-                 "<strong>" + d.properties.name + "</strong>")
-                .style("left", (d3.event.pageX) + "px")          
-                .style("top", (d3.event.pageY - 28) + "px");
-            })
 
-          
-            .on("mouseout", function(d) {
-                tooltip.transition()
-                    .duration(200)
-                    .style("opacity", 0);
+        .on("mouseover", function(d) {
+            for (var r in regiondData) {
+                if (d.properties.name == regiondData[r].key) {
+                    var regObj = regiondData[r];
+                    break;
+                }
+            };
+            var regArr = [];
+            regObj.values.forEach(function(r) {
+                regArr.push({ parti: r.parti, procent: r[year] });
             })
+            tooltip.transition()
+                .duration(200)
+                .style("opacity", .9);
+            tooltip.html(
+                    "<span style='color:" + color.get("Moderaterna") + "'>" +
+                    "<strong>" + d.properties.name + "</strong>" + "<br>" +
+                    regArr[0].parti
+                )
+                .style("left", (d3.event.pageX + 10) + "px")
+                .style("top", (d3.event.pageY - 200) + "px");
+        })
+
+
+        .on("mouseout", function(d) {
+            tooltip.transition()
+                .duration(200)
+                .style("opacity", 0);
+        })
 
         .on("click", function(d) {
-            
-                        d3.selectAll(".mun")
-                            .style("stroke-width", .1)
+            console.log(d)
+            d3.selectAll(".mun")
+                .style("stroke-width", .1)
 
-                        d3.select(this)
-                            .style("stroke-width", 1)
-            
+            d3.select(this)
+                .style("stroke-width", 1)
+
             selectedMun(d.properties.name);
             $("#searchfield").attr("placeholder", d.properties.name).val("").focus().blur();
 
@@ -133,8 +125,6 @@ function map(data) {
 
     this.colorByYear = function(electionYear) {
 
-        //var year = document.getElementById("year").value;
-        //console.log(electionYear);
         year = electionYear;
 
         donut1.drawMun(currentMun(CURRMUN), electionYear);
@@ -238,6 +228,7 @@ function map(data) {
                 };
                 return opac;
             });
+/*
             point.attr("title", function(d) {
                 var regionString = "";
                 for (var r = 0; r < regiondData.length; ++r) {
@@ -253,6 +244,7 @@ function map(data) {
                 };
                 return regionString;
             })
+        */
         });
 
     }
@@ -298,14 +290,10 @@ function map(data) {
     }
 
     function compare(a, b) {
-        //var year = document.getElementById("year").value;
-        //var year = $('#year').slider('getValue')
 
-        var trueVal = $( "#year" ).slider( "value" );  
-        //var closestYear = closest(electionYearsArray, sliderYear);
+        var trueVal = $("#year").slider("value");
         var year = ELECTIONYEARSARRAY[trueVal];
-
-        var year = closest(ELECTIONYEARSARRAY, year);
+        year = closest(ELECTIONYEARSARRAY, year);
 
         if (isNaN(a[year]) && isNaN(b[year]))
             return 0;
@@ -339,7 +327,7 @@ function map(data) {
     // Sends the name of the mun to other .js-files
     function selectedMun(mun) {
 
-        var trueVal = $( "#year" ).slider( "value" );  
+        var trueVal = $("#year").slider("value");
         var year = ELECTIONYEARSARRAY[trueVal];
 
         var electionYear = closest(ELECTIONYEARSARRAY, year);
@@ -375,47 +363,31 @@ function map(data) {
             .entries(electionData);
 
         //beräkna för vald region spara object i variable
-
         var vald;
         nested_data.forEach(function(m) {
-            if(m.key == mun) {
-                var mu, cal = 0;
-                mu = m.key;
-                m.values.forEach(function(y) {
-                    if(!isNaN(y[electionYear])){
-                        cal += Math.pow(y[electionYear], 2);
-                    }
-                })
-            vald = { reg: mu, value: Math.sqrt(cal) };
+            if (m.key == mun) {
+                vald = m;
             };
-
         });
 
         //beräkna för övriga regioner och jämför med vald
         //lägg in i en array
         var simmun = [];
         nested_data.forEach(function(m) {
-            if(m.key != mun) {
-            var mu, cal = 0;
-            mu = m.key;
-            m.values.forEach(function(y) {
-                if(!isNaN(y[electionYear])){
-                        cal += Math.pow(y[electionYear], 2);
+            if (m.key != mun) {
+                var mu, dif = 0;
+                mu = m.key;
+                m.values.forEach(function(y, i) {
+                    if (!isNaN(vald.values[i][electionYear]) || !isNaN(y[electionYear])) {
+                        dif += Math.abs(Math.pow(vald.values[i][electionYear], 2) - Math.pow(y[electionYear], 2));
                     }
                 });
-            simmun.push({reg: mu, value: Math.sqrt(cal)});
+                simmun.push({ reg: mu, value: Math.sqrt(dif) });
             }
 
         });
 
-        simmun.forEach(function(m) {
-            if(!isNaN(m.value)){
-                m.value = Math.abs( vald.value - m.value );
-            }
-
-        })
-
-        simmun.sort(function (a, b) {
+        simmun.sort(function(a, b) {
             if (a.value > b.value) {
                 return 1;
             }
@@ -434,8 +406,8 @@ function map(data) {
 
             point.style("fill", function(d) {
 
-                if(d.properties.name == vald.reg) {
-                    return "white"
+                if (d.properties.name == vald.key) {
+                    return "orange"
                 }
 
                 for (var i = 0; i < 30; ++i) {
@@ -447,7 +419,7 @@ function map(data) {
                     }
                 };
 
-                for (var i = len-1; i > (len -30);  --i) {
+                for (var i = len - 1; i > (len - 30); --i) {
 
                     var region = simmun[i];
                     if (d.properties.name == region.reg) {
