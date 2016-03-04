@@ -33,6 +33,7 @@ function map(data) {
         .projection(projection);
 
     g = svg.append("g");
+    l = svg.append("g");
     svg.call(tip);
 
     // load data and draw the map
@@ -143,7 +144,7 @@ function map(data) {
 
         });
 
-        var legend = g.selectAll(".legend")
+        var legend = l.selectAll(".legend")
             .data(miningArray)
             .enter()
             .append("g")
@@ -456,9 +457,9 @@ function map(data) {
             point.style("fill-opacity", 1)
         });
 
-        g.selectAll("rect.legendRect")
+        l.selectAll("rect.legendRect")
             .style("opacity", 1);
-        g.selectAll("text.legendText")
+        l.selectAll("text.legendText")
             .style("opacity", 1);
 
 
