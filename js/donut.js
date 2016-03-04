@@ -28,10 +28,7 @@ function donut(data) {
 
     var tip = d3.tip()
         .attr('class', 'd3-tip')
-        .offset([-10, 0])
-        .html(function(d) {
-            return "<span style='color:" + color.get(d.data.parti) + "'>" + d.data.parti + "<strong>:</strong> <span style='color:white'>" + d.data.year + "%" + "</span>";
-        });
+        .offset([-10, 0]);
 
     var svg = d3.select("#donut").append("svg")
         .attr("width", width)
@@ -67,7 +64,29 @@ function donut(data) {
             .each(function(d) {
                 this._current = d;
             })
-            .on('mouseover', tip.show)
+            .on('mouseover', function(d) {
+                var year = ELECTIONYEARSARRAY[$("#year").slider("value")];
+                var mun;
+                if($("#searchfield").attr("placeholder") == "Municipality") {
+                    mun = "Upplands Väsby";
+                } else {
+                    mun = $("#searchfield").attr("placeholder");
+                }
+
+                var munArray = getMunData(mun, year);
+
+                var party;
+                munArray.forEach(function(e) {
+                    if(d.data.parti == e.parti) {
+                        party = e;
+                    }
+                });
+
+                tip.html(
+                "<span style='color:" + color.get(party.parti) + "'>" + party.parti + "<strong>:</strong> <span style='color:white'>" + party.year + "%" + "</span>"
+                );
+                tip.show();
+            })
             .on('mouseout', tip.hide);
 
         var legend = svg.selectAll('.legend')
@@ -98,7 +117,31 @@ function donut(data) {
             .attr('y', legendRectSize - legendSpacing)
             .text(function(d) {
                 return d;
-            });;
+            });
+
+        var legendMun = svg.selectAll('.legendname')
+        .data([{}])
+        .enter()
+        .append('g')
+        .attr('transform', 'translate(' + 0 + ',' + 0 + ')');
+
+        legendMun.append('text')
+            .attr('class', 'legendReg')
+            .transition()
+            .duration(500)
+            .style("opacity", 0)
+            .transition().duration(200)
+            .style("opacity", 1)
+            .attr("text-anchor", "middle")
+            .text(function(d) {
+                var mun;
+                if($("#searchfield").attr("placeholder") == "Municipality") {
+                    mun = "Upplands Väsby";
+                } else {
+                    mun = $("#searchfield").attr("placeholder");
+                }
+                return mun;
+        });
 
     }
 
@@ -141,32 +184,16 @@ function donut(data) {
         path.attr("d", arc);
         path.transition().duration(750).attrTween("d", arcTween);
 
-        //Funkar inte
-        /*
-                            var tip = d3.tip()
-                            .attr('class', 'd3-tip')
-                            .offset([-10,0])
-                            .html(function(d) {
-                                console.log(d)
-                            return "<span style='color:white'>" + d.data.parti + "<strong>:</strong> <span style='color:orange'>" + d.data.year + "%" +"</span>";
-                          }); 
-        */
 
-        //path.attr("fill-opacity", 1)
+
 
         svg.selectAll(".legend").remove();
 
+
         var data_arr = getMunData(mun, electionYear);
 
-        var partyArray = [];
-        data_arr.forEach(function(d) {
-            if (!isNaN(d.year)) {
-                partyArray.push(d.parti);
-            }
-        });
-
         var legend = svg.selectAll('.legend')
-            .data(partyArray)
+            .data(data_arr)
             .enter()
             .append('g')
             .attr('class', 'legend')
@@ -178,23 +205,34 @@ function donut(data) {
                 var vert = i * height - offset;
                 return 'translate(' + horz + ',' + vert + ')';
             });
+        
+      
 
         legend.append('rect')
             .attr('width', legendRectSize)
             .attr('height', legendRectSize)
             .style('fill', function(d) {
-                return color.get(d);
+                return color.get(d.parti);
             })
             .style('stroke', function(d) {
-                return color.get(d);
+                return color.get(d.parti);
             });
 
         legend.append('text')
             .attr('x', legendRectSize + legendSpacing)
             .attr('y', legendRectSize - legendSpacing)
             .text(function(d) {
-                return d;
+                return d.parti;
             });
+
+
+        d3.selectAll('text.legendReg')
+            .transition()
+            .duration(200)
+            .style("opacity", 0)
+            .transition().duration(200)
+            .style("opacity", 1)
+            .text(mun)
 
     }
 

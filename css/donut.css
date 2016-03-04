@@ -11,6 +11,10 @@
     font-size: 12px;
 }
 
+.legendname {
+    font-size: 20px;
+}
+
 .rect {
     stroke-width: 2;
 }
