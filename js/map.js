@@ -14,11 +14,10 @@ function map(data) {
     var margin = { top: 0, right: 0, bottom: 0, left: 0 },
         width = mapDiv.width() - margin.right - margin.left,
         height = partyDiv.height() - margin.top - margin.bottom;
-    //height = 200;
-    //initialize tooltip
-    var tooltip = d3.select("body").append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0);
+
+    var tip = d3.tip()
+	    .attr('class', 'd3-map-tip')
+	    .offset([2,0]);
 
     var projection = d3.geo.mercator()
         .center([40, 62])
@@ -35,6 +34,7 @@ function map(data) {
         .projection(projection);
 
     g = svg.append("g");
+    svg.call(tip);
 
     // load data and draw the map
     d3.json("data/sweden_mun.topojson", function(error, sweden) {
@@ -53,8 +53,7 @@ function map(data) {
             .entries(electionData);
         self.electionData = electionData;
 
-        var year = 1973;
-        //var arrayIndex = $( "#year" ).slider( "value" );  
+        var year = 1973; 
 
         var mun = g.selectAll(".swe_mun").data(mun);
         var colorOfParty = partyColor(electionData, year);
@@ -80,6 +79,10 @@ function map(data) {
 
 
         .on("mouseover", function(d) {
+
+        	var trueVal = $("#year").slider("value");
+        	var year = ELECTIONYEARSARRAY[trueVal];
+
             for (var r in regiondData) {
                 if (d.properties.name == regiondData[r].key) {
                     var regObj = regiondData[r];
@@ -89,24 +92,25 @@ function map(data) {
             var regArr = [];
             regObj.values.forEach(function(r) {
                 regArr.push({ parti: r.parti, procent: r[year] });
-            })
-            tooltip.transition()
-                .duration(200)
-                .style("opacity", .9);
-            tooltip.html(
-                    "<span style='color:" + color.get("Moderaterna") + "'>" +
-                    "<strong>" + d.properties.name + "</strong>" + "<br>" +
-                    regArr[0].parti
-                )
-                .style("left", (d3.event.pageX + 20) + "px")
-                .style("top", (d3.event.pageY - 200) + "px");
-        })
+            });            
 
+            tip.html(function(x) {
+
+            	var res = "<span style='color:white'>" + "<h3> <b>" + d.properties.name + "</b> </h3>";
+
+            	for(var i = 0; i < regArr.length; ++i){
+            		res += "<p>" + "<span style='color:" + color.get(regArr[i].parti) + "'>" + regArr[i].parti + "<span style='color:white'>" + " : "
+            		+ regArr[i].procent + " %" + "</p>";
+            	}
+
+            	res += "</span>";
+            	return res;
+        });
+            tip.show();
+        }) 
 
         .on("mouseout", function(d) {
-            tooltip.transition()
-                .duration(200)
-                .style("opacity", 0);
+        	tip.hide();
         })
 
         .on("click", function(d) {
@@ -145,7 +149,6 @@ function map(data) {
                         break;
                     }
                 };
-                //console.log(index)
                 if (!isNaN(index)) {
                     return color.get(colorOfParty[index].par);
                 } else {
@@ -179,7 +182,7 @@ function map(data) {
 
         // TEMP
         if (!party) {
-            var party = CURRMUN
+            var party = CURRMUN;
         };
 
         var nested_data = d3.nest()
@@ -227,23 +230,6 @@ function map(data) {
                 };
                 return opac;
             });
-            /*
-                        point.attr("title", function(d) {
-                            var regionString = "";
-                            for (var r = 0; r < regiondData.length; ++r) {
-                                if (regiondData[r].key == d.properties.name) {
-                                    regionString = regiondData[r].key;
-                                    regiondData[r].values.forEach(function(e) {
-                                        if (!isNaN(e[year])) {
-                                            regionString = regionString + "\n" + e.parti + ": " + e[year];
-                                        }
-                                    })
-                                }
-                                continue;
-                            };
-                            return regionString;
-                        })
-                    */
         });
 
     }
@@ -254,8 +240,6 @@ function map(data) {
             .style("stroke-width", function(b) {
                 return (b.properties.name == mun) ? 1 : 0.1;
             });
-
-
     };
 
     function currentMun(mun) {
@@ -266,7 +250,6 @@ function map(data) {
         } else {
             return CURRMUN;
         }
-
     }
 
     function partyColor(electionData, year) {
@@ -320,7 +303,6 @@ function map(data) {
 
         zoom.translate(t);
         g.style("stroke-width", 1 / s).attr("transform", "translate(" + t + ")scale(" + s + ")");
-
     }
 
     // Sends the name of the mun to other .js-files
@@ -383,7 +365,6 @@ function map(data) {
                 });
                 simmun.push({ reg: mu, value: dif });
             }
-
         });
 
         simmun.sort(function(a, b) {
@@ -404,13 +385,11 @@ function map(data) {
             var point = d3.select(this);
             //OPTIMERA
             point.style("fill", function(d) {
-
                 if (d.properties.name == vald.key) {
                     return "orange"
                 }
 
                 for (var i = 0; i < 30; ++i) {
-
                     var region = simmun[i];
 
                     if (d.properties.name == region.reg) {
@@ -424,12 +403,8 @@ function map(data) {
                     if (d.properties.name == region.reg) {
                         return "red";
                     }
-
                 }
             })
         });
-
     };
-
-
 }
