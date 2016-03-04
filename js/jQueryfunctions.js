@@ -125,7 +125,8 @@ $("#mining").click(function() {
 
 
 $('#year').on('slidestop', function(event, ui) {
-    $("#currYear").text(ELECTIONYEARSARRAY[ui.value]);
+    var str = ELECTIONYEARSARRAY[ui.value].toString();
+    $("#currYear").html(str.bold());
     $("#currYear").val(ELECTIONYEARSARRAY[ui.value]);
 
     var trueVal = $("#year").slider("value");
