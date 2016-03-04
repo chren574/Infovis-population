@@ -98,7 +98,8 @@ function donut(data) {
             .attr('y', legendRectSize - legendSpacing)
             .text(function(d) {
                 return d;
-            });
+            });;
+
     }
 
     function getMunData(mun, electionYear) {
@@ -168,7 +169,9 @@ function donut(data) {
             .data(partyArray)
             .enter()
             .append('g')
-            .attr('transform', function(d, i) {
+            .attr('class', 'legend')
+
+        .attr('transform', function(d, i) {
                 var height = legendRectSize + legendSpacing;
                 var offset = height * color.size / 2;
                 var horz = 12 * legendRectSize;
