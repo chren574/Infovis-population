@@ -29,17 +29,15 @@ $(function() {
         if (event.keyCode == SPACE) {
             $("#searchMun").trigger("click");
             return false;
-         }
+        }
     });
 });
 
 
-var submitSeachMun = $("#searchMun").click(function() {
+$("#searchMun").click(function() {
 
     var trueVal = $("#year").slider("value");
-    var sliderYear = ELECTIONYEARSARRAY[trueVal];
-
-    var closestYear = closest(ELECTIONYEARSARRAY, sliderYear);
+    var year = ELECTIONYEARSARRAY[trueVal];
 
     //Get
     var str = $('#searchfield').val();
@@ -67,7 +65,7 @@ var submitSeachMun = $("#searchMun").click(function() {
     var validReg = validateRegion(formatString);
 
     if (validReg) {
-        donut1.drawMun(formatString, closestYear);
+        donut1.drawMun(formatString, year);
         map1.munBorder(formatString);
         $("#searchfield").attr("placeholder", formatString).val("").focus().blur();
     } else {
@@ -80,9 +78,7 @@ var submitSeachMun = $("#searchMun").click(function() {
 $("#mining").click(function() {
 
     var trueVal = $("#year").slider("value");
-    var sliderYear = ELECTIONYEARSARRAY[trueVal];
-
-    var closestYear = closest(ELECTIONYEARSARRAY, sliderYear);
+    var year = ELECTIONYEARSARRAY[trueVal];
 
     //Get
     var str = $('#searchfield').val();
@@ -115,7 +111,7 @@ $("#mining").click(function() {
     var validReg = validateRegion(formatString);
 
     if (validReg) {
-        map1.regionsimilarities(closestYear, formatString);
+        map1.regionsimilarities(year, formatString);
         $("#searchfield").attr("placeholder", formatString).val("").focus().blur();
     } else {
         $("#searchfield").attr("placeholder", "Not a region").val("").focus().blur();
@@ -125,28 +121,26 @@ $("#mining").click(function() {
 
 
 $('#year').on('slidestop', function(event, ui) {
+
     var str = ELECTIONYEARSARRAY[ui.value].toString();
     $("#currYear").html(str.bold());
     $("#currYear").val(ELECTIONYEARSARRAY[ui.value]);
 
-    var trueVal = $("#year").slider("value");
-    var sliderYear = ELECTIONYEARSARRAY[trueVal];
+    var year = ELECTIONYEARSARRAY[ui.value];
 
-    var closestYear = closest(ELECTIONYEARSARRAY, sliderYear);
-
-    if (closestYear < 1998) {
+    if (year < 1998) {
         $('.btn-sve').prop('disabled', true);
     } else {
         $('.btn-sve').prop('disabled', false);
     }
 
-    if (closestYear < 1982) {
+    if (year < 1982) {
         $('.btn-mil').prop('disabled', true);
     } else {
         $('.btn-mil').prop('disabled', false);
     }
 
-    if (closestYear == 1988) {
+    if (year == 1988) {
         $('.btn-krist').prop('disabled', true);
     } else {
         $('.btn-krist').prop('disabled', false);
@@ -155,29 +149,63 @@ $('#year').on('slidestop', function(event, ui) {
     var party = $('#party button.active').val();
 
     if (party == "All") {
-        map1.colorByYear(closestYear);
+        map1.colorByYear(year);
     } else {
-        map1.colorByParty(closestYear, party);
+        map1.colorByParty(year, party);
     }
 
 });
+
+
+$('#year').on('slide', function(event, ui) {
+
+    $("#currYear").text(ELECTIONYEARSARRAY[ui.value]);
+    $("#currYear").val(ELECTIONYEARSARRAY[ui.value]);
+
+    var year = ELECTIONYEARSARRAY[ui.value];
+
+    if (year < 1998) {
+        $('.btn-sve').prop('disabled', true);
+    } else {
+        $('.btn-sve').prop('disabled', false);
+    }
+
+    if (year < 1982) {
+        $('.btn-mil').prop('disabled', true);
+    } else {
+        $('.btn-mil').prop('disabled', false);
+    }
+
+    if (year == 1988) {
+        $('.btn-krist').prop('disabled', true);
+    } else {
+        $('.btn-krist').prop('disabled', false);
+    }
+
+    var party = $('#party button.active').val();
+
+    if (party == "All") {
+        map1.colorByYear(year);
+    } else {
+        map1.colorByParty(year, party);
+    }
+
+});
+
 
 $("#party > .btn").on("click", function() {
 
     $(this).addClass("active").siblings().removeClass("active");
 
     var trueVal = $("#year").slider("value");
-    var sliderYear = ELECTIONYEARSARRAY[trueVal];
-
-    //var sliderYear = $('#year').slider('getValue');
-    var closestYear = closest(ELECTIONYEARSARRAY, sliderYear);
+    var year = ELECTIONYEARSARRAY[trueVal];
 
     var party = $('#party button.active').val();
 
     if (party == "All") {
-        map1.colorByYear(closestYear);
+        map1.colorByYear(year);
     } else {
-        map1.colorByParty(closestYear, party);
+        map1.colorByParty(year, party);
     }
 
 });
