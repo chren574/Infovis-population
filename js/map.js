@@ -121,8 +121,25 @@ function map(data) {
             d3.select(this)
                 .style("stroke-width", 1)
 
-            selectedMun(d.properties.name);
-            $("#searchfield").attr("placeholder", d.properties.name).val("").focus().blur();
+            var totalProcent = 0;
+            for (var r in regiondData) {
+                if (d.properties.name == regiondData[r].key) {
+                    var regObj = regiondData[r];
+                    regObj.values.forEach(function(e) {
+                        if (!isNaN(e[ELECTIONYEARSARRAY[$("#year").slider("value")]])) {
+                            totalProcent += e[ELECTIONYEARSARRAY[$("#year").slider("value")]];
+                        }
+                    })
+                    break;
+                }
+            };
+
+            if (totalProcent) {
+                selectedMun(d.properties.name);
+                $("#searchfield").attr("placeholder", d.properties.name).val("").focus().blur();
+            } else {
+                $("#searchfield").attr("placeholder", d.properties.name + ": saknas data").val("").focus().blur();
+            }
 
         });
 

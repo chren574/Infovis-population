@@ -181,7 +181,6 @@ function donut(data) {
         path.attr("d", arc);
         path.transition().duration(750).attrTween("d", arcTween);
 
-
         svg.selectAll(".legendParty").remove();
 
         filteredData = filteredData.filter(isYearNaN);
