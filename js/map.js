@@ -182,9 +182,9 @@ function map(data) {
 
     this.colorByYear = function(electionYear) {
 
-        g.selectAll("text.legendText")
+        l.selectAll("text.legendText")
             .style("opacity", 0);
-        g.selectAll("rect.legendRect")
+        l.selectAll("rect.legendRect")
             .style("opacity", 0);
 
         year = electionYear;
@@ -242,9 +242,9 @@ function map(data) {
 
     this.colorByParty = function(electionYear, party) {
 
-        g.selectAll("text.legendText")
+        l.selectAll("text.legendText")
             .style("opacity", 0);
-        g.selectAll("rect.legendRect")
+        l.selectAll("rect.legendRect")
             .style("opacity", 0);
 
         year = electionYear;
