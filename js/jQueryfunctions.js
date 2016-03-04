@@ -23,10 +23,18 @@ $(function() {
         value: 2014,
     });
 
+    var SPACE = 13;
+
+    $("#searchfield").keydown(function(event) {
+        if (event.keyCode == SPACE) {
+            $("#searchMun").trigger("click");
+            return false;
+         }
+    });
 });
 
 
-$("#searchMun").click(function() {
+var submitSeachMun = $("#searchMun").click(function() {
 
     var trueVal = $("#year").slider("value");
     var sliderYear = ELECTIONYEARSARRAY[trueVal];
