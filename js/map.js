@@ -14,7 +14,7 @@ function map(data) {
     var margin = { top: 0, right: 0, bottom: 0, left: 0 },
         width = mapDiv.width() - margin.right - margin.left,
         height = partyDiv.height() - margin.top - margin.bottom;
-    //height = 200;
+
     //initialize tooltip
     var tooltip = d3.select("body").append("div")
         .attr("class", "tooltip")
@@ -53,8 +53,8 @@ function map(data) {
             .entries(electionData);
         self.electionData = electionData;
 
-        var year = 1973;
-        //var arrayIndex = $( "#year" ).slider( "value" );  
+        var trueVal = $("#year").slider("value");
+        var year = ELECTIONYEARSARRAY[trueVal];
 
         var mun = g.selectAll(".swe_mun").data(mun);
         var colorOfParty = partyColor(electionData, year);
@@ -126,7 +126,7 @@ function map(data) {
 
         year = electionYear;
 
-        donut1.drawMun(currentMun(CURRMUN), electionYear);
+        donut1.drawMun(currentMun(CURRMUN), year);
 
         var colorOfParty = partyColor(electionData, year);
 
@@ -145,7 +145,6 @@ function map(data) {
                         break;
                     }
                 };
-                //console.log(index)
                 if (!isNaN(index)) {
                     return color.get(colorOfParty[index].par);
                 } else {
@@ -286,26 +285,22 @@ function map(data) {
             colorOfParty.push({ reg: d.values[0].region, par: d.values[0].parti });
         });
         return colorOfParty;
-    }
 
-    function compare(a, b) {
+        function compare(a, b) {
 
-        var trueVal = $("#year").slider("value");
-        var year = ELECTIONYEARSARRAY[trueVal];
-        year = closest(ELECTIONYEARSARRAY, year);
-
-        if (isNaN(a[year]) && isNaN(b[year]))
-            return 0;
-        else if (isNaN(a[year]) && !(isNaN(b[year])))
-            return 1;
-        else if (!(isNaN(a[year])) && isNaN(b[year]))
-            return -1;
-        else if (a[year] < b[year])
-            return 1;
-        else if (a[year] > b[year])
-            return -1;
-        else
-            return 0;
+            if (isNaN(a[year]) && isNaN(b[year]))
+                return 0;
+            else if (isNaN(a[year]) && !(isNaN(b[year])))
+                return 1;
+            else if (!(isNaN(a[year])) && isNaN(b[year]))
+                return -1;
+            else if (a[year] < b[year])
+                return 1;
+            else if (a[year] > b[year])
+                return -1;
+            else
+                return 0;
+        }
     }
 
     function getYear(year) {
@@ -329,9 +324,9 @@ function map(data) {
         var trueVal = $("#year").slider("value");
         var year = ELECTIONYEARSARRAY[trueVal];
 
-        var electionYear = closest(ELECTIONYEARSARRAY, year);
+        //var electionYear = closest(ELECTIONYEARSARRAY, year);
 
-        donut1.drawMun(currentMun(mun), electionYear);
+        donut1.drawMun(currentMun(mun), year);
     }
 
     // Finds the closest value in an array
@@ -427,6 +422,7 @@ function map(data) {
 
                 }
             })
+            point.style("fill-opacity", 1)
         });
 
     };

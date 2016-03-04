@@ -35,8 +35,6 @@ d3.csv("data/Swedish_Election.csv", function(data) {
         REGIONARRAY.push(d.values[0].region);
     });
 
-    //console.log(REGIONARRAY);
-
 });
 
 
@@ -68,20 +66,4 @@ this.validateRegion = function(inputString) {
 
     return valid;
 
-};
-
-
-// Finds the closest value in an array
-this.closest = function(array, num) {
-    var i = 0;
-    var minDiff = 1000;
-    var ans;
-    for (i in array) {
-        var m = Math.abs(num - array[i]);
-        if (m < minDiff) {
-            minDiff = m;
-            ans = array[i];
-        }
-    }
-    return ans;
 };

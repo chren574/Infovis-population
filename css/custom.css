@@ -1,19 +1,19 @@
 /* Buttons */
-.btn-default{
-  font-weight: bold;
-}
 
+.btn-default {
+    font-weight: bold;
+}
 
 .btn-mod {
     /*color: #333333;*/
-   /* background-color: #52BDEC; */
+    /* background-color: #52BDEC; */
     background-color: blue;
     border-color: #cccccc;
     font-weight: bold;
 }
 
 .btn-cent {
-        /*color: #333333;*/
+    /*color: #333333;*/
     color: black;
     background-color: #016A3A;
     border-color: #cccccc;
@@ -21,7 +21,7 @@
 }
 
 .btn-folk {
-        /*color: #333333;*/
+    /*color: #333333;*/
     color: black;
     background-color: #52BDEC;
     border-color: #cccccc;
@@ -29,7 +29,7 @@
 }
 
 .btn-krist {
-        /*color: #333333;*/
+    /*color: #333333;*/
     color: black;
     background-color: #231977;
     border-color: #cccccc;
@@ -37,7 +37,7 @@
 }
 
 .btn-mil {
-        /*color: #333333;*/
+    /*color: #333333;*/
     color: black;
     background-color: #53A045;
     border-color: #cccccc;
@@ -45,7 +45,7 @@
 }
 
 .btn-soc {
-        /*color: #333333;*/
+    /*color: #333333;*/
     color: black;
     background-color: #ED1B34;
     border-color: #cccccc;
@@ -53,7 +53,7 @@
 }
 
 .btn-van {
-        /*color: #333333;*/
+    /*color: #333333;*/
     color: black;
     background-color: #DA291C;
     border-color: #cccccc;
@@ -61,7 +61,7 @@
 }
 
 .btn-sve {
-        /*color: #333333;*/
+    /*color: #333333;*/
     color: black;
     background-color: #DDDD00;
     border-color: #cccccc;
@@ -69,40 +69,45 @@
 }
 
 .btn-ovr {
-            /*color: #333333;*/
+    /*color: #333333;*/
     color: black;
     background-color: gray;
     border-color: #cccccc;
     font-weight: bold;
 }
 
+
 /* Tooltip on hover */
 
 .d3-tip {
-  line-height: 1;
-  font-weight: bold;
-  padding: 12px;
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  border-radius: 2px;
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
 }
+
 
 /* Creates a small triangle extender for the tooltip */
+
 .d3-tip:after {
-  box-sizing: border-box;
-  display: inline;
-  font-size: 10px;
-  width: 100%;
-  line-height: 1;
-  color: rgba(0, 0, 0, 0.8);
-  content: "\25BC";
-  position: absolute;
-  text-align: center;
+    box-sizing: border-box;
+    display: inline;
+    font-size: 10px;
+    width: 100%;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.8);
+    content: "\25BC";
+    position: absolute;
+    text-align: center;
 }
 
+
 /* Style northward tooltips differently */
+
 .d3-tip.n:after {
-  margin: -1px 0 0 0;
-  top: 100%;
-  left: 0;
+    margin: -1px 0 0 0;
+    top: 100%;
+    left: 0;
 }
