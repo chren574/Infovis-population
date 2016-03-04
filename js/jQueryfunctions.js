@@ -176,7 +176,7 @@ $('#year').on('slide', function(event, ui) {
         $('.btn-mil').prop('disabled', false);
     }
 
-    if (year == 1988) {
+    if (year == 1985) {
         $('.btn-krist').prop('disabled', true);
     } else {
         $('.btn-krist').prop('disabled', false);
