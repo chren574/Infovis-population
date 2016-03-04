@@ -2,16 +2,12 @@ function donut(data) {
 
     var donutDiv = $("#donut");
     var partyDiv = $("#party");
-    var scaleDiv = 1;
 
     var margin = { top: 0, right: 0, bottom: 0, left: 0 },
         width = donutDiv.width() - margin.right - margin.left,
         height = partyDiv.height() - margin.top - margin.bottom;
 
-    width = width * scaleDiv;
-    height = height * scaleDiv;
-
-    var radius = Math.min(width, height) / 3;
+    var radius = Math.min(width, height * 1.2) / 3;
 
     var legendRectSize = 18;
     var legendSpacing = 2;
@@ -54,6 +50,7 @@ function donut(data) {
             }
         });
 
+
         path = svg.datum(data_arr).selectAll("path")
             .data(pie)
             .enter().append("path")
@@ -67,7 +64,7 @@ function donut(data) {
             .on('mouseover', function(d) {
                 var year = ELECTIONYEARSARRAY[$("#year").slider("value")];
                 var mun;
-                if($("#searchfield").attr("placeholder") == "Municipality") {
+                if ($("#searchfield").attr("placeholder") == "Municipality") {
                     mun = "Upplands Väsby";
                 } else {
                     mun = $("#searchfield").attr("placeholder");
@@ -77,13 +74,13 @@ function donut(data) {
 
                 var party;
                 munArray.forEach(function(e) {
-                    if(d.data.parti == e.parti) {
+                    if (d.data.parti == e.parti) {
                         party = e;
                     }
                 });
 
                 tip.html(
-                "<span style='color:" + color.get(party.parti) + "'>" + party.parti + "<strong>:</strong> <span style='color:white'>" + party.year + "%" + "</span>"
+                    "<span style='color:" + color.get(party.parti) + "'>" + party.parti + "<strong>:</strong> <span style='color:white'>" + party.year + "%" + "</span>"
                 );
                 tip.show();
             })
@@ -93,7 +90,7 @@ function donut(data) {
             .data(partyArray)
             .enter()
             .append('g')
-            .attr('class', 'legend')
+            .attr('class', 'legendParty')
             .attr('transform', function(d, i) {
                 var height = legendRectSize + legendSpacing;
                 var offset = height * color.size / 2;
@@ -120,10 +117,10 @@ function donut(data) {
             });
 
         var legendMun = svg.selectAll('.legendname')
-        .data([{}])
-        .enter()
-        .append('g')
-        .attr('transform', 'translate(' + 0 + ',' + 0 + ')');
+            .data([{}])
+            .enter()
+            .append('g')
+            .attr('transform', 'translate(' + 0 + ',' + 0 + ')');
 
         legendMun.append('text')
             .attr('class', 'legendReg')
@@ -135,13 +132,13 @@ function donut(data) {
             .attr("text-anchor", "middle")
             .text(function(d) {
                 var mun;
-                if($("#searchfield").attr("placeholder") == "Municipality") {
+                if ($("#searchfield").attr("placeholder") == "Municipality") {
                     mun = "Upplands Väsby";
                 } else {
                     mun = $("#searchfield").attr("placeholder");
                 }
                 return mun;
-        });
+            });
 
     }
 
@@ -185,28 +182,24 @@ function donut(data) {
         path.transition().duration(750).attrTween("d", arcTween);
 
 
+        svg.selectAll(".legendParty").remove();
 
-
-        svg.selectAll(".legend").remove();
-
-
-        var data_arr = getMunData(mun, electionYear);
+        filteredData = filteredData.filter(isYearNaN);
 
         var legend = svg.selectAll('.legend')
-            .data(data_arr)
+            .data(filteredData)
             .enter()
             .append('g')
-            .attr('class', 'legend')
+            .attr('class', 'legendParty')
 
         .attr('transform', function(d, i) {
-                var height = legendRectSize + legendSpacing;
-                var offset = height * color.size / 2;
-                var horz = 12 * legendRectSize;
-                var vert = i * height - offset;
-                return 'translate(' + horz + ',' + vert + ')';
-            });
-        
-      
+            var height = legendRectSize + legendSpacing;
+            var offset = height * color.size / 2;
+            var horz = 10 * legendRectSize;
+            var vert = i * height - offset;
+            return 'translate(' + horz + ',' + vert + ')';
+        });
+
 
         legend.append('rect')
             .attr('width', legendRectSize)
@@ -245,4 +238,9 @@ function donut(data) {
             return arc(i(t));
         };
     }
+
+    function isYearNaN(element, index, array) {
+        return !isNaN(element.year);
+    }
+
 }

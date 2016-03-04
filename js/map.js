@@ -1,31 +1,30 @@
 function map(data) {
 
-    // Global variable
-    CURRMUN = "Upplands Väsby";
-    var partyDiv = $("#party");
-    var scaleDiv = 1;
-
     var zoom = d3.behavior.zoom()
         .scaleExtent([1, 8])
         .on("zoom", move);
 
     var mapDiv = $("#map");
+    var partyDiv = $("#party");
 
     var margin = { top: 0, right: 0, bottom: 0, left: 0 },
         width = mapDiv.width() - margin.right - margin.left,
         height = partyDiv.height() - margin.top - margin.bottom;
 
+    var legendRectSize = 18;
+    var legendSpacing = 2;
+
     var tip = d3.tip()
-	    .attr('class', 'd3-map-tip')
-	    .offset([2,0]);
+        .attr('class', 'd3-map-tip')
+        .offset([2, 0]);
 
     var projection = d3.geo.mercator()
         .center([40, 62])
         .scale(850);
 
     var svg = d3.select("#map").append("svg")
-        .attr("width", width * scaleDiv)
-        .attr("height", height * scaleDiv)
+        .attr("width", width)
+        .attr("height", height)
         .style("border", "1px solid black")
         .append("g")
         .call(zoom);
@@ -81,8 +80,8 @@ function map(data) {
 
         .on("mouseover", function(d) {
 
-        	var trueVal = $("#year").slider("value");
-        	var year = ELECTIONYEARSARRAY[trueVal];
+            var trueVal = $("#year").slider("value");
+            var year = ELECTIONYEARSARRAY[trueVal];
 
             for (var r in regiondData) {
                 if (d.properties.name == regiondData[r].key) {
@@ -93,25 +92,26 @@ function map(data) {
             var regArr = [];
             regObj.values.forEach(function(r) {
                 regArr.push({ parti: r.parti, procent: r[year] });
-            });            
+            });
 
             tip.html(function(x) {
 
-            	var res = "<span style='color:white'>" + "<h3> <b>" + d.properties.name + "</b> </h3>";
+                var res = "<span style='color:white'>" + "<h3> <b>" + d.properties.name + "</b> </h3>";
 
-            	for(var i = 0; i < regArr.length; ++i){
-            		res += "<p>" + "<span style='color:" + color.get(regArr[i].parti) + "'>" + regArr[i].parti + "<span style='color:white'>" + " : "
-            		+ regArr[i].procent + " %" + "</p>";
-            	}
+                for (var i = 0; i < regArr.length; ++i) {
+                    if (!isNaN(regArr[i].procent)) {
+                        res += "<p>" + "<span style='color:" + color.get(regArr[i].parti) + "'>" + regArr[i].parti + "<span style='color:white'>" + " : " + regArr[i].procent + " %" + "</p>";
+                    }
+                }
 
-            	res += "</span>";
-            	return res;
-        });
+                res += "</span>";
+                return res;
+            });
             tip.show();
-        }) 
+        })
 
         .on("mouseout", function(d) {
-        	tip.hide();
+            tip.hide();
         })
 
         .on("click", function(d) {
@@ -124,14 +124,61 @@ function map(data) {
             selectedMun(d.properties.name);
             $("#searchfield").attr("placeholder", d.properties.name).val("").focus().blur();
 
-        })
+        });
+
+        var legend = g.selectAll(".legend")
+            .data(miningArray)
+            .enter()
+            .append("g")
+            .attr("class", "legend");
+        legend.attr('transform', function(d, i) {
+            var height = legendRectSize + legendSpacing;
+            var offset = height * miningArray.length / 2;
+            var horz = 1 * legendRectSize;
+            var vert = i * height - offset + 50;
+            return 'translate(' + horz + ',' + vert + ')';
+        });
+
+        legend.append('rect')
+            .attr('class', 'legendRect')
+            .attr('width', legendRectSize)
+            .attr('height', legendRectSize)
+            .style("opacity", 0)
+            .style('fill', function(d, i) {
+
+                return miningMap.get(d);
+            })
+            .style('stroke', function(d) {
+                return miningMap.get(d);
+            });
+
+        legend.append('text')
+            .attr('class', 'legendText')
+            .attr('x', legendRectSize + legendSpacing)
+            .attr('y', legendRectSize - legendSpacing)
+            .style("opacity", 0)
+            .text(function(d) {
+                return d;
+            });
     }
 
     this.colorByYear = function(electionYear) {
 
+        g.selectAll("text.legendText")
+            .style("opacity", 0);
+        g.selectAll("rect.legendRect")
+            .style("opacity", 0);
+
         year = electionYear;
 
-        donut1.drawMun(currentMun(CURRMUN), year);
+        var mun;
+        if ($("#searchfield").attr("placeholder") == "Municipality") {
+            mun = "Upplands Väsby";
+        } else {
+            mun = $("#searchfield").attr("placeholder");
+        }
+
+        donut1.drawMun(mun, year);
 
         var colorOfParty = partyColor(electionData, year);
 
@@ -177,9 +224,21 @@ function map(data) {
 
     this.colorByParty = function(electionYear, party) {
 
+        g.selectAll("text.legendText")
+            .style("opacity", 0);
+        g.selectAll("rect.legendRect")
+            .style("opacity", 0);
+
         year = electionYear;
 
-        donut1.drawMun(currentMun(CURRMUN), electionYear);
+        var mun;
+        if ($("#searchfield").attr("placeholder") == "Municipality") {
+            mun = "Upplands Väsby";
+        } else {
+            mun = $("#searchfield").attr("placeholder");
+        }
+
+        donut1.drawMun(mun, electionYear);
 
         // TEMP
         if (!party) {
@@ -243,16 +302,6 @@ function map(data) {
             });
     };
 
-    function currentMun(mun) {
-
-        if (mun) {
-            CURRMUN = mun;
-            return CURRMUN;
-        } else {
-            return CURRMUN;
-        }
-    }
-
     function partyColor(electionData, year) {
 
         var nested_data = d3.nest()
@@ -308,30 +357,15 @@ function map(data) {
         var trueVal = $("#year").slider("value");
         var year = ELECTIONYEARSARRAY[trueVal];
 
-        //var electionYear = closest(ELECTIONYEARSARRAY, year);
-
-        donut1.drawMun(currentMun(mun), year);
-    }
-
-    // Finds the closest value in an array
-    function closest(array, num) {
-        var i = 0;
-        var minDiff = 1000;
-        var ans;
-        for (i in array) {
-            var m = Math.abs(num - array[i]);
-            if (m < minDiff) {
-                minDiff = m;
-                ans = array[i];
-            }
+        if ($("#searchfield").attr("placeholder") == "Municipality") {
+            mun = "Upplands Väsby";
         }
-        return ans;
+
+        donut1.drawMun(mun, year);
     }
 
 
     this.regionsimilarities = function(electionYear, mun) {
-
-        //hämta från sökfältet
 
         //sortera efter regioner
         var nested_data = d3.nest()
@@ -404,5 +438,12 @@ function map(data) {
             })
             point.style("fill-opacity", 1)
         });
+
+        g.selectAll("rect.legendRect")
+            .style("opacity", 1);
+        g.selectAll("text.legendText")
+            .style("opacity", 1);
+
+
     };
 }

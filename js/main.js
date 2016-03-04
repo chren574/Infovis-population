@@ -16,6 +16,13 @@ d3.csv("data/Swedish_Election.csv", function(data) {
     color.set("Övriga partier", "gray");
     color.set("Odefinierad", "black");
 
+    miningMap = new Map();
+    miningMap.set("Chosen", "orange");
+    miningMap.set("Near", "green");
+    miningMap.set("Far", "red");
+
+    miningArray = ["Chosen", "Near", "Far"];
+
     parseData(data);
 
     map1 = new map(data);

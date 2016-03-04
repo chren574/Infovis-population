@@ -12,6 +12,10 @@
     display: none;
 }
 
+.legend {
+    font-size: 12px;
+}
+
 div.tooltip {
     position: absolute;
     text-align: center;

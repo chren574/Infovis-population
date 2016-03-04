@@ -160,7 +160,7 @@ $('#year').on('slidestop', function(event, ui) {
 $('#year').on('slide', function(event, ui) {
 
     $("#currYear").text(ELECTIONYEARSARRAY[ui.value]);
-    $("#currYear").val(ELECTIONYEARSARRAY[ui.value]);
+    $("#currYear").val(ELECTIONYEARSARRAY[ui.value]).css("font-weight", "Bold");
 
     var year = ELECTIONYEARSARRAY[ui.value];
 
