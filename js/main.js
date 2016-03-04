@@ -13,7 +13,7 @@ d3.csv("data/Swedish_Election.csv", function(data) {
     color.set("Socialdemokraterna", "#ED1B34");
     color.set("Vänsterpartiet", "#DA291C");
     color.set("Sverigedemokraterna", "#DDDD00");
-    color.set("övriga partier", "gray");
+    color.set("Övriga partier", "gray");
     color.set("Odefinierad", "black");
 
     parseData(data);
@@ -50,10 +50,8 @@ function parseData(electionData) {
             if (data[ELECTIONYEARSARRAY[i]] != "..") {
                 data[ELECTIONYEARSARRAY[i]] = +data[ELECTIONYEARSARRAY[i].toString()];
             };
-
         };
     });
-
 };
 
 ELECTIONYEARSARRAY = [1973, 1976, 1979, 1982, 1985, 1988, 1991, 1994, 1998, 2002, 2006, 2010, 2014];
@@ -71,6 +69,7 @@ this.validateRegion = function(inputString) {
     return valid;
 
 };
+
 
 // Finds the closest value in an array
 this.closest = function(array, num) {
