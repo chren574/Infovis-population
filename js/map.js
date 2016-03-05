@@ -34,6 +34,8 @@ function map(data) {
     g = svg.append("g");
     l = svg.append("g");
     partyLegendRoot = svg.append("g");
+    undefinedLegendRoot = svg.append("g");
+
     svg.call(tip);
 
     // load data and draw the map
@@ -133,7 +135,7 @@ function map(data) {
                     break;
                 }
             };
-
+            console.log(totalProcent)
             if (totalProcent) {
                 selectedMun(d.properties.name);
                 $("#searchfield").attr("placeholder", d.properties.name).val("").focus().blur();
@@ -202,6 +204,34 @@ function map(data) {
             .attr('x', legendRectSize + legendSpacing)
             .attr('y', legendRectSize - legendSpacing)
             .style("opacity", 0);
+
+        // For undefined muns
+        var undefinedLegend = undefinedLegendRoot.selectAll(".legend")
+            .data(["Data saknas"])
+            .enter()
+            .append("g")
+            .attr("class", "legend");
+        partyLegend.attr('transform', function(d) {
+            var height = legendRectSize + legendSpacing;
+            var offset = height / 2;
+            var horz = legendRectSize;
+            var vert = height - offset + 70;
+            return 'translate(' + horz + ',' + vert + ')';
+        });
+
+        undefinedLegend.append('rect')
+            .attr('class', 'undefinedLegendRect')
+            .attr('width', legendRectSize)
+            .attr('height', legendRectSize)
+            .style("opacity", 0)
+            .style('stroke', "black");
+
+        undefinedLegend.append('text')
+            .attr('class', 'undefinedLegendText')
+            .attr('x', legendRectSize + legendSpacing)
+            .attr('y', legendRectSize - legendSpacing)
+            .style("opacity", 0)
+            .text("Data saknas");
     }
 
     this.colorByYear = function(electionYear) {
@@ -218,9 +248,11 @@ function map(data) {
             mun = $("#searchfield").attr("placeholder");
         }
 
-        donut1.drawMun(mun, year);
+        var isUndefined = [mun , false];
 
         var colorOfParty = partyColor(electionData, year);
+
+        hideUndefinedLegend();
 
         g.selectAll(".mun").each(function(p) {
 
@@ -240,7 +272,7 @@ function map(data) {
                 if (!isNaN(index)) {
                     return color.get(colorOfParty[index].par);
                 } else {
-                    
+                    isUndefined[1] = true;
                     return color.get("Odefinierad");
                 }
 
@@ -261,6 +293,15 @@ function map(data) {
                 return regionString;
             })
         });
+
+/*        if(!isUndefined[1]){
+            donut1.drawMun(mun, year);
+        }else{
+            showUndefinedLegend();
+        }
+
+        */
+
     }
 
     this.colorByParty = function(electionYear, party) {
@@ -499,6 +540,13 @@ function map(data) {
             .style("opacity", 0);
     };
 
+    function hideUndefinedLegend(){
+        undefinedLegendRoot.selectAll("rect.undefinedLegendRect")
+            .style("opacity", 0);
+        undefinedLegendRoot.selectAll("text.undefinedLegendText")
+            .style("opacity", 0);
+    };
+
     function showSimLegend(){
         l.selectAll("rect.legendRect")
             .style("opacity", 1);
@@ -510,6 +558,13 @@ function map(data) {
         partyLegendRoot.selectAll("rect.partyLegendRect")
             .style("opacity", 1);
         partyLegendRoot.selectAll("text.partyLegendText")
+            .style("opacity", 1);
+    };
+
+    function showUndefinedLegend(){
+        undefinedLegendRoot.selectAll("rect.undefinedLegendRect")
+            .style("opacity", 1);
+        undefinedLegendRoot.selectAll("text.undefinedLegendText")
             .style("opacity", 1);
     };
 
@@ -530,5 +585,7 @@ function map(data) {
                     var val = (min-max)/len*i + max;
                     return val.toFixed(1) + " %";
             });
-    }
+    };
+
+
 }
