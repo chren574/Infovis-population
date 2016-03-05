@@ -218,6 +218,7 @@ function map(data) {
                 if (!isNaN(index)) {
                     return color.get(colorOfParty[index].par);
                 } else {
+                    
                     return color.get("Odefinierad");
                 }
 
@@ -333,8 +334,10 @@ function map(data) {
         nested_data.forEach(function(d) {
 
             d.values.sort(compare);
-
-            colorOfParty.push({ reg: d.values[0].region, par: d.values[0].parti });
+  
+            if(!isNaN(d.values[0][year])) {
+                colorOfParty.push({ reg: d.values[0].region, par: d.values[0].parti });
+            }
         });
         return colorOfParty;
 
