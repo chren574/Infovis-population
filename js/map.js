@@ -247,7 +247,7 @@ function map(data) {
 
         hideUndefinedLegend();
 
-        g.selectAll(".mun").each(function(p) {
+        d3.selectAll(".mun").each(function(p) {
 
             var point = d3.select(this);
             point.style("fill-opacity", 1)
@@ -335,7 +335,7 @@ function map(data) {
         max = parseFloat(nested_data[0].values[0][year]);
         min = parseFloat(nested_data[0].values[len - 1][year]);
 
-        g.selectAll(".mun").each(function(p) {
+        d3.selectAll(".mun").each(function(p) {
 
             var point = d3.select(this);
 
@@ -485,7 +485,7 @@ function map(data) {
 
         var len = simmun.length;
 
-        g.selectAll(".mun").each(function(p) {
+        d3.selectAll(".mun").each(function(p) {
 
             var point = d3.select(this);
             //OPTIMERA
@@ -517,45 +517,46 @@ function map(data) {
         hidePartyLegend();
     };
 
+
     function hideSimLegend() {
-        l.selectAll("rect.legendRect")
+        d3.selectAll("rect.legendRect")
             .style("opacity", 0);
-        l.selectAll("text.legendText")
+        d3.selectAll("text.legendText")
             .style("opacity", 0);
     };
 
     function hidePartyLegend() {
-        partyLegendRoot.selectAll("rect.partyLegendRect")
+        d3.selectAll("rect.partyLegendRect")
             .style("opacity", 0);
-        partyLegendRoot.selectAll("text.partyLegendText")
+        d3.selectAll("text.partyLegendText")
             .style("opacity", 0);
     };
 
     function hideUndefinedLegend() {
-        undefinedLegendRoot.selectAll("rect.undefinedLegendRect")
+        d3.selectAll("rect.undefinedLegendRect")
             .style("opacity", 0);
-        undefinedLegendRoot.selectAll("text.undefinedLegendText")
+        d3.selectAll("text.undefinedLegendText")
             .style("opacity", 0);
     };
 
     function showSimLegend() {
-        l.selectAll("rect.legendRect")
+        d3.selectAll("rect.legendRect")
             .style("opacity", 1);
         l.selectAll("text.legendText")
             .style("opacity", 1);
     };
 
     function showPartyLegend() {
-        partyLegendRoot.selectAll("rect.partyLegendRect")
+        d3.selectAll("rect.partyLegendRect")
             .style("opacity", 1);
-        partyLegendRoot.selectAll("text.partyLegendText")
+        d3.selectAll("text.partyLegendText")
             .style("opacity", 1);
     };
 
     function showUndefinedLegend() {
-        undefinedLegendRoot.selectAll("rect.undefinedLegendRect")
+        d3.selectAll("rect.undefinedLegendRect")
             .style("opacity", 1);
-        undefinedLegendRoot.selectAll("text.undefinedLegendText")
+        d3.selectAll("text.undefinedLegendText")
             .style("opacity", 1);
     };
 
@@ -575,7 +576,6 @@ function map(data) {
         d3.selectAll("rect.partyLegendRect")
             .style("fill", color)
             .style("fill-opacity", function(d, i) {
-                console.log(i)
                 return 1 - i / len;
             })
 
