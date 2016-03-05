@@ -51,46 +51,50 @@ function donut(data) {
         var path = p.datum(data_arr).selectAll(".arc")
             .data(pie)
             .enter().append("path")
-            .attr("class","arc")
-            .style("fill", function(d,i){ return color.get(d.data.parti); })
+            .attr("class", "arc")
+            .style("fill", function(d, i) {
+                return color.get(d.data.parti); })
             .attr("d", arc)
-            .each(function(d){ this._current = d; })
+            .each(function(d) { this._current = d; })
 
-    
-        path.filter(function(d) { 
-            return d.endAngle - d.startAngle > .2; })
-        .append("text")
+
+        path.filter(function(d) {
+                return d.endAngle - d.startAngle > .2;
+            })
+            .append("text")
             .attr('class', 'legendPartyProcent')
             .attr("dy", ".35em")
-            .attr("transform", function(d) { 
-                return "translate(" + arc.centroid(d) + ")"; })
-            .text(function(d) { return d.data.year; });
-
-            path.on('mouseover', function(d) {
-                var year = ELECTIONYEARSARRAY[$("#year").slider("value")];
-                var mun;
-                if ($("#searchfield").attr("placeholder") == "Municipality") {
-                    mun = "Upplands Väsby";
-                } else {
-                    mun = $("#searchfield").attr("placeholder");
-                }
-
-                var munArray = getMunData(mun, year);
-
-                var party;
-                munArray.forEach(function(e) {
-
-                    if (d.data.parti == e.parti) {
-                        party = e;
-                    }
-                });
-
-                tip.html(
-                    "<span style='color:" + color.get(party.parti) + "'>" + party.parti + "<strong>:</strong> <span style='color:white'>" + party.year + "%" + "</span>"
-                );
-                tip.show();
+            .attr("transform", function(d) {
+                return "translate(" + arc.centroid(d) + ")";
             })
-            path.on('mouseout', tip.hide);
+            .text(function(d) {
+                return d.data.year; });
+
+        path.on('mouseover', function(d) {
+            var year = ELECTIONYEARSARRAY[$("#year").slider("value")];
+            var mun;
+            if ($("#searchfield").attr("placeholder") == "Municipality") {
+                mun = "Upplands Väsby";
+            } else {
+                mun = $("#searchfield").attr("placeholder");
+            }
+
+            var munArray = getMunData(mun, year);
+
+            var party;
+            munArray.forEach(function(e) {
+
+                if (d.data.parti == e.parti) {
+                    party = e;
+                }
+            });
+
+            tip.html(
+                "<span style='color:" + color.get(party.parti) + "'>" + party.parti + "<strong>:</strong> <span style='color:white'>" + party.year + "%" + "</span>"
+            );
+            tip.show();
+        })
+        path.on('mouseout', tip.hide);
 
         var legend = svg.selectAll('.legend')
             .data(partyArray)
@@ -185,29 +189,28 @@ function donut(data) {
         //path.data(pie(filteredData));
         //path.attr("d", arc);
         //path.transition().duration(750).attrTween("d", arcTween);
-//console.log("---------------")
+        //console.log("---------------")
 
-//console.log(filteredData);
-/*
-  p.datum(filteredData).selectAll("path")
-    .data(pie)
-  .enter().append("path")
-    .attr("class","arc")
-    .attr("fill", function(d,i){ 
-console.log(i)
-//console.log(color.get(d.data.parti))
-        return color.get(d.data.parti); })
-    .attr("d", arc)
-    .each(function(d){ this._current = d; })
-*/
-      // remove data not being used
-  //p.datum(filteredData).selectAll("path")
-    //.data(pie).exit().remove();
+        //console.log(filteredData);
+        /*
+          p.datum(filteredData).selectAll("path")
+            .data(pie)
+          .enter().append("path")
+            .attr("class","arc")
+            .attr("fill", function(d,i){ 
+        console.log(i)
+        //console.log(color.get(d.data.parti))
+                return color.get(d.data.parti); })
+            .attr("d", arc)
+            .each(function(d){ this._current = d; })
+        */
+        // remove data not being used
+        //p.datum(filteredData).selectAll("path")
+        //.data(pie).exit().remove();
 
         svg.selectAll(".legendParty").remove();
 
         filteredData = filteredData.filter(isYearNaN);
-
         var legend = svg.selectAll('.legend')
             .data(filteredData)
             .enter()

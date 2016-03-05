@@ -76,8 +76,8 @@ function map(data) {
                 };
                 return color.get(colorOfParty[index].par);
             })
-        .attr("stroke-width", 0.1)
-        .attr("stroke", "black")
+            .attr("stroke-width", 0.1)
+            .attr("stroke", "black")
 
 
         .on("mouseover", function(d) {
@@ -150,7 +150,7 @@ function map(data) {
             .enter()
             .append("g")
             .attr("class", "legend")
-        
+
         .attr('transform', function(d, i) {
             var height = legendRectSize + legendSpacing;
             var offset = height * miningArray.length / 2;
@@ -178,19 +178,12 @@ function map(data) {
                 return d;
             });
 
-    // Party selection legend
+        // Party selection legend
         var partyLegend = partyLegendRoot.selectAll(".legend")
             .data(new Array(partyLegendLength))
             .enter()
             .append("g")
-            .attr("class", "legend");
-        partyLegend.attr('transform', function(d, i) {
-            var height = legendRectSize + legendSpacing;
-            var offset = height * partyLegendLength / 2;
-            var horz = 1 * legendRectSize;
-            var vert = i * height - offset + 70;
-            return 'translate(' + horz + ',' + vert + ')';
-        });
+            .attr("class", "partylegend");
 
         partyLegend.append('rect')
             .attr('class', 'partyLegendRect')
@@ -248,7 +241,7 @@ function map(data) {
             mun = $("#searchfield").attr("placeholder");
         }
 
-        var isUndefined = [mun , false];
+        var isUndefined = [mun, false];
 
         var colorOfParty = partyColor(electionData, year);
 
@@ -297,13 +290,13 @@ function map(data) {
 
         donut1.drawMun(mun, year);
 
-/*        if(!isUndefined[1]){
-            donut1.drawMun(mun, year);
-        }else{
-            showUndefinedLegend();
-        }
+        /*        if(!isUndefined[1]){
+                    donut1.drawMun(mun, year);
+                }else{
+                    showUndefinedLegend();
+                }
 
-        */
+                */
 
     }
 
@@ -370,7 +363,7 @@ function map(data) {
             });
         });
 
-        updatePartyLegend(min,max,color.get(party));
+        updatePartyLegend(min, max, color.get(party));
     }
 
     this.munBorder = function(mun) {
@@ -394,8 +387,8 @@ function map(data) {
         nested_data.forEach(function(d) {
 
             d.values.sort(compare);
-  
-            if(!isNaN(d.values[0][year])) {
+
+            if (!isNaN(d.values[0][year])) {
                 colorOfParty.push({ reg: d.values[0].region, par: d.values[0].parti });
             }
         });
@@ -524,64 +517,73 @@ function map(data) {
         hidePartyLegend();
     };
 
-    function hideSimLegend(){
+    function hideSimLegend() {
         l.selectAll("rect.legendRect")
             .style("opacity", 0);
         l.selectAll("text.legendText")
             .style("opacity", 0);
     };
 
-    function hidePartyLegend(){
+    function hidePartyLegend() {
         partyLegendRoot.selectAll("rect.partyLegendRect")
             .style("opacity", 0);
         partyLegendRoot.selectAll("text.partyLegendText")
             .style("opacity", 0);
     };
 
-    function hideUndefinedLegend(){
+    function hideUndefinedLegend() {
         undefinedLegendRoot.selectAll("rect.undefinedLegendRect")
             .style("opacity", 0);
         undefinedLegendRoot.selectAll("text.undefinedLegendText")
             .style("opacity", 0);
     };
 
-    function showSimLegend(){
+    function showSimLegend() {
         l.selectAll("rect.legendRect")
             .style("opacity", 1);
         l.selectAll("text.legendText")
             .style("opacity", 1);
     };
 
-    function showPartyLegend(){
+    function showPartyLegend() {
         partyLegendRoot.selectAll("rect.partyLegendRect")
             .style("opacity", 1);
         partyLegendRoot.selectAll("text.partyLegendText")
             .style("opacity", 1);
     };
 
-    function showUndefinedLegend(){
+    function showUndefinedLegend() {
         undefinedLegendRoot.selectAll("rect.undefinedLegendRect")
             .style("opacity", 1);
         undefinedLegendRoot.selectAll("text.undefinedLegendText")
             .style("opacity", 1);
     };
 
-    function updatePartyLegend(min, max, color)
-    {
+    function updatePartyLegend(min, max, color) {
         var len = partyLegendLength;
         len--;
 
-        partyLegendRoot.selectAll("rect.partyLegendRect")
-            .style("fill", color)
-            .style("fill-opacity", function(d,i){
-                return 1 - i/len;
-            });
+        d3.selectAll(".partylegend")
+            .attr('transform', function(d, i) {
+                var height = legendRectSize + legendSpacing;
+                var offset = height * partyLegendLength / 2;
+                var horz = 1 * legendRectSize;
+                var vert = i * height - offset + 70;
+                return 'translate(' + horz + ',' + vert + ')';
+            })
 
-        partyLegendRoot.selectAll("text.partyLegendText")
-                .text(function(d,i) {
-            // Linear interpolation from max to min in decending order
-                    var val = (min-max)/len*i + max;
-                    return val.toFixed(1) + " %";
+        d3.selectAll("rect.partyLegendRect")
+            .style("fill", color)
+            .style("fill-opacity", function(d, i) {
+                console.log(i)
+                return 1 - i / len;
+            })
+
+        d3.selectAll("text.partyLegendText")
+            .text(function(d, i) {
+                // Linear interpolation from max to min in decending order
+                var val = (min - max) / len * i + max;
+                return val.toFixed(1) + " %";
             });
     };
 

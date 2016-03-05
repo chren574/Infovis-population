@@ -23,7 +23,7 @@ $(function() {
         value: 2014,
     });
 
-    
+
 
     $("#searchfield").keydown(function(event) {
         var SPACE = 13;
@@ -76,11 +76,11 @@ $("#party > .btn").on("click", function() {
 });
 
 
-function formatStringInput (inputString) {
+function formatStringInput(inputString) {
 
     var inputString = inputString.trim();
 
-    if(inputString.trim().length != 0) {
+    if (inputString.trim().length != 0) {
 
         var str = (inputString.substr(0, 1)).toUpperCase() + (inputString.substr(1)).toLowerCase();
 
@@ -99,14 +99,14 @@ function formatStringInput (inputString) {
     return str;
 };
 
-function setButtons (year) {
+function setButtons(year) {
 
     if (year < 1982) {
         $('.btn-mil').prop('disabled', true);
     } else {
         $('.btn-mil').prop('disabled', false);
     }
-    
+
     if (year == 1985) {
         $('.btn-krist').prop('disabled', true);
     } else {
@@ -117,30 +117,30 @@ function setButtons (year) {
         $('.btn-sve').prop('disabled', true);
     } else {
         $('.btn-sve').prop('disabled', false);
-    }   
+    }
 };
 
-function isRegion (inputString) {
+function isRegion(inputString) {
 
     var valid = false;
 
     REGIONARRAY.forEach(function(r) {
-        if (inputString == r) { valid = true; } 
+        if (inputString == r) { valid = true; }
     });
 
     return valid;
 };
 
-function functionChose (region, year, functionType) {
+function functionChose(region, year, functionType) {
 
     donut1.drawMun(region, year);
 
-    if(functionType == "search") {
+    if (functionType == "search") {
         map1.munBorder(region);
     } else if (functionType == "mining") {
         map1.regionsimilarities(year, region);
-    }    
-   
+    }
+
 };
 
 function partyChose(year, party) {
@@ -158,9 +158,9 @@ function getSearchString() {
     var str = $('#searchfield').val();
 
     if (!str.trim()) {
-        var str = $("#searchfield").attr("placeholder"); 
+        var str = $("#searchfield").attr("placeholder");
     } else {
-        var str = $('#searchfield').val();   
+        var str = $('#searchfield').val();
     }
 
     return str
@@ -179,13 +179,13 @@ function navbarCommands(type) {
     var validRegion = isRegion(formatString);
 
     if (validRegion) {
-        
-        if(type == "search") {
-            functionChose (formatString, year, "search");
+
+        if (type == "search") {
+            functionChose(formatString, year, "search");
         } else {
-            functionChose (formatString, year, "mining");
+            functionChose(formatString, year, "mining");
         }
-        
+
         $("#searchfield").attr("placeholder", formatString).val("").focus().blur();
     } else {
         $("#searchfield").attr("placeholder", "Ingen kommun").val("").focus().blur();
