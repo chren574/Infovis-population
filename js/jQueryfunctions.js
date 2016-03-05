@@ -23,9 +23,10 @@ $(function() {
         value: 2014,
     });
 
-    var SPACE = 13;
+    
 
     $("#searchfield").keydown(function(event) {
+        var SPACE = 13;
         if (event.keyCode == SPACE) {
             $("#searchMun").trigger("click");
             return false;
@@ -36,8 +37,7 @@ $(function() {
 
 $("#searchMun").click(function() {
 
-    var trueVal = $("#year").slider("value");
-    var year = ELECTIONYEARSARRAY[trueVal];
+    var year = ELECTIONYEARSARRAY[$("#year").slider("value")];
 
     //Get
     var str = $('#searchfield').val();
@@ -45,11 +45,7 @@ $("#searchMun").click(function() {
     //Set
     $('#searchfield').val('');
 
-    str1 = (str.substr(0, 1)).toUpperCase();
-
-    str2 = (str.substr(1)).toLowerCase();
-
-    str = str1 + str2;
+    str = (str.substr(0, 1)).toUpperCase() + (str.substr(1)).toLowerCase();
 
     if (!str.indexOf(" ").length) {
         var i = str.indexOf(" ");
@@ -91,11 +87,7 @@ $("#mining").click(function() {
     //Set
     $('#searchfield').val('');
 
-    str1 = (str.substr(0, 1)).toUpperCase();
-
-    str2 = (str.substr(1)).toLowerCase();
-
-    str = str1 + str2;
+    str = (str.substr(0, 1)).toUpperCase() + (str.substr(1)).toLowerCase();
 
     if (!str.indexOf(" ").length) {
         var i = str.indexOf(" ");
@@ -197,8 +189,7 @@ $("#party > .btn").on("click", function() {
 
     $(this).addClass("active").siblings().removeClass("active");
 
-    var trueVal = $("#year").slider("value");
-    var year = ELECTIONYEARSARRAY[trueVal];
+    var year = ELECTIONYEARSARRAY[$("#year").slider("value")];
 
     var party = $('#party button.active').val();
 

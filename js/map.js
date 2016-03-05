@@ -25,7 +25,6 @@ function map(data) {
     var svg = d3.select("#map").append("svg")
         .attr("width", width)
         .attr("height", height)
-        .style("border", "1px solid black")
         .append("g")
         .call(zoom);
 
@@ -75,8 +74,8 @@ function map(data) {
                 };
                 return color.get(colorOfParty[index].par);
             })
-            .attr("stroke-width", 0.1)
-            .attr("stroke", "black")
+        .attr("stroke-width", 0.1)
+        .attr("stroke", "black")
 
 
         .on("mouseover", function(d) {
@@ -148,8 +147,9 @@ function map(data) {
             .data(miningArray)
             .enter()
             .append("g")
-            .attr("class", "legend");
-        legend.attr('transform', function(d, i) {
+            .attr("class", "legend")
+        
+        .attr('transform', function(d, i) {
             var height = legendRectSize + legendSpacing;
             var offset = height * miningArray.length / 2;
             var horz = 1 * legendRectSize;

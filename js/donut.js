@@ -29,17 +29,12 @@ function donut(data) {
     var svg = d3.select("#donut").append("svg")
         .attr("width", width)
         .attr("height", height)
-        .style("border", "1px solid black")
         .append("g")
         .attr("transform", "translate(" + width / 3 + "," + height / 2 + ")");
 
     svg.call(tip);
 
-    var firstMun = "Upplands Väsby";
-
-    var arr = getMunData(firstMun, "2014");
-
-    draw(arr);
+    draw(getMunData("Upplands Väsby", "2014"));
 
     function draw(data_arr) {
 
