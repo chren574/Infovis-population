@@ -37,150 +37,28 @@ $(function() {
 
 $("#searchMun").click(function() {
 
-    var year = ELECTIONYEARSARRAY[$("#year").slider("value")];
-
-    //Get
-    var str = $('#searchfield').val();
-
-    //Set
-    $('#searchfield').val('');
-
-    str = (str.substr(0, 1)).toUpperCase() + (str.substr(1)).toLowerCase();
-
-    if (!str.indexOf(" ").length) {
-        var i = str.indexOf(" ");
-        str = str.replace(str[i + 1], str[i + 1].toUpperCase());
-    }
-    if (!str.indexOf("-").length) {
-        var i = str.indexOf("-");
-        str = str.replace(str[i + 1], str[i + 1].toUpperCase());
-    };
-
-    var formatString = str;
-
-    var validReg = validateRegion(formatString);
-
-    if (validReg) {
-        donut1.drawMun(formatString, year);
-        map1.munBorder(formatString);
-        $("#searchfield").attr("placeholder", formatString).val("").focus().blur();
-    } else {
-        $("#searchfield").attr("placeholder", "Fel kommun").val("").focus().blur();
-
-    }
+    navbarCommands("search");
 
 });
 
 $("#mining").click(function() {
 
-    var trueVal = $("#year").slider("value");
-    var year = ELECTIONYEARSARRAY[trueVal];
-
-    //Get
-    var str = $('#searchfield').val();
-    if (str.trim() || str == "Municipality") {
-        var str = $('#searchfield').val();
-    } else {
-        var str = $("#searchfield").attr("placeholder");
-    }
-
-    //Set
-    $('#searchfield').val('');
-
-    str = (str.substr(0, 1)).toUpperCase() + (str.substr(1)).toLowerCase();
-
-    if (!str.indexOf(" ").length) {
-        var i = str.indexOf(" ");
-        str = str.replace(str[i + 1], str[i + 1].toUpperCase());
-    }
-    if (!str.indexOf("-").length) {
-        var i = str.indexOf("-");
-        str = str.replace(str[i + 1], str[i + 1].toUpperCase());
-    };
-
-    var formatString = str;
-
-    var validReg = validateRegion(formatString);
-
-    if (validReg) {
-        map1.regionsimilarities(year, formatString);
-        $("#searchfield").attr("placeholder", formatString).val("").focus().blur();
-    } else {
-        $("#searchfield").attr("placeholder", "Not a region").val("").focus().blur();
-
-    }
-});
-
-
-$('#year').on('slidestop', function(event, ui) {
-
-    var str = ELECTIONYEARSARRAY[ui.value].toString();
-    $("#currYear").html(str.bold());
-    $("#currYear").val(ELECTIONYEARSARRAY[ui.value]);
-
-    var year = ELECTIONYEARSARRAY[ui.value];
-
-    if (year < 1998) {
-        $('.btn-sve').prop('disabled', true);
-    } else {
-        $('.btn-sve').prop('disabled', false);
-    }
-
-    if (year < 1982) {
-        $('.btn-mil').prop('disabled', true);
-    } else {
-        $('.btn-mil').prop('disabled', false);
-    }
-
-    if (year == 1988) {
-        $('.btn-krist').prop('disabled', true);
-    } else {
-        $('.btn-krist').prop('disabled', false);
-    }
-
-    var party = $('#party button.active').val();
-
-    if (party == "All") {
-        map1.colorByYear(year);
-    } else {
-        map1.colorByParty(year, party);
-    }
+    navbarCommands("mining");
 
 });
 
 
 $('#year').on('slide', function(event, ui) {
 
-    $("#currYear").text(ELECTIONYEARSARRAY[ui.value]);
-    $("#currYear").val(ELECTIONYEARSARRAY[ui.value]).css("font-weight", "Bold");
+    $("#currYear").text(ELECTIONYEARSARRAY[ui.value]).css("font-weight", "Bold");
 
     var year = ELECTIONYEARSARRAY[ui.value];
 
-    if (year < 1998) {
-        $('.btn-sve').prop('disabled', true);
-    } else {
-        $('.btn-sve').prop('disabled', false);
-    }
+    setButtons(year);
 
-    if (year < 1982) {
-        $('.btn-mil').prop('disabled', true);
-    } else {
-        $('.btn-mil').prop('disabled', false);
-    }
+    var buttonVal = $('#party button.active').val();
 
-    if (year == 1985) {
-        $('.btn-krist').prop('disabled', true);
-    } else {
-        $('.btn-krist').prop('disabled', false);
-    }
-
-    var party = $('#party button.active').val();
-
-    if (party == "All") {
-        map1.colorByYear(year);
-    } else {
-        map1.colorByParty(year, party);
-    }
+    partyChose(year, buttonVal);
 
 });
 
@@ -191,7 +69,81 @@ $("#party > .btn").on("click", function() {
 
     var year = ELECTIONYEARSARRAY[$("#year").slider("value")];
 
-    var party = $('#party button.active').val();
+    var buttonVal = $('#party button.active').val();
+
+    partyChose(year, buttonVal);
+
+});
+
+
+function formatStringInput (inputString) {
+
+    var inputString = inputString.trim();
+
+    if(inputString.trim().length != 0) {
+
+        var str = (inputString.substr(0, 1)).toUpperCase() + (inputString.substr(1)).toLowerCase();
+
+        if (!str.indexOf(" ").length) {
+            var i = str.indexOf(" ");
+            str = str.replace(str[i + 1], str[i + 1].toUpperCase());
+        }
+        if (!str.indexOf("-").length) {
+            var i = str.indexOf("-");
+            str = str.replace(str[i + 1], str[i + 1].toUpperCase());
+        }
+    } else {
+        var str = "noRegion";
+    }
+
+    return str;
+};
+
+function setButtons (year) {
+
+    if (year < 1982) {
+        $('.btn-mil').prop('disabled', true);
+    } else {
+        $('.btn-mil').prop('disabled', false);
+    }
+    
+    if (year == 1985) {
+        $('.btn-krist').prop('disabled', true);
+    } else {
+        $('.btn-krist').prop('disabled', false);
+    }
+
+    if (year < 1998) {
+        $('.btn-sve').prop('disabled', true);
+    } else {
+        $('.btn-sve').prop('disabled', false);
+    }   
+};
+
+function isRegion (inputString) {
+
+    var valid = false;
+
+    REGIONARRAY.forEach(function(r) {
+        if (inputString == r) { valid = true; } 
+    });
+
+    return valid;
+};
+
+function functionChose (region, year, functionType) {
+
+    donut1.drawMun(region, year);
+
+    if(functionType == "search") {
+        map1.munBorder(region);
+    } else if (functionType == "mining") {
+        map1.regionsimilarities(year, region);
+    }    
+   
+};
+
+function partyChose(year, party) {
 
     if (party == "All") {
         map1.colorByYear(year);
@@ -199,4 +151,44 @@ $("#party > .btn").on("click", function() {
         map1.colorByParty(year, party);
     }
 
-});
+};
+
+function getSearchString() {
+
+    var str = $('#searchfield').val();
+
+    if (!str.trim()) {
+        var str = $("#searchfield").attr("placeholder"); 
+    } else {
+        var str = $('#searchfield').val();   
+    }
+
+    return str
+}
+
+function navbarCommands(type) {
+
+    var year = ELECTIONYEARSARRAY[$("#year").slider("value")];
+
+    var str = getSearchString();
+
+    $('#searchfield').val('');
+
+    var formatString = formatStringInput(str);
+
+    var validRegion = isRegion(formatString);
+
+    if (validRegion) {
+        
+        if(type == "search") {
+            functionChose (formatString, year, "search");
+        } else {
+            functionChose (formatString, year, "mining");
+        }
+        
+        $("#searchfield").attr("placeholder", formatString).val("").focus().blur();
+    } else {
+        $("#searchfield").attr("placeholder", "Ingen kommun").val("").focus().blur();
+    }
+
+};

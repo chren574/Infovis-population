@@ -294,6 +294,9 @@ function map(data) {
             })
         });
 
+
+        donut1.drawMun(mun, year);
+
 /*        if(!isUndefined[1]){
             donut1.drawMun(mun, year);
         }else{
@@ -319,11 +322,6 @@ function map(data) {
         }
 
         donut1.drawMun(mun, electionYear);
-
-        // TEMP
-        if (!party) {
-            var party = CURRMUN;
-        };
 
         var nested_data = d3.nest()
             .key(function(d) {
