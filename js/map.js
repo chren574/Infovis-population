@@ -207,6 +207,7 @@ function map(data) {
     this.colorByYear = function(electionYear) {
 
         hideSimLegend();
+        hidePartyLegend();
 
         year = electionYear;
 
