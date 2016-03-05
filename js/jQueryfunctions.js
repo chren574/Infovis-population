@@ -69,7 +69,7 @@ $("#searchMun").click(function() {
         map1.munBorder(formatString);
         $("#searchfield").attr("placeholder", formatString).val("").focus().blur();
     } else {
-        $("#searchfield").attr("placeholder", "Not a region").val("").focus().blur();
+        $("#searchfield").attr("placeholder", "Fel kommun").val("").focus().blur();
 
     }
 

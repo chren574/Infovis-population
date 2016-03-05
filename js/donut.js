@@ -24,7 +24,7 @@ function donut(data) {
 
     var tip = d3.tip()
         .attr('class', 'd3-tip')
-        .offset([-10, 0]);
+        .offset([15, -10]);
 
     var svg = d3.select("#donut").append("svg")
         .attr("width", width)
