@@ -33,6 +33,7 @@ function map(data) {
 
     g = svg.append("g");
     l = svg.append("g");
+    partyLegendRoot = svg.append("g");
     svg.call(tip);
 
     // load data and draw the map
@@ -70,7 +71,6 @@ function map(data) {
                         index = l;
                         break;
                     }
-
                 };
                 return color.get(colorOfParty[index].par);
             })
@@ -163,12 +163,9 @@ function map(data) {
             .attr('height', legendRectSize)
             .style("opacity", 0)
             .style('fill', function(d, i) {
-
                 return miningMap.get(d);
             })
-            .style('stroke', function(d) {
-                return miningMap.get(d);
-            });
+            .style('stroke', "black");
 
         legend.append('text')
             .attr('class', 'legendText')
@@ -178,14 +175,39 @@ function map(data) {
             .text(function(d) {
                 return d;
             });
+
+    // Party selection legend
+        var partyLegend = partyLegendRoot.selectAll(".legend")
+            .data(new Array(partyLegendLength))
+            .enter()
+            .append("g")
+            .attr("class", "legend");
+        partyLegend.attr('transform', function(d, i) {
+            var height = legendRectSize + legendSpacing;
+            var offset = height * partyLegendLength / 2;
+            var horz = 1 * legendRectSize;
+            var vert = i * height - offset + 70;
+            return 'translate(' + horz + ',' + vert + ')';
+        });
+
+        partyLegend.append('rect')
+            .attr('class', 'partyLegendRect')
+            .attr('width', legendRectSize)
+            .attr('height', legendRectSize)
+            .style("opacity", 0)
+            .style('stroke', "black");
+
+        partyLegend.append('text')
+            .attr('class', 'partyLegendText')
+            .attr('x', legendRectSize + legendSpacing)
+            .attr('y', legendRectSize - legendSpacing)
+            .style("opacity", 0);
     }
 
     this.colorByYear = function(electionYear) {
 
-        l.selectAll("text.legendText")
-            .style("opacity", 0);
-        l.selectAll("rect.legendRect")
-            .style("opacity", 0);
+        hideSimLegend();
+        hidePartyLegend();
 
         year = electionYear;
 
@@ -243,10 +265,8 @@ function map(data) {
 
     this.colorByParty = function(electionYear, party) {
 
-        l.selectAll("text.legendText")
-            .style("opacity", 0);
-        l.selectAll("rect.legendRect")
-            .style("opacity", 0);
+        hideSimLegend();
+        showPartyLegend();
 
         year = electionYear;
 
@@ -311,6 +331,7 @@ function map(data) {
             });
         });
 
+        updatePartyLegend(min,max,color.get(party));
     }
 
     this.munBorder = function(mun) {
@@ -395,7 +416,7 @@ function map(data) {
             })
             .entries(electionData);
 
-        //beräkna för vald region spara object i variable
+        //beräkna för vald region spara object i variabel
         var vald;
         nested_data.forEach(function(m) {
             if (m.key == mun) {
@@ -460,11 +481,54 @@ function map(data) {
             point.style("fill-opacity", 1)
         });
 
+        showSimLegend();
+        hidePartyLegend();
+    };
+
+    function hideSimLegend(){
+        l.selectAll("rect.legendRect")
+            .style("opacity", 0);
+        l.selectAll("text.legendText")
+            .style("opacity", 0);
+    };
+
+    function hidePartyLegend(){
+        partyLegendRoot.selectAll("rect.partyLegendRect")
+            .style("opacity", 0);
+        partyLegendRoot.selectAll("text.partyLegendText")
+            .style("opacity", 0);
+    };
+
+    function showSimLegend(){
         l.selectAll("rect.legendRect")
             .style("opacity", 1);
         l.selectAll("text.legendText")
             .style("opacity", 1);
-
-
     };
+
+    function showPartyLegend(){
+        partyLegendRoot.selectAll("rect.partyLegendRect")
+            .style("opacity", 1);
+        partyLegendRoot.selectAll("text.partyLegendText")
+            .style("opacity", 1);
+    };
+
+    function updatePartyLegend(min, max, color)
+    {
+        var len = partyLegendLength;
+        len--;
+
+        partyLegendRoot.selectAll("rect.partyLegendRect")
+            .style("fill", color)
+            .style("fill-opacity", function(d,i){
+                return 1 - i/len;
+            });
+
+        partyLegendRoot.selectAll("text.partyLegendText")
+                .text(function(d,i) {
+            // Linear interpolation from max to min in decending order
+                    var val = (min-max)/len*i + max;
+                    return val.toFixed(1) + " %";
+            });
+    }
 }

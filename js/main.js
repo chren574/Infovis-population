@@ -22,6 +22,7 @@ d3.csv("data/Swedish_Election.csv", function(data) {
     miningMap.set("Far", "red");
 
     miningArray = ["Chosen", "Near", "Far"];
+    partyLegendLength = 5;
 
     parseData(data);
 
