@@ -15,7 +15,6 @@ function donut(data) {
     var pie = d3.layout.pie()
         .sort(null)
         .value(function(d) {
-            //console.log(d)
             return !isNaN(d.year) ? d.year : 0;
         });
 

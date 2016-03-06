@@ -384,13 +384,15 @@ function map(data) {
             var year = ELECTIONYEARSARRAY[$("#year").slider("value")];
             donut1.drawMun(mun, year);
             $("#searchfield").attr("placeholder", mun).val("").focus().blur();
-        }
         
-
-        d3.selectAll(".mun")            
+            d3.selectAll(".mun")            
             .style("stroke-width", function(d) {
                 return (d.properties.name == mun) ? 1 : .1;
             })
+        }
+        
+
+        
 
     }
 
