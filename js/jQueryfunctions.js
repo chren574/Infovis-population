@@ -23,8 +23,6 @@ $(function() {
         value: 2014,
     });
 
-
-
     $("#searchfield").keydown(function(event) {
         var SPACE = 13;
         if (event.keyCode == SPACE) {
@@ -32,6 +30,9 @@ $(function() {
             return false;
         }
     });
+
+    // Reset Buttens when refreshing website
+    setButtons(2014);
 });
 
 

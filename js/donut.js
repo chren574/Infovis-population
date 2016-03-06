@@ -20,8 +20,8 @@ function donut(data) {
         });
 
     var arc = d3.svg.arc()
-        .outerRadius(radius - 10)
-        .innerRadius(radius - 70);
+        .outerRadius(radius - 15)
+        .innerRadius(radius - 80);
 
     var tip = d3.tip()
         .attr('class', 'd3-tip')
@@ -35,7 +35,7 @@ function donut(data) {
 
     svg.call(tip);
 
-    p = svg.append('g')
+    donutGraficsRoot = svg.append('g')
 
     draw(getMunData("Upplands Väsby", "2014"));
 
@@ -48,7 +48,7 @@ function donut(data) {
             }
         });
 
-        var path = p.datum(data_arr).selectAll(".arc")
+        var path = donutGraficsRoot.datum(data_arr).selectAll(".arc")
             .data(pie)
             .enter().append("path")
             .attr("class", "arc")
@@ -106,7 +106,7 @@ function donut(data) {
             .attr('transform', function(d, i) {
                 var height = legendRectSize + legendSpacing;
                 var offset = height * color.size / 2;
-                var horz = 10 * legendRectSize;
+                var horz = 11 * legendRectSize;
                 var vert = i * height - offset;
                 return 'translate(' + horz + ',' + vert + ')';
             });
@@ -187,7 +187,7 @@ function donut(data) {
 
         var filteredData = getMunData(mun, electionYear);
 
-        p.datum(filteredData).selectAll("path").data(pie).transition().attrTween("d", arcTween);
+        donutGraficsRoot.datum(filteredData).selectAll("path").data(pie).transition().attrTween("d", arcTween);
         //path.datum(data).selectAll("path").data(pie).transition().duration(1000).attrTween("d", arcTween)
         //path.data(pie(filteredData));
         //path.attr("d", arc);
