@@ -133,8 +133,6 @@ function isRegion(inputString) {
 
 function functionChose(region, year, functionType) {
 
-    donut1.drawMun(region, year);
-
     if (functionType == "search") {
         map1.munBorder(region);
     } else if (functionType == "mining") {

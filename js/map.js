@@ -117,31 +117,13 @@ function map(data) {
         })
 
         .on("click", function(d) {
+
             d3.selectAll(".mun")
                 .style("stroke-width", .1)
-
             d3.select(this)
                 .style("stroke-width", 1)
 
-            var totalProcent = 0;
-            for (var r in regiondData) {
-                if (d.properties.name == regiondData[r].key) {
-                    var regObj = regiondData[r];
-                    regObj.values.forEach(function(e) {
-                        if (!isNaN(e[ELECTIONYEARSARRAY[$("#year").slider("value")]])) {
-                            totalProcent += e[ELECTIONYEARSARRAY[$("#year").slider("value")]];
-                        }
-                    })
-                    break;
-                }
-            };
-            console.log(totalProcent)
-            if (totalProcent) {
-                selectedMun(d.properties.name);
-                $("#searchfield").attr("placeholder", d.properties.name).val("").focus().blur();
-            } else {
-                $("#searchfield").attr("placeholder", d.properties.name + ": saknas data").val("").focus().blur();
-            }
+            selectedMun(d.properties.name);
 
         });
 
@@ -227,19 +209,18 @@ function map(data) {
             .text("Data saknas");
     }
 
-    this.colorByYear = function(electionYear) {
+    this.colorByYear = function(year) {
+
+        if (year < 1991) {
+            showUndefinedLegend();
+        } else {
+            hideUndefinedLegend();
+        }
 
         hideSimLegend();
         hidePartyLegend();
 
-        year = electionYear;
-
-        var mun;
-        if ($("#searchfield").attr("placeholder") == "Municipality") {
-            mun = "Upplands Väsby";
-        } else {
-            mun = $("#searchfield").attr("placeholder");
-        }
+        var mun = $("#searchfield").attr("placeholder");
 
         var isUndefined = [mun, false];
 
@@ -287,34 +268,19 @@ function map(data) {
             })
         });
 
-
-        donut1.drawMun(mun, year);
-
-        /*        if(!isUndefined[1]){
-                    donut1.drawMun(mun, year);
-                }else{
-                    showUndefinedLegend();
-                }
-
-                */
+        selectedMun(mun);
 
     }
 
-    this.colorByParty = function(electionYear, party) {
+    this.colorByParty = function(year, party) {
 
-        hideSimLegend();
         showPartyLegend();
+        hideSimLegend();
+        hideUndefinedLegend();
 
-        year = electionYear;
+        var mun = $("#searchfield").attr("placeholder");
 
-        var mun;
-        if ($("#searchfield").attr("placeholder") == "Municipality") {
-            mun = "Upplands Väsby";
-        } else {
-            mun = $("#searchfield").attr("placeholder");
-        }
-
-        donut1.drawMun(mun, electionYear);
+        selectedMun(mun);
 
         var nested_data = d3.nest()
             .key(function(d) {
@@ -368,6 +334,8 @@ function map(data) {
 
     this.munBorder = function(mun) {
 
+        selectedMun(mun);
+
         d3.selectAll(".mun")
             .style("stroke-width", function(b) {
                 return (b.properties.name == mun) ? 1 : 0.1;
@@ -415,6 +383,24 @@ function map(data) {
         return year;
     }
 
+    function hasData(mun) {
+
+        var totalProcent = 0;
+        for (var r in regiondData) {
+            if (mun == regiondData[r].key) {
+                var regObj = regiondData[r];
+                regObj.values.forEach(function(e) {
+                    if (!isNaN(e[ELECTIONYEARSARRAY[$("#year").slider("value")]])) {
+                        totalProcent += e[ELECTIONYEARSARRAY[$("#year").slider("value")]];
+                    }
+                })
+                break;
+            }
+        };
+
+        return totalProcent ? true : false;
+    }
+
     //zoom and panning method
     function move() {
 
@@ -428,18 +414,17 @@ function map(data) {
     // Sends the name of the mun to other .js-files
     function selectedMun(mun) {
 
-        var trueVal = $("#year").slider("value");
-        var year = ELECTIONYEARSARRAY[trueVal];
+        var validRegion = hasData(mun);
 
-        if ($("#searchfield").attr("placeholder") == "Municipality") {
-            mun = "Upplands Väsby";
+        if (validRegion) {
+            var year = ELECTIONYEARSARRAY[$("#year").slider("value")];
+            donut1.drawMun(mun, year);
+            $("#searchfield").attr("placeholder", mun).val("").focus().blur();
         }
 
-        donut1.drawMun(mun, year);
     }
 
-
-    this.regionsimilarities = function(electionYear, mun) {
+    this.regionsimilarities = function(year, mun) {
 
         //sortera efter regioner
         var nested_data = d3.nest()
@@ -464,8 +449,8 @@ function map(data) {
                 var mu, dif = 0;
                 mu = m.key;
                 m.values.forEach(function(y, i) {
-                    if (!isNaN(vald.values[i][electionYear]) || !isNaN(y[electionYear])) {
-                        dif += Math.sqrt(Math.pow(vald.values[i][electionYear] - y[electionYear], 2));
+                    if (!isNaN(vald.values[i][year]) || !isNaN(y[year])) {
+                        dif += Math.sqrt(Math.pow(vald.values[i][year] - y[year], 2));
                     }
                 });
                 simmun.push({ reg: mu, value: dif });
@@ -515,35 +500,23 @@ function map(data) {
 
         showSimLegend();
         hidePartyLegend();
+
+        selectedMun(mun);
     };
 
-
-    function hideSimLegend() {
-        d3.selectAll("rect.legendRect")
-            .style("opacity", 0);
-        d3.selectAll("text.legendText")
-            .style("opacity", 0);
-    };
-
-    function hidePartyLegend() {
-        d3.selectAll("rect.partyLegendRect")
-            .style("opacity", 0);
-        d3.selectAll("text.partyLegendText")
-            .style("opacity", 0);
-    };
-
-    function hideUndefinedLegend() {
-        d3.selectAll("rect.undefinedLegendRect")
-            .style("opacity", 0);
-        d3.selectAll("text.undefinedLegendText")
-            .style("opacity", 0);
-    };
 
     function showSimLegend() {
         d3.selectAll("rect.legendRect")
             .style("opacity", 1);
         l.selectAll("text.legendText")
             .style("opacity", 1);
+    };
+
+    function hideSimLegend() {
+        d3.selectAll("rect.legendRect")
+            .style("opacity", 0);
+        d3.selectAll("text.legendText")
+            .style("opacity", 0);
     };
 
     function showPartyLegend() {
@@ -553,11 +526,25 @@ function map(data) {
             .style("opacity", 1);
     };
 
+    function hidePartyLegend() {
+        d3.selectAll("rect.partyLegendRect")
+            .style("opacity", 0);
+        d3.selectAll("text.partyLegendText")
+            .style("opacity", 0);
+    };
+
     function showUndefinedLegend() {
         d3.selectAll("rect.undefinedLegendRect")
             .style("opacity", 1);
         d3.selectAll("text.undefinedLegendText")
             .style("opacity", 1);
+    };
+
+    function hideUndefinedLegend() {
+        d3.selectAll("rect.undefinedLegendRect")
+            .style("opacity", 0);
+        d3.selectAll("text.undefinedLegendText")
+            .style("opacity", 0);
     };
 
     function updatePartyLegend(min, max, color) {

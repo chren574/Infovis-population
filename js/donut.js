@@ -53,7 +53,8 @@ function donut(data) {
             .enter().append("path")
             .attr("class", "arc")
             .style("fill", function(d, i) {
-                return color.get(d.data.parti); })
+                return color.get(d.data.parti);
+            })
             .attr("d", arc)
             .each(function(d) { this._current = d; })
 
@@ -68,7 +69,8 @@ function donut(data) {
                 return "translate(" + arc.centroid(d) + ")";
             })
             .text(function(d) {
-                return d.data.year; });
+                return d.data.year;
+            });
 
         path.on('mouseover', function(d) {
             var year = ELECTIONYEARSARRAY[$("#year").slider("value")];
@@ -140,14 +142,10 @@ function donut(data) {
             .transition().duration(200)
             .style("opacity", 1)
             .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("font-weight", "bold")
             .text(function(d) {
-                var mun;
-                if ($("#searchfield").attr("placeholder") == "Municipality") {
-                    mun = "Upplands Väsby";
-                } else {
-                    mun = $("#searchfield").attr("placeholder");
-                }
-                return mun;
+                return $("#searchfield").attr("placeholder");
             });
 
     }
@@ -250,6 +248,8 @@ function donut(data) {
             .style("opacity", 0)
             .transition().duration(200)
             .style("opacity", 1)
+            .style("font-size", "16px")
+            .style("font-weight", "bold")
             .text(mun)
 
     }
