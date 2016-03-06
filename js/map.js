@@ -123,7 +123,7 @@ function map(data) {
             d3.select(this)
                 .style("stroke-width", 1)
 
-            selectedMun(d.properties.name);
+            map1.selectedMun(d.properties.name);
 
         });
 
@@ -268,7 +268,7 @@ function map(data) {
             })
         });
 
-        selectedMun(mun);
+        map1.selectedMun(mun);
 
     }
 
@@ -280,7 +280,7 @@ function map(data) {
 
         var mun = $("#searchfield").attr("placeholder");
 
-        selectedMun(mun);
+        map1.selectedMun(mun);
 
         var nested_data = d3.nest()
             .key(function(d) {
@@ -332,16 +332,6 @@ function map(data) {
         updatePartyLegend(min, max, color.get(party));
     }
 
-    this.munBorder = function(mun) {
-
-        selectedMun(mun);
-
-        d3.selectAll(".mun")
-            .style("stroke-width", function(b) {
-                return (b.properties.name == mun) ? 1 : 0.1;
-            });
-    };
-
     function partyColor(electionData, year) {
 
         var nested_data = d3.nest()
@@ -379,10 +369,6 @@ function map(data) {
         }
     }
 
-    function getYear(year) {
-        return year;
-    }
-
     function hasData(mun) {
 
         var totalProcent = 0;
@@ -412,7 +398,7 @@ function map(data) {
     }
 
     // Sends the name of the mun to other .js-files
-    function selectedMun(mun) {
+    this.selectedMun = function(mun) {
 
         var validRegion = hasData(mun);
 
@@ -501,7 +487,7 @@ function map(data) {
         showSimLegend();
         hidePartyLegend();
 
-        selectedMun(mun);
+        map1.selectedMun(mun);
     };
 
 

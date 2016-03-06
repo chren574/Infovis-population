@@ -134,7 +134,7 @@ function isRegion(inputString) {
 function functionChose(region, year, functionType) {
 
     if (functionType == "search") {
-        map1.munBorder(region);
+        map1.selectedMun(region);
     } else if (functionType == "mining") {
         map1.regionsimilarities(year, region);
     }
