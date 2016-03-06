@@ -16,6 +16,7 @@ function map(data) {
 
     var tip = d3.tip()
         .attr('class', 'd3-map-tip')
+        .direction('e')
         .offset([2, 0]);
 
     var projection = d3.geo.mercator()
