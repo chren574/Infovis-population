@@ -118,11 +118,6 @@ function map(data) {
 
         .on("click", function(d) {
 
-            d3.selectAll(".mun")
-                .style("stroke-width", .1)
-            d3.select(this)
-                .style("stroke-width", 1)
-
             map1.selectedMun(d.properties.name);
 
         });
@@ -132,8 +127,7 @@ function map(data) {
             .enter()
             .append("g")
             .attr("class", "legend")
-
-        .attr('transform', function(d, i) {
+            .attr('transform', function(d, i) {
             var height = legendRectSize + legendSpacing;
             var offset = height * miningArray.length / 2;
             var horz = 1 * legendRectSize;
@@ -185,14 +179,14 @@ function map(data) {
             .data(["Data saknas"])
             .enter()
             .append("g")
-            .attr("class", "legend");
-        partyLegend.attr('transform', function(d) {
-            var height = legendRectSize + legendSpacing;
-            var offset = height / 2;
-            var horz = legendRectSize;
-            var vert = height - offset + 70;
-            return 'translate(' + horz + ',' + vert + ')';
-        });
+            .attr("class", "legend")
+            .attr('transform', function(d) {
+                var height = legendRectSize + legendSpacing;
+                var offset = height / 2;
+                var horz = legendRectSize;
+                var vert = height - offset + 10;
+                return 'translate(' + horz + ',' + vert + ')';
+            });
 
         undefinedLegend.append('rect')
             .attr('class', 'undefinedLegendRect')
@@ -217,16 +211,15 @@ function map(data) {
             hideUndefinedLegend();
         }
 
-        hideSimLegend();
         hidePartyLegend();
+
+        map1.selectedMun(mun);
 
         var mun = $("#searchfield").attr("placeholder");
 
         var isUndefined = [mun, false];
 
         var colorOfParty = partyColor(electionData, year);
-
-        hideUndefinedLegend();
 
         d3.selectAll(".mun").each(function(p) {
 
@@ -251,24 +244,8 @@ function map(data) {
                 }
 
             });
-            point.attr("title", function(d) {
-                var regionString = "";
-                for (var r = 0; r < regiondData.length; ++r) {
-                    if (regiondData[r].key == d.properties.name) {
-                        regionString = regiondData[r].key;
-                        regiondData[r].values.forEach(function(e) {
-                            if (!isNaN(e[year])) {
-                                regionString = regionString + "\n" + e.parti + ": " + e[year];
-                            }
-                        })
-                    }
-                    continue;
-                };
-                return regionString;
-            })
-        });
 
-        map1.selectedMun(mun);
+        });
 
     }
 
@@ -407,10 +384,20 @@ function map(data) {
             donut1.drawMun(mun, year);
             $("#searchfield").attr("placeholder", mun).val("").focus().blur();
         }
+        
+
+        d3.selectAll(".mun")            
+            .style("stroke-width", function(d) {
+                return (d.properties.name == mun) ? 1 : .1;
+            })
 
     }
 
     this.regionsimilarities = function(year, mun) {
+
+        showSimLegend();
+        hideUndefinedLegend();
+        hidePartyLegend();
 
         //sortera efter regioner
         var nested_data = d3.nest()
@@ -484,8 +471,7 @@ function map(data) {
             point.style("fill-opacity", 1)
         });
 
-        showSimLegend();
-        hidePartyLegend();
+        
 
         map1.selectedMun(mun);
     };
@@ -494,7 +480,7 @@ function map(data) {
     function showSimLegend() {
         d3.selectAll("rect.legendRect")
             .style("opacity", 1);
-        l.selectAll("text.legendText")
+        d3.selectAll("text.legendText")
             .style("opacity", 1);
     };
 

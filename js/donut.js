@@ -75,7 +75,7 @@ function donut(data) {
         path.on('mouseover', function(d) {
             var year = ELECTIONYEARSARRAY[$("#year").slider("value")];
             var mun;
-            if ($("#searchfield").attr("placeholder") == "Municipality") {
+            if ($("#searchfield").attr("placeholder") == "Sök kommun") {
                 mun = "Upplands Väsby";
             } else {
                 mun = $("#searchfield").attr("placeholder");
