@@ -145,7 +145,12 @@ function donut(data) {
             .style("font-size", "16px")
             .style("font-weight", "bold")
             .text(function(d) {
-                return $("#searchfield").attr("placeholder");
+                if ($("#searchfield").attr("placeholder") == "Sök kommun") {
+                    return "Upplands Väsby";
+                } else {
+                    return $("#searchfield").attr("placeholder");
+                }
+
             });
 
     }
