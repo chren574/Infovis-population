@@ -40,35 +40,35 @@ function donut(data) {
 
     function draw(data_arr) {
 
-        var partyArray = [];
-        data_arr.forEach(function(d) {
-            if (!isNaN(d.year)) {
-                partyArray.push(d.parti);
-            }
-        });
-
-        var path = donutGraficsRoot.datum(data_arr).selectAll(".arc")
-            .data(pie)
-            .enter().append("path")
+        
+        var path = donutGraficsRoot.selectAll(".arc")
+            .data(pie(data_arr))
+            .enter()
+            .append("g")
             .attr("class", "arc")
+
+        path.append("path")
             .style("fill", function(d, i) {
                 return color.get(d.data.parti);
             })
+            .attr("class", "arcPath")
             .attr("d", arc)
             .each(function(d) { this._current = d; })
 
 
         path.filter(function(d) {
-                return d.endAngle - d.startAngle > .2;
-            })
-            .append("text")
+                return d.endAngle - d.startAngle > .1;
+            }).append("text")
             .attr('class', 'legendPartyProcent')
             .attr("dy", ".35em")
             .attr("transform", function(d) {
                 return "translate(" + arc.centroid(d) + ")";
             })
+            .attr("text-anchor", "middle")
+            .style("opacity", 1)
+            .style("font-weight", "bold") 
             .text(function(d) {
-                return d.data.year;
+                return d.data.year + " %";
             });
 
         path.on('mouseover', function(d) {
@@ -95,7 +95,15 @@ function donut(data) {
             );
             tip.show();
         })
+
         path.on('mouseout', tip.hide);
+
+        var partyArray = [];
+        data_arr.forEach(function(d) {
+            if (!isNaN(d.year)) {
+                partyArray.push(d.parti);
+            }
+        });
 
         var legend = svg.selectAll('.legend')
             .data(partyArray)
@@ -186,33 +194,34 @@ function donut(data) {
 
         var filteredData = getMunData(mun, electionYear);
 
-        donutGraficsRoot.datum(filteredData).selectAll("path").data(pie).transition().attrTween("d", arcTween);
-        //path.datum(data).selectAll("path").data(pie).transition().duration(1000).attrTween("d", arcTween)
-        //path.data(pie(filteredData));
-        //path.attr("d", arc);
-        //path.transition().duration(750).attrTween("d", arcTween);
-        //console.log("---------------")
 
-        //console.log(filteredData);
-        /*
-          p.datum(filteredData).selectAll("path")
-            .data(pie)
-          .enter().append("path")
-            .attr("class","arc")
-            .attr("fill", function(d,i){ 
-        console.log(i)
-        //console.log(color.get(d.data.parti))
-                return color.get(d.data.parti); })
+        var redrawdount = d3.selectAll(".arc")
+        .data(pie(filteredData));
+
+        d3.selectAll("text.legendPartyProcent").style("opacity", 0); 
+        
+        redrawdount.select("path")
             .attr("d", arc)
-            .each(function(d){ this._current = d; })
-        */
-        // remove data not being used
-        //p.datum(filteredData).selectAll("path")
-        //.data(pie).exit().remove();
+            .transition().duration(750).attrTween("d", arcTween)
+            .call(checkEndAll, function () { // redraw the arcs
+        
+        redrawdount.filter(function(d) {
+                return d.endAngle - d.startAngle > .15;
+            })
+            .select("text")
+            .attr("transform", function(d) {
+                return "translate(" + arc.centroid(d) + ")"; 
+            })
+            .style("opacity", 1)
+            .text(function(d) {
+                return d.data.year + " %";
+            });
+        });
 
         svg.selectAll(".legendParty").remove();
 
         filteredData = filteredData.filter(isYearNaN);
+
         var legend = svg.selectAll('.legend')
             .data(filteredData)
             .enter()
@@ -226,7 +235,6 @@ function donut(data) {
             var vert = i * height - offset;
             return 'translate(' + horz + ',' + vert + ')';
         });
-
 
         legend.append('rect')
             .attr('width', legendRectSize)
@@ -244,7 +252,6 @@ function donut(data) {
             .text(function(d) {
                 return d.parti;
             });
-
 
         d3.selectAll('text.legendReg')
             .transition()
@@ -266,6 +273,16 @@ function donut(data) {
         return function(t) {
             return arc(i(t));
         };
+    }
+
+    //http://javascript.tutorialhorizon.com/2015/03/05/creating-an-animated-ring-or-pie-chart-in-d3js/
+    function checkEndAll(transition, callback) {
+        var n = 0;
+        transition
+        .each(function() { ++n; })
+        .each("end", function() {
+            if (!--n) callback.apply(this, arguments);
+        });
     }
 
     function isYearNaN(element, index, array) {

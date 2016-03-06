@@ -56,17 +56,15 @@ function map(data) {
             .entries(electionData);
         self.electionData = electionData;
 
-        var trueVal = $("#year").slider("value");
-        var year = ELECTIONYEARSARRAY[trueVal];
+        var year = ELECTIONYEARSARRAY[$("#year").slider("value")];
 
-        var mun = mapGraficsRoot.selectAll(".swe_mun").data(mun);
+        var munMap = mapGraficsRoot.selectAll(".swe_mun").data(mun);
         var colorOfParty = partyColor(electionData, year);
 
-        mun.enter().insert("path")
+        munMap.enter().insert("path")
             .attr("class", "mun")
             .attr("d", path)
-
-        .style("fill", function(d, i) {
+            .style("fill", function(d, i) {
                 var index = 0;
                 for (var l = 0; l < colorOfParty.length; ++l) {
                     // Compare region-name
@@ -79,7 +77,6 @@ function map(data) {
             })
             .attr("stroke-width", 0.1)
             .attr("stroke", "black")
-
 
         .on("mouseover", function(d) {
 
