@@ -6,7 +6,7 @@ color = new Map();
 color.set("Moderaterna", "blue");
 color.set("Centerpartiet", "#016A3A");
 color.set("Folkpartiet", "#0094D7");
-color.set("Kristdemokraterna", "#231977");
+color.set("Kristdemokraterna", "#08519c");
 color.set("Miljöpartiet", "#53A045");
 color.set("Socialdemokraterna", "#ED1B34");
 color.set("Vänsterpartiet", "#DA291C");
