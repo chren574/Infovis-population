@@ -218,6 +218,7 @@ function map(data) {
 
         var colorOfParty = partyColor(electionData, year);
 
+        d3.selectAll(".mun").attr("stroke", "black");
         d3.selectAll(".mun").each(function(p) {
 
             var point = d3.select(this);
@@ -274,6 +275,7 @@ function map(data) {
         max = parseFloat(nested_data[0].values[0][year]);
         min = parseFloat(nested_data[0].values[len - 1][year]);
 
+        d3.selectAll(".mun").attr("stroke", "black");
         d3.selectAll(".mun").each(function(p) {
 
             var point = d3.select(this);
@@ -440,7 +442,7 @@ function map(data) {
         });
 
         var len = simmun.length;
-
+        d3.selectAll(".mun").attr("stroke", "white")
         d3.selectAll(".mun").each(function(p) {
 
             var point = d3.select(this);
@@ -467,6 +469,7 @@ function map(data) {
                 }
             })
             point.style("fill-opacity", 1)
+
         });
 
         
