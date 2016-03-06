@@ -68,7 +68,7 @@ function donut(data) {
             .style("opacity", 1)
             .style("font-weight", "bold") 
             .text(function(d) {
-                return d.data.year + " %";
+                return d.data.year + "%";
             });
 
         path.on('mouseover', function(d) {
@@ -214,7 +214,7 @@ function donut(data) {
             })
             .style("opacity", 1)
             .text(function(d) {
-                return d.data.year + " %";
+                return d.data.year + "%";
             });
         });
 
