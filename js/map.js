@@ -214,9 +214,8 @@ function map(data) {
 
         hidePartyLegend();
 
-        map1.selectedMun(mun);
-
         var mun = $("#searchfield").attr("placeholder");
+        map1.selectedMun(mun);
 
         var isUndefined = [mun, false];
 
@@ -257,7 +256,6 @@ function map(data) {
         hideUndefinedLegend();
 
         var mun = $("#searchfield").attr("placeholder");
-
         map1.selectedMun(mun);
 
         var nested_data = d3.nest()
