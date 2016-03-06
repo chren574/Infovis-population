@@ -31,9 +31,10 @@
 .btn-krist {
     /*color: #333333;*/
     color: black;
-    background-color: #231977;
+    background-color: #231977;*/
     border-color: #cccccc;
     font-weight: bold;
+    background: linear-gradient(to bottom right, #231977, #08519c);
 }
 
 .btn-mil {
@@ -99,18 +100,10 @@
     line-height: 1;
     color: rgba(0, 0, 0, 1);
     content: "\25BC";
-    position: absolute;
+    position: relative;
     text-align: center;
 }
 
-
-/* Style northward tooltips differently */
-
-.d3-tip.n:after {
-  margin: -1px 0 0 0;
-  top: 100%;
-  left: 0;
-}
 
 /* Tooltip for map */
 .d3-map-tip {
@@ -125,19 +118,12 @@
 
 /* Creates a small triangle extender for the tooltip */
 .d3-map-tip:after {
- /* box-sizing: border-box; */
+  box-sizing: border-box;
   display: inline;
   font-size: 10px;
   width: 100%;
   color: rgba(0, 0, 0, 0.8);
   content: "\25BC";
-  position: absolute;
+  position: relative;
   text-align: center;
-}
-
-/* Style northward tooltips differently */
-.d3-map-tip.n:after {
-  margin: -1px 0 0 0;
-  top: 100%;
-  left: 0;
 }
