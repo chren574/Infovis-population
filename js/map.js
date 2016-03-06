@@ -31,8 +31,8 @@ function map(data) {
     var path = d3.geo.path()
         .projection(projection);
 
-    g = svg.append("g");
-    l = svg.append("g");
+    mapGraficsRoot = svg.append("g");
+    miningLegendRoot = svg.append("g");
     partyLegendRoot = svg.append("g");
     undefinedLegendRoot = svg.append("g");
 
@@ -58,7 +58,7 @@ function map(data) {
         var trueVal = $("#year").slider("value");
         var year = ELECTIONYEARSARRAY[trueVal];
 
-        var mun = g.selectAll(".swe_mun").data(mun);
+        var mun = mapGraficsRoot.selectAll(".swe_mun").data(mun);
         var colorOfParty = partyColor(electionData, year);
 
         mun.enter().insert("path")
@@ -122,7 +122,7 @@ function map(data) {
 
         });
 
-        var legend = l.selectAll(".legend")
+        var legend = miningLegendRoot.selectAll(".legend")
             .data(miningArray)
             .enter()
             .append("g")
@@ -371,7 +371,7 @@ function map(data) {
         var s = d3.event.scale;
 
         zoom.translate(t);
-        g.style("stroke-width", 1 / s).attr("transform", "translate(" + t + ")scale(" + s + ")");
+        mapGraficsRoot.style("stroke-width", 1 / s).attr("transform", "translate(" + t + ")scale(" + s + ")");
     }
 
     // Sends the name of the mun to other .js-files
@@ -523,6 +523,10 @@ function map(data) {
         var len = partyLegendLength;
         len--;
 
+        if(isNaN(max)) {
+            hidePartyLegend();
+        }
+
         d3.selectAll(".partylegend")
             .attr('transform', function(d, i) {
                 var height = legendRectSize + legendSpacing;
@@ -544,6 +548,7 @@ function map(data) {
                 var val = (min - max) / len * i + max;
                 return val.toFixed(1) + " %";
             });
+
     };
 
 
