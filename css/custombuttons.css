@@ -1,0 +1,68 @@
+/* Buttons */
+
+.btn-default {
+    font-weight: bold;
+}
+
+.btn-mod {
+    background-color: blue;
+    border-color: #cccccc;
+    font-weight: bold;
+}
+
+.btn-cent {
+    color: black;
+    background-color: #016A3A;
+    border-color: #cccccc;
+    font-weight: bold;
+}
+
+.btn-folk {
+    color: black;
+    background-color: #52BDEC;
+    border-color: #cccccc;
+    font-weight: bold;
+}
+
+.btn-krist {
+    color: black;
+    background-color: #231977;
+    border-color: #cccccc;
+    font-weight: bold;
+    background: #08519c;
+}
+
+.btn-mil {
+    color: black;
+    background-color: #53A045;
+    border-color: #cccccc;
+    font-weight: bold;
+}
+
+.btn-soc {
+    color: black;
+    background-color: #ED1B34;
+    border-color: #cccccc;
+    font-weight: bold;
+}
+
+.btn-van {
+    color: black;
+    background-color: #DA291C;
+    border-color: #cccccc;
+    font-weight: bold;
+}
+
+.btn-sve {
+    color: black;
+    background-color: #DDDD00;
+    border-color: #cccccc;
+    font-weight: bold;
+}
+
+.btn-ovr {
+    color: black;
+    background-color: gray;
+    border-color: #cccccc;
+    font-weight: bold;
+}
