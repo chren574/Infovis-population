@@ -33,6 +33,9 @@ $(function() {
 
     // Reset Buttens when refreshing website
     setButtons(2014);
+
+    miningMode = false;
+
 });
 
 
@@ -44,6 +47,7 @@ $("#searchMun").click(function() {
 
 $("#mining").click(function() {
 
+    miningMode = true;
     navbarCommands("mining");
 
 });
@@ -59,12 +63,19 @@ $('#year').on('slide', function(event, ui) {
 
     var buttonVal = $('#party button.active').val();
 
-    partyChose(year, buttonVal);
-
+    if(miningMode) {
+        var region = getSearchString();
+        map1.regionsimilarities(year, region);
+    } else {
+        partyChose(year, buttonVal);
+    }
+    
 });
 
 
 $("#party > .btn").on("click", function() {
+
+    miningMode = false;
 
     $(this).addClass("active").siblings().removeClass("active");
 

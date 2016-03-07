@@ -218,7 +218,7 @@ function donut(data) {
             });
         });
 
-        svg.selectAll(".legendParty").remove();
+        d3.selectAll(".legendParty").remove();
 
         filteredData = filteredData.filter(isYearNaN);
 
