@@ -40,7 +40,6 @@ function donut(data) {
 
     function draw(data_arr) {
 
-        
         var path = donutGraficsRoot.selectAll(".arc")
             .data(pie(data_arr))
             .enter()
@@ -66,7 +65,7 @@ function donut(data) {
             })
             .attr("text-anchor", "middle")
             .style("opacity", 1)
-            .style("font-weight", "bold") 
+            .style("font-weight", "bold")
             .text(function(d) {
                 return d.data.year + "%";
             });
@@ -159,7 +158,6 @@ function donut(data) {
                 }
 
             });
-
     }
 
     function getMunData(mun, electionYear) {
@@ -196,27 +194,27 @@ function donut(data) {
 
 
         var redrawdount = d3.selectAll(".arc")
-        .data(pie(filteredData));
+            .data(pie(filteredData));
 
-        d3.selectAll("text.legendPartyProcent").style("opacity", 0); 
-        
+        d3.selectAll("text.legendPartyProcent").style("opacity", 0);
+
         redrawdount.select("path")
             .attr("d", arc)
             .transition().duration(750).attrTween("d", arcTween)
-            .call(checkEndAll, function () { // redraw the arcs
-        
-        redrawdount.filter(function(d) {
-                return d.endAngle - d.startAngle > .15;
-            })
-            .select("text")
-            .attr("transform", function(d) {
-                return "translate(" + arc.centroid(d) + ")"; 
-            })
-            .style("opacity", 1)
-            .text(function(d) {
-                return d.data.year + "%";
+            .call(checkEndAll, function() { // redraw the arcs
+
+                redrawdount.filter(function(d) {
+                        return d.endAngle - d.startAngle > .15;
+                    })
+                    .select("text")
+                    .attr("transform", function(d) {
+                        return "translate(" + arc.centroid(d) + ")";
+                    })
+                    .style("opacity", 1)
+                    .text(function(d) {
+                        return d.data.year + "%";
+                    });
             });
-        });
 
         d3.selectAll(".legendParty").remove();
 
@@ -262,7 +260,6 @@ function donut(data) {
             .style("font-size", "16px")
             .style("font-weight", "bold")
             .text(mun)
-
     }
 
     function arcTween(a) {
@@ -279,10 +276,10 @@ function donut(data) {
     function checkEndAll(transition, callback) {
         var n = 0;
         transition
-        .each(function() { ++n; })
-        .each("end", function() {
-            if (!--n) callback.apply(this, arguments);
-        });
+            .each(function() {++n; })
+            .each("end", function() {
+                if (!--n) callback.apply(this, arguments);
+            });
     }
 
     function isYearNaN(element, index, array) {
