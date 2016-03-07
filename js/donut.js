@@ -257,9 +257,9 @@ function donut(data) {
 
         d3.selectAll('text.legendReg')
             .transition()
-            .duration(200)
+            .duration(100)
             .style("opacity", 0)
-            .transition().duration(200)
+            .transition().duration(100)
             .style("opacity", 1)
             .style("font-size", function(d) {
                 var len = Math.min(2 * radius, ((2 * radius - 80) / d.defaultRegion.length ) );
