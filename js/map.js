@@ -210,6 +210,7 @@ function map(data) {
         }
 
         hidePartyLegend();
+        hideSimLegend()
 
         var mun = $("#searchfield").attr("placeholder");
         map1.selectedMun(mun);
