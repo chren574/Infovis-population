@@ -119,7 +119,9 @@ function map(data) {
 
         .on("click", function(d) {
 
-            map1.selectedMun(d.properties.name);
+            if(d.properties.name != $("#searchfield").attr("placeholder")) {
+                map1.selectedMun(d.properties.name);
+            }
 
         });
 

@@ -181,10 +181,10 @@ function getSearchString(type) {
 
 function isSameString() {
 
-    var input = $('#searchfield').val();
+    var input = $('#searchfield').val().trim();
     var placeHolder = $("#searchfield").attr("placeholder");
 
-    return (input.trim() == placeHolder) ? true : false;
+    return (input == placeHolder) ? true : false;
 }
 
 function navbarCommands(type) {
@@ -211,5 +211,4 @@ function navbarCommands(type) {
     } else {
         $("#searchfield").attr("placeholder", "Ingen kommun").val("").focus().blur();
     }
-
 };
