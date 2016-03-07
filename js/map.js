@@ -49,6 +49,8 @@ function map(data) {
 
     function draw(mun, electionData) {
 
+        var defaultRegion = "Upplands Väsby";
+
         regiondData = d3.nest()
             .key(function(d) {
                 return d.region;
@@ -75,8 +77,11 @@ function map(data) {
                 };
                 return color.get(colorOfParty[index].par);
             })
-            .attr("stroke-width", 0.1)
+            .attr("stroke-width", function(d) {
+                    return (d.properties.name == defaultRegion) ? 1 : .1;
+                })
             .attr("stroke", "black")
+
 
         .on("mouseover", function(d) {
 
@@ -126,12 +131,12 @@ function map(data) {
             .append("g")
             .attr("class", "legend")
             .attr('transform', function(d, i) {
-            var height = legendRectSize + legendSpacing;
-            var offset = height * miningArray.length / 2;
-            var horz = 1 * legendRectSize;
-            var vert = i * height - offset + 50;
-            return 'translate(' + horz + ',' + vert + ')';
-        });
+                var height = legendRectSize + legendSpacing;
+                var offset = height * miningArray.length / 2;
+                var horz = 1 * legendRectSize;
+                var vert = i * height - offset + 50;
+                return 'translate(' + horz + ',' + vert + ')';
+            });
 
         legend.append('rect')
             .attr('class', 'legendRect')
@@ -382,15 +387,15 @@ function map(data) {
             var year = ELECTIONYEARSARRAY[$("#year").slider("value")];
             donut1.drawMun(mun, year);
             $("#searchfield").attr("placeholder", mun).val("").focus().blur();
-        
-            d3.selectAll(".mun")            
-            .style("stroke-width", function(d) {
-                return (d.properties.name == mun) ? 1 : .1;
-            })
-        }
-        
 
-        
+            d3.selectAll(".mun")
+                .style("stroke-width", function(d) {
+                    return (d.properties.name == mun) ? 1 : .1;
+                })
+        }
+
+
+
 
     }
 
@@ -473,7 +478,7 @@ function map(data) {
 
         });
 
-        
+
 
         map1.selectedMun(mun);
     };
@@ -525,7 +530,7 @@ function map(data) {
         var len = partyLegendLength;
         len--;
 
-        if(isNaN(max)) {
+        if (isNaN(max)) {
             hidePartyLegend();
         }
 
