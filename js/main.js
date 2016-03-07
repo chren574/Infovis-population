@@ -9,15 +9,15 @@ color.set("Folkpartiet", "#0094D7");
 color.set("Kristdemokraterna", "#08519c");
 color.set("Miljöpartiet", "#53A045");
 color.set("Socialdemokraterna", "#ED1B34");
-color.set("Vänsterpartiet", "#DA291C");
+color.set("Vänsterpartiet", "#a50f15");
 color.set("Sverigedemokraterna", "#DDDD00");
 color.set("Övriga partier", "gray");
 color.set("Odefinierad", "black");
 
 miningMap = new Map();
 miningMap.set("Vald Kommun", "orange");
-miningMap.set("Mest lik", "green");
-miningMap.set("Minst lik", "red");
+miningMap.set("Mest lik", "#00cc99");
+miningMap.set("Minst lik", "purple");
 
 miningArray = ["Vald Kommun", "Mest lik", "Minst lik"];
 
@@ -26,6 +26,8 @@ ELECTIONYEARSARRAY = [1973, 1976, 1979, 1982, 1985, 1988, 1991, 1994, 1998, 2002
 REGIONARRAY = [];
 
 partyLegendLength = 5;
+
+defaultRegion = "Karlstad";
 
 d3.csv("data/Swedish_Election.csv", function(data) {
 

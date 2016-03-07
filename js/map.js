@@ -20,8 +20,8 @@ function map(data) {
         .offset([2, 0]);
 
     var projection = d3.geo.mercator()
-        .center([40, 62])
-        .scale(850);
+        .center([37, 63])
+        .scale(1000);
 
     var svg = d3.select("#map").append("svg")
         .attr("width", width)
@@ -48,8 +48,6 @@ function map(data) {
     });
 
     function draw(mun, electionData) {
-
-        var defaultRegion = "Upplands Väsby";
 
         regiondData = d3.nest()
             .key(function(d) {
@@ -78,7 +76,7 @@ function map(data) {
                 return color.get(colorOfParty[index].par);
             })
             .attr("stroke-width", function(d) {
-                    return (d.properties.name == defaultRegion) ? 1 : .1;
+                    return (d.properties.name == defaultRegion) ? 1 : .2;
                 })
             .attr("stroke", "black")
 
@@ -206,7 +204,7 @@ function map(data) {
             .text("Data saknas");
     }
 
-    this.colorByYear = function(year) {
+    this.colorByYear = function(year, region) {
 
         if (year < 1991) {
             showUndefinedLegend();
@@ -215,12 +213,12 @@ function map(data) {
         }
 
         hidePartyLegend();
-        hideSimLegend()
+        hideSimLegend();
 
         var mun = $("#searchfield").attr("placeholder");
-        map1.selectedMun(mun);
+        map1.selectedMun(region);
 
-        var isUndefined = [mun, false];
+        var isUndefined = [region, false];
 
         var colorOfParty = partyColor(electionData, year);
 
@@ -390,7 +388,7 @@ function map(data) {
 
             d3.selectAll(".mun")
                 .style("stroke-width", function(d) {
-                    return (d.properties.name == mun) ? 1 : .1;
+                    return (d.properties.name == mun) ? 1 : .2;
                 })
         }
 
@@ -448,12 +446,14 @@ function map(data) {
         });
 
         var len = simmun.length;
-        d3.selectAll(".mun").attr("stroke", "white")
+        d3.selectAll(".mun").attr("stroke", "black")
+        d3.selectAll(".mun").attr("fill", "white")
         d3.selectAll(".mun").each(function(p) {
 
             var point = d3.select(this);
             //OPTIMERA
             point.style("fill", function(d) {
+                
                 if (d.properties.name == vald.key) {
                     return "orange"
                 }
@@ -462,7 +462,7 @@ function map(data) {
                     var region = simmun[i];
 
                     if (d.properties.name == region.reg) {
-                        return "green";
+                        return "#00cc99";
                     }
                 };
 
@@ -470,7 +470,7 @@ function map(data) {
 
                     var region = simmun[i];
                     if (d.properties.name == region.reg) {
-                        return "red";
+                        return "purple";
                     }
                 }
             })

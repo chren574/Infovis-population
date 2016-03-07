@@ -36,7 +36,7 @@ function donut(data) {
 
     donutGraficsRoot = svg.append('g')
 
-    draw(getMunData("Upplands Väsby", "2014"));
+    draw(getMunData(defaultRegion, "2014"));
 
     function draw(data_arr) {
 
@@ -74,7 +74,7 @@ function donut(data) {
             var year = ELECTIONYEARSARRAY[$("#year").slider("value")];
             var mun;
             if ($("#searchfield").attr("placeholder") == "Sök kommun") {
-                mun = "Upplands Väsby";
+                mun = defaultRegion;
             } else {
                 mun = $("#searchfield").attr("placeholder");
             }
@@ -152,7 +152,7 @@ function donut(data) {
             .style("font-weight", "bold")
             .text(function(d) {
                 if ($("#searchfield").attr("placeholder") == "Sök kommun") {
-                    return "Upplands Väsby";
+                    return defaultRegion;
                 } else {
                     return $("#searchfield").attr("placeholder");
                 }
@@ -229,7 +229,7 @@ function donut(data) {
         .attr('transform', function(d, i) {
             var height = legendRectSize + legendSpacing;
             var offset = height * color.size / 2;
-            var horz = 10 * legendRectSize;
+            var horz = 11 * legendRectSize;
             var vert = i * height - offset;
             return 'translate(' + horz + ',' + vert + ')';
         });

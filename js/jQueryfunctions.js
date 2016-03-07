@@ -41,6 +41,7 @@ $(function() {
 
 $("#searchMun").click(function() {
 
+    miningMode = false;
     navbarCommands("search");
 
 });
@@ -63,13 +64,13 @@ $('#year').on('slide', function(event, ui) {
 
     var buttonVal = $('#party button.active').val();
 
-    if(miningMode) {
+    if (miningMode) {
         var region = getSearchString();
         map1.regionsimilarities(year, region);
     } else {
         partyChose(year, buttonVal);
     }
-    
+
 });
 
 
@@ -146,7 +147,7 @@ function isRegion(inputString) {
 function functionChose(region, year, functionType) {
 
     if (functionType == "search") {
-        map1.selectedMun(region);
+        map1.colorByYear(year, region);
     } else if (functionType == "mining") {
         map1.regionsimilarities(year, region);
     }
@@ -156,31 +157,30 @@ function functionChose(region, year, functionType) {
 function partyChose(year, party) {
 
     if (party == "All") {
-        map1.colorByYear(year);
+        var region = getSearchString("search");
+        map1.colorByYear(year, region);
     } else {
         map1.colorByParty(year, party);
     }
 
 };
 
-function getSearchString() {
+function getSearchString(type) {
 
     var str = $('#searchfield').val();
-
-    if (!str.trim()) {
-        var str = $("#searchfield").attr("placeholder");
-    } else {
-        var str = $('#searchfield').val();
+    str.trim();
+    if (!str || type != "search") {
+        str = $("#searchfield").attr("placeholder");
     }
 
-    return str
+    return str;
 }
 
 function navbarCommands(type) {
 
     var year = ELECTIONYEARSARRAY[$("#year").slider("value")];
 
-    var str = getSearchString();
+    var str = getSearchString(type);
 
     $('#searchfield').val('');
 
