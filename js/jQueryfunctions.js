@@ -41,8 +41,11 @@ $(function() {
 
 $("#searchMun").click(function() {
 
-    miningMode = false;
-    navbarCommands("search");
+    if(!isSameString()) {
+        miningMode = false;
+        navbarCommands("search");
+
+    }
 
 });
 
@@ -174,6 +177,14 @@ function getSearchString(type) {
     }
 
     return str;
+}
+
+function isSameString() {
+
+    var input = $('#searchfield').val();
+    var placeHolder = $("#searchfield").attr("placeholder");
+
+    return (input.trim() == placeHolder) ? true : false;
 }
 
 function navbarCommands(type) {
