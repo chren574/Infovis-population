@@ -7,7 +7,7 @@ function donut(data) {
         width = donutDiv.width() - margin.right - margin.left,
         height = partyDiv.height() - margin.top - margin.bottom;
 
-    var radius = Math.min(width, height * 1.2) / 3;
+    radius = Math.min(width, height * 1.2) / 3;
 
     var legendRectSize = 18;
     var legendSpacing = 2;
@@ -135,7 +135,7 @@ function donut(data) {
             });
 
         var legendMun = svg.selectAll('.legendname')
-            .data([{}])
+            .data([{defaultRegion}])
             .enter()
             .append('g')
             .attr('transform', 'translate(' + 0 + ',' + 0 + ')');
@@ -148,7 +148,11 @@ function donut(data) {
             .transition().duration(200)
             .style("opacity", 1)
             .attr("text-anchor", "middle")
-            .style("font-size", "16px")
+            .style("font-size", function(d) {
+                var len = Math.min(2 * radius, ((2 * radius - 80) / d.defaultRegion.length ) );
+                return len + "px";
+            })
+            .attr("dy", ".35em")
             .style("font-weight", "bold")
             .text(function(d) {
                 if ($("#searchfield").attr("placeholder") == "Sök kommun") {
@@ -257,7 +261,10 @@ function donut(data) {
             .style("opacity", 0)
             .transition().duration(200)
             .style("opacity", 1)
-            .style("font-size", "16px")
+            .style("font-size", function(d) {
+                var len = Math.min(2 * radius, ((2 * radius - 80) / d.defaultRegion.length ) );
+                return len + "px";
+            })
             .style("font-weight", "bold")
             .text(mun)
     }
