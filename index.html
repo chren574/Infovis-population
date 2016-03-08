@@ -36,7 +36,7 @@
                     <div class="navbar-header">
                         <a class="navbar-brand">Riksdagsval i Sverige</a>
                     </div>
-                    <form class="navbar-form navbar-left" role="search">
+                    <form class="navbar-form navbar-left fixfixed" role="search">
                         <div class="form-group">
                             <input type="text" class="form-control" id="searchfield" placeholder="Sök kommun">
                         </div>
@@ -56,7 +56,7 @@
                     </br>
                     <div id="year"></div>
                     </br>
-                    <div class="btn-group-vertical" role="group" style="height:70vh" align="center" id="party">
+                    <div class="btn-group-vertical" role="group" style="height:60vh;" align="center" id="party">
                         <button type="button" class="btn btn-default blue active" value="All">Vinnande parti</button>
                         <button type="button" class="btn btn-mod" value="Moderaterna">Moderaterna</button>
                         <button type="button" class="btn btn-cent" value="Centerpartiet">Centerpartiet</button>
@@ -70,10 +70,10 @@
                     </div>
                 </div>
                 <div class="col-xs-7 col-sm-3  col-md-3">
-                    <div id="map"></div>
+                    <div id="map" style="height: 80vh;"></div>
                 </div>
-                <div class="col-xs-12 col-sm-6  col-md-6">
-                    <div id="donut"></div>
+                <div class="col-xs-11 col-sm-11  col-md-6">
+                    <div id="donut" style="height: 60vh;"></div>
                 </div>
                 <!-- row 2 end -->
             </div>
@@ -111,9 +111,9 @@
     <script src="js/vendor/d3.tip.v0.6.3.js"></script>
     <!--modules js-->
     <script src="js/globalvariables.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/map.js"></script>
     <script src="js/donut.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/main.js"></script>
     <script src="js/jQueryfunctions.js"></script>
 </body>
 

@@ -219,8 +219,8 @@ function navbarCommands(type) {
             functionChose(formatString, year, "mining");
         }
 
-        $("#searchfield").attr("placeholder", formatString).val("").focus().blur();
+        $("#searchfield").attr("placeholder", formatString).val("").blur();
     } else {
-        $("#searchfield").attr("placeholder", "Ingen kommun").val("").focus().blur();
+        $("#searchfield").attr("placeholder", "Ingen kommun").val("").blur();
     }
 };

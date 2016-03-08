@@ -1,11 +1,10 @@
 function donut(data) {
 
     var donutDiv = $("#donut");
-    var partyDiv = $("#party");
 
     var margin = { top: 0, right: 0, bottom: 0, left: 0 },
         width = donutDiv.width() - margin.right - margin.left,
-        height = partyDiv.height() - margin.top - margin.bottom;
+        height = donutDiv.height() - margin.top - margin.bottom;
 
     radius = Math.min(width, height * 1.2) / 3;
 
@@ -103,7 +102,7 @@ function donut(data) {
                 partyArray.push(d.parti);
             }
         });
-console.log(radius)
+
         var legend = svg.selectAll('.legend')
             .data(partyArray)
             .enter()

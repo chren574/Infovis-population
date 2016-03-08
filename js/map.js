@@ -5,11 +5,10 @@ function map(data) {
         .on("zoom", move);
 
     var mapDiv = $("#map");
-    var partyDiv = $("#party");
 
     var margin = { top: 0, right: 0, bottom: 0, left: 0 },
         width = mapDiv.width() - margin.right - margin.left,
-        height = partyDiv.height() - margin.top - margin.bottom;
+        height = mapDiv.height() - margin.top - margin.bottom;
 
     var legendRectSize = 18;
     var legendSpacing = 2;
@@ -380,7 +379,7 @@ function map(data) {
 
         if (validRegion) {
             donut1.drawMun(mun, year);
-            $("#searchfield").attr("placeholder", mun).val("").focus().blur();
+            $("#searchfield").attr("placeholder", mun).val("").blur();
 
             d3.selectAll(".mun")
                 .style("stroke-width", function(d) {
