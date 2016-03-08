@@ -379,7 +379,7 @@ function map(data) {
 
         if (validRegion) {
             donut1.drawMun(mun, year);
-            $("#searchfield").attr("placeholder", mun).val("").blur();
+            $("#searchfield").attr("placeholder", mun).val("");
 
             d3.selectAll(".mun")
                 .style("stroke-width", function(d) {
