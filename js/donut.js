@@ -103,7 +103,7 @@ function donut(data) {
                 partyArray.push(d.parti);
             }
         });
-
+console.log(radius)
         var legend = svg.selectAll('.legend')
             .data(partyArray)
             .enter()
@@ -112,7 +112,7 @@ function donut(data) {
             .attr('transform', function(d, i) {
                 var height = legendRectSize + legendSpacing;
                 var offset = height * COLOR.size / 2;
-                var horz = 11 * legendRectSize;
+                var horz = radius + 10;
                 var vert = i * height - offset;
                 return 'translate(' + horz + ',' + vert + ')';
             });
