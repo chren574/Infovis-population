@@ -149,7 +149,7 @@ function donut(data) {
             .style("opacity", 1)
             .attr("text-anchor", "middle")
             .style("font-size", function(d) {
-                var len = Math.min(2 * radius, ((2 * radius - 80) / d.DEFAULTREGION.length ) );
+                var len = Math.min(2 * (radius - 80), ((2 * (radius - 80)) / d.DEFAULTREGION.length ) );
                 return len + "px";
             })
             .attr("dy", ".35em")
@@ -258,7 +258,7 @@ function donut(data) {
         d3.selectAll('text.legendReg')
             .style("opacity", 1)
             .style("font-size", function(d) {
-                var len = Math.min(2 * radius, ((2 * radius - 80) / d.DEFAULTREGION.length ) );
+                var len = Math.min(2 * (radius - 80), ((2 * (radius - 80)) / d.DEFAULTREGION.length ) );
                 return len + "px";
             })
             .style("font-weight", "bold")
