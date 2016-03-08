@@ -393,7 +393,9 @@ function map(data) {
 
     }
 
-    this.regionsimilarities = function(year, mun) {
+    this.regionsimilarities = function(year, mun, miningAmount) {
+
+        console.log(miningAmount);
 
         showSimLegend();
         hideUndefinedLegend();
@@ -456,7 +458,7 @@ function map(data) {
                     return "orange"
                 }
 
-                for (var i = 0; i < 30; ++i) {
+                for (var i = 0; i < miningAmount; ++i) {
                     var region = simmun[i];
 
                     if (d.properties.name == region.reg) {
@@ -464,7 +466,7 @@ function map(data) {
                     }
                 };
 
-                for (var i = len - 1; i > (len - 30); --i) {
+                for (var i = len - 1; i >= (len - miningAmount); --i) {
 
                     var region = simmun[i];
                     if (d.properties.name == region.reg) {

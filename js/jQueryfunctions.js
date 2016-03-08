@@ -55,6 +55,11 @@ $("#mining").click(function() {
 
 });
 
+function updateSlider(value){
+    var miningDiv = document.getElementById("miningAmount");
+    miningDiv.innerHTML = value;
+};
+
 
 $('#year').on('slide', function(event, ui) {
 
@@ -70,7 +75,8 @@ $('#year').on('slide', function(event, ui) {
 
     if (miningMode) {
         var region = getSearchString();
-        map1.regionsimilarities(year, region);
+        var miningAmount = parseInt(document.getElementById("miningAmount").innerHTML);
+        map1.regionsimilarities(year, region, miningAmount);
     } else {
         partyChose(year, buttonVal);
     }
@@ -154,7 +160,9 @@ function functionChose(region, year, functionType) {
         map1.colorByYear(year, region);
         map1.selectedMun(region, year);
     } else if (functionType == "mining") {
-        map1.regionsimilarities(year, region);
+        var miningAmount = parseInt(document.getElementById("miningAmount").innerHTML);
+        console.log(miningAmount);
+        map1.regionsimilarities(year, region, miningAmount);
         map1.selectedMun(region, year);
     }
 
