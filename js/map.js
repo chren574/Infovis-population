@@ -217,9 +217,6 @@ function map(data) {
         hidePartyLegend();
         hideSimLegend();
 
-        var mun = $("#searchfield").attr("placeholder");
-        map1.selectedMun(region);
-
         var isUndefined = [region, false];
 
         var colorOfParty = partyColor(electionData, year);
@@ -258,9 +255,6 @@ function map(data) {
         showPartyLegend();
         hideSimLegend();
         hideUndefinedLegend();
-
-        var mun = $("#searchfield").attr("placeholder");
-        map1.selectedMun(mun);
 
         var nested_data = d3.nest()
             .key(function(d) {
@@ -480,9 +474,6 @@ function map(data) {
 
         });
 
-
-
-        map1.selectedMun(mun);
     };
 
 

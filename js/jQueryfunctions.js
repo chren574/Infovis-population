@@ -67,11 +67,14 @@ $('#year').on('slide', function(event, ui) {
 
     var buttonVal = $('#party button.active').val();
 
+    var region = getSearchString();
+
     if (miningMode) {
-        var region = getSearchString();
+        //var region = getSearchString();
         map1.regionsimilarities(year, region);
     } else {
         partyChose(year, buttonVal);
+        map1.selectedMun(region);
     }
 
 });
@@ -161,17 +164,19 @@ function partyChose(year, party) {
 
     if (party == "All") {
         var region = getSearchString("search");
+        map1.selectedMun(region);
         map1.colorByYear(year, region);
     } else {
         map1.colorByParty(year, party);
+        map1.selectedMun(region);
     }
 
 };
 
 function getSearchString(type) {
 
-    var str = $('#searchfield').val();
-    str.trim();
+    var str = $('#searchfield').val().trim();
+
     if (!str || type != "search") {
         str = $("#searchfield").attr("placeholder");
     }

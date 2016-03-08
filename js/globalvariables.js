@@ -14,11 +14,11 @@ COLOR.set("Odefinierad", "black");
 // Map for mining
 MININGMAP = new Map();
 MININGMAP.set("Vald Kommun", "orange");
-MININGMAP.set("Mest lik", "#00cc99");
-MININGMAP.set("Minst lik", "purple");
+MININGMAP.set("Mest lika", "#00cc99");
+MININGMAP.set("Minst lika", "purple");
 
 // Array for mining
-MININGARRAY = ["Vald Kommun", "Mest lik", "Minst lik"];
+MININGARRAY = ["Vald Kommun", "Mest lika", "Minst lika"];
 
 ELECTIONYEARSARRAY = [1973, 1976, 1979, 1982, 1985, 1988, 1991, 1994, 1998, 2002, 2006, 2010, 2014];
 
