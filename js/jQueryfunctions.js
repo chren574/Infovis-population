@@ -44,7 +44,6 @@ $("#searchMun").click(function() {
     if(!isSameString()) {
         miningMode = false;
         navbarCommands("search");
-
     }
 
 });
@@ -70,11 +69,10 @@ $('#year').on('slide', function(event, ui) {
     var region = getSearchString();
 
     if (miningMode) {
-        //var region = getSearchString();
+        var region = getSearchString();
         map1.regionsimilarities(year, region);
     } else {
         partyChose(year, buttonVal);
-        map1.selectedMun(region);
     }
 
 });
@@ -99,7 +97,7 @@ function formatStringInput(inputString) {
 
     var inputString = inputString.trim();
 
-    if (inputString.trim().length != 0) {
+    if (inputString.length != 0) {
 
         var str = (inputString.substr(0, 1)).toUpperCase() + (inputString.substr(1)).toLowerCase();
 
@@ -154,30 +152,33 @@ function functionChose(region, year, functionType) {
 
     if (functionType == "search") {
         map1.colorByYear(year, region);
+        map1.selectedMun(region, year);
     } else if (functionType == "mining") {
         map1.regionsimilarities(year, region);
+        map1.selectedMun(region, year);
     }
 
 };
 
 function partyChose(year, party) {
 
+    var region = getSearchString("search");
+
     if (party == "All") {
-        var region = getSearchString("search");
-        map1.selectedMun(region);
+        map1.selectedMun(region, year);
         map1.colorByYear(year, region);
     } else {
         map1.colorByParty(year, party);
-        map1.selectedMun(region);
+        map1.selectedMun(region, year);
     }
 
 };
 
 function getSearchString(type) {
 
-    var str = $('#searchfield').val().trim();
+    var str = $('#searchfield').val();
 
-    if (!str || type != "search") {
+    if (!str.trim() || type != "search") {
         str = $("#searchfield").attr("placeholder");
     }
 
@@ -186,10 +187,10 @@ function getSearchString(type) {
 
 function isSameString() {
 
-    var input = $('#searchfield').val().trim();
+    var input = $('#searchfield').val();
     var placeHolder = $("#searchfield").attr("placeholder");
 
-    return (input == placeHolder) ? true : false;
+    return (input.trim() == placeHolder) ? true : false;
 }
 
 function navbarCommands(type) {

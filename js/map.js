@@ -120,7 +120,8 @@ function map(data) {
         .on("click", function(d) {
 
             if(d.properties.name != $("#searchfield").attr("placeholder")) {
-                map1.selectedMun(d.properties.name);
+                var year = ELECTIONYEARSARRAY[$("#year").slider("value")];
+                map1.selectedMun(d.properties.name, year);
             }
 
         });
@@ -373,12 +374,11 @@ function map(data) {
     }
 
     // Sends the name of the mun to other .js-files
-    this.selectedMun = function(mun) {
+    this.selectedMun = function(mun, year) {
 
         var validRegion = hasData(mun);
 
         if (validRegion) {
-            var year = ELECTIONYEARSARRAY[$("#year").slider("value")];
             donut1.drawMun(mun, year);
             $("#searchfield").attr("placeholder", mun).val("").focus().blur();
 
@@ -405,6 +405,8 @@ function map(data) {
                 return d.region;
             })
             .entries(electionData);
+
+        map1.selectedMun(mun, year);
 
         //beräkna för vald region spara object i variabel
         var vald;

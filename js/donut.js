@@ -194,6 +194,9 @@ function donut(data) {
     // Sends the name of the mun to other .js-files
     this.drawMun = function(mun, electionYear) {
 
+        // Temporary fix
+        //var electionYear = ELECTIONYEARSARRAY[$("#year").slider("value")];
+
         var filteredData = getMunData(mun, electionYear);
 
 
