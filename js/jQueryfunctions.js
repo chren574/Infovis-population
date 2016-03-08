@@ -45,7 +45,6 @@ $("#searchMun").click(function() {
         miningMode = false;
         navbarCommands("search");
     }
-
 });
 
 $("#mining").click(function() {
@@ -161,7 +160,6 @@ function functionChose(region, year, functionType) {
         map1.selectedMun(region, year);
     } else if (functionType == "mining") {
         var miningAmount = parseInt(document.getElementById("miningAmount").innerHTML);
-        console.log(miningAmount);
         map1.regionsimilarities(year, region, miningAmount);
         map1.selectedMun(region, year);
     }

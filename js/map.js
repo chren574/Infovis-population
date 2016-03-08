@@ -387,15 +387,9 @@ function map(data) {
                     return (d.properties.name == mun) ? 1 : .2;
                 })
         }
-
-
-
-
     }
 
     this.regionsimilarities = function(year, mun, miningAmount) {
-
-        console.log(miningAmount);
 
         showSimLegend();
         hideUndefinedLegend();
