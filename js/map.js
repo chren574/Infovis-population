@@ -73,10 +73,10 @@ function map(data) {
                         break;
                     }
                 };
-                return color.get(colorOfParty[index].par);
+                return COLOR.get(colorOfParty[index].par);
             })
             .attr("stroke-width", function(d) {
-                    return (d.properties.name == defaultRegion) ? 1 : .2;
+                    return (d.properties.name == DEFAULTREGION) ? 1 : .2;
                 })
             .attr("stroke", "black")
 
@@ -103,7 +103,7 @@ function map(data) {
 
                 for (var i = 0; i < regArr.length; ++i) {
                     if (!isNaN(regArr[i].procent)) {
-                        res += "<p>" + "<span style='color:" + color.get(regArr[i].parti) + "'>" + regArr[i].parti + "<span style='color:white'>" + " : " + regArr[i].procent + " %" + "</p>";
+                        res += "<p>" + "<span style='color:" + COLOR.get(regArr[i].parti) + "'>" + regArr[i].parti + "<span style='color:white'>" + " : " + regArr[i].procent + " %" + "</p>";
                     }
                 }
 
@@ -126,13 +126,13 @@ function map(data) {
         });
 
         var legend = miningLegendRoot.selectAll(".legend")
-            .data(miningArray)
+            .data(MININGARRAY)
             .enter()
             .append("g")
             .attr("class", "legend")
             .attr('transform', function(d, i) {
                 var height = legendRectSize + legendSpacing;
-                var offset = height * miningArray.length / 2;
+                var offset = height * MININGARRAY.length / 2;
                 var horz = 1 * legendRectSize;
                 var vert = i * height - offset + 50;
                 return 'translate(' + horz + ',' + vert + ')';
@@ -144,7 +144,7 @@ function map(data) {
             .attr('height', legendRectSize)
             .style("opacity", 0)
             .style('fill', function(d, i) {
-                return miningMap.get(d);
+                return MININGMAP.get(d);
             })
             .style('stroke', "black");
 
@@ -159,7 +159,7 @@ function map(data) {
 
         // Party selection legend
         var partyLegend = partyLegendRoot.selectAll(".legend")
-            .data(new Array(partyLegendLength))
+            .data(new Array(PARTYLEGENDLENGTH))
             .enter()
             .append("g")
             .attr("class", "partylegend");
@@ -241,10 +241,10 @@ function map(data) {
                     }
                 };
                 if (!isNaN(index)) {
-                    return color.get(colorOfParty[index].par);
+                    return COLOR.get(colorOfParty[index].par);
                 } else {
                     isUndefined[1] = true;
-                    return color.get("Odefinierad");
+                    return COLOR.get("Odefinierad");
                 }
 
             });
@@ -292,7 +292,7 @@ function map(data) {
                     var region = nested_data[0].values[i];
 
                     if (d.properties.name == region.region) {
-                        return !(isNaN(region[year])) ? color.get(party) : "white";
+                        return !(isNaN(region[year])) ? COLOR.get(party) : "white";
                     }
                 };
             })
@@ -310,7 +310,7 @@ function map(data) {
             });
         });
 
-        updatePartyLegend(min, max, color.get(party));
+        updatePartyLegend(min, max, COLOR.get(party));
     }
 
     function partyColor(electionData, year) {
@@ -446,7 +446,7 @@ function map(data) {
             // a must be equal to b
             return 0;
         });
-
+ 
         var len = simmun.length;
         d3.selectAll(".mun").attr("stroke", "black")
         d3.selectAll(".mun").attr("fill", "white")
@@ -529,7 +529,7 @@ function map(data) {
     };
 
     function updatePartyLegend(min, max, color) {
-        var len = partyLegendLength;
+        var len = PARTYLEGENDLENGTH;
         len--;
 
         if (isNaN(max)) {
@@ -539,7 +539,7 @@ function map(data) {
         d3.selectAll(".partylegend")
             .attr('transform', function(d, i) {
                 var height = legendRectSize + legendSpacing;
-                var offset = height * partyLegendLength / 2;
+                var offset = height * PARTYLEGENDLENGTH / 2;
                 var horz = 1 * legendRectSize;
                 var vert = i * height - offset + 70;
                 return 'translate(' + horz + ',' + vert + ')';

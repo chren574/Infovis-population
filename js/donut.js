@@ -36,7 +36,7 @@ function donut(data) {
 
     donutGraficsRoot = svg.append('g')
 
-    draw(getMunData(defaultRegion, "2014"));
+    draw(getMunData(DEFAULTREGION, DEFAULTYEAR));
 
     function draw(data_arr) {
 
@@ -48,7 +48,7 @@ function donut(data) {
 
         path.append("path")
             .style("fill", function(d, i) {
-                return color.get(d.data.parti);
+                return COLOR.get(d.data.parti);
             })
             .attr("class", "arcPath")
             .attr("d", arc)
@@ -74,7 +74,7 @@ function donut(data) {
             var year = ELECTIONYEARSARRAY[$("#year").slider("value")];
             var mun;
             if ($("#searchfield").attr("placeholder") == "Sök kommun") {
-                mun = defaultRegion;
+                mun = DEFAULTREGION;
             } else {
                 mun = $("#searchfield").attr("placeholder");
             }
@@ -90,7 +90,7 @@ function donut(data) {
             });
 
             tip.html(
-                "<span style='color:" + color.get(party.parti) + "'>" + party.parti + "<strong>:</strong> <span style='color:white'>" + party.year + "%" + "</span>"
+                "<span style='color:" + COLOR.get(party.parti) + "'>" + party.parti + "<strong>:</strong> <span style='color:white'>" + party.year + "%" + "</span>"
             );
             tip.show();
         })
@@ -111,7 +111,7 @@ function donut(data) {
             .attr('class', 'legendParty')
             .attr('transform', function(d, i) {
                 var height = legendRectSize + legendSpacing;
-                var offset = height * color.size / 2;
+                var offset = height * COLOR.size / 2;
                 var horz = 11 * legendRectSize;
                 var vert = i * height - offset;
                 return 'translate(' + horz + ',' + vert + ')';
@@ -121,10 +121,10 @@ function donut(data) {
             .attr('width', legendRectSize)
             .attr('height', legendRectSize)
             .style('fill', function(d) {
-                return color.get(d);
+                return COLOR.get(d);
             })
             .style('stroke', function(d) {
-                return color.get(d);
+                return COLOR.get(d);
             });
 
         legend.append('text')
@@ -135,7 +135,7 @@ function donut(data) {
             });
 
         var legendMun = svg.selectAll('.legendname')
-            .data([{defaultRegion}])
+            .data([{DEFAULTREGION}])
             .enter()
             .append('g')
             .attr('transform', 'translate(' + 0 + ',' + 0 + ')');
@@ -149,14 +149,14 @@ function donut(data) {
             .style("opacity", 1)
             .attr("text-anchor", "middle")
             .style("font-size", function(d) {
-                var len = Math.min(2 * radius, ((2 * radius - 80) / d.defaultRegion.length ) );
+                var len = Math.min(2 * radius, ((2 * radius - 80) / d.DEFAULTREGION.length ) );
                 return len + "px";
             })
             .attr("dy", ".35em")
             .style("font-weight", "bold")
             .text(function(d) {
                 if ($("#searchfield").attr("placeholder") == "Sök kommun") {
-                    return defaultRegion;
+                    return DEFAULTREGION;
                 } else {
                     return $("#searchfield").attr("placeholder");
                 }
@@ -232,7 +232,7 @@ function donut(data) {
 
         .attr('transform', function(d, i) {
             var height = legendRectSize + legendSpacing;
-            var offset = height * color.size / 2;
+            var offset = height * COLOR.size / 2;
             var horz = 11 * legendRectSize;
             var vert = i * height - offset;
             return 'translate(' + horz + ',' + vert + ')';
@@ -242,10 +242,10 @@ function donut(data) {
             .attr('width', legendRectSize)
             .attr('height', legendRectSize)
             .style('fill', function(d) {
-                return color.get(d.parti);
+                return COLOR.get(d.parti);
             })
             .style('stroke', function(d) {
-                return color.get(d.parti);
+                return COLOR.get(d.parti);
             });
 
         legend.append('text')
@@ -258,7 +258,7 @@ function donut(data) {
         d3.selectAll('text.legendReg')
             .style("opacity", 1)
             .style("font-size", function(d) {
-                var len = Math.min(2 * radius, ((2 * radius - 80) / d.defaultRegion.length ) );
+                var len = Math.min(2 * radius, ((2 * radius - 80) / d.DEFAULTREGION.length ) );
                 return len + "px";
             })
             .style("font-weight", "bold")

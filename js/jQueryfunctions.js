@@ -20,7 +20,7 @@ $(function() {
         animate: "slow",
         min: 0,
         max: ELECTIONYEARSARRAY.length - 1,
-        value: 2014,
+        value: DEFAULTYEAR,
     });
 
     $("#searchfield").keydown(function(event) {
@@ -32,7 +32,7 @@ $(function() {
     });
 
     // Reset Buttens when refreshing website
-    setButtons(2014);
+    setButtons(DEFAULTYEAR);
 
     miningMode = false;
 
