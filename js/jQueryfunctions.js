@@ -1,5 +1,7 @@
+// Startup functions
 $(function() {
 
+    // Searchfunction
     $("#searchfield").autocomplete({
         /*Source refers to the list of fruits that are available in the auto complete list. */
         source: function(request, response) {
@@ -16,6 +18,7 @@ $(function() {
         }
     });
 
+    // Slider to change the year
     $("#year").slider({
         animate: "slow",
         min: 0,
@@ -23,6 +26,7 @@ $(function() {
         value: DEFAULTYEAR,
     });
 
+    // Keybinding "Enter", when using thne searchfield
     $("#searchfield").keydown(function(event) {
         var SPACE = 13;
         if (event.keyCode == SPACE) {
@@ -34,11 +38,12 @@ $(function() {
     // Reset Buttens when refreshing website
     setButtons(DEFAULTYEAR);
 
+    // Default setting for miningfunction
     miningMode = false;
 
 });
 
-
+// Handles the search input
 $("#searchMun").click(function() {
 
     if(!isSameString()) {
@@ -47,6 +52,7 @@ $("#searchMun").click(function() {
     }
 });
 
+// Enables the miningfunction
 $("#mining").click(function() {
 
     miningMode = true;
@@ -54,12 +60,13 @@ $("#mining").click(function() {
 
 });
 
-function updateSlider(value){
+// Update how many municipalities that is chosen
+function updateSliderValue(value){
     var miningDiv = document.getElementById("miningAmount");
     miningDiv.innerHTML = value;
 };
 
-
+// Updated the map to the chosen year
 $('#year').on('slide', function(event, ui) {
 
     $("#currYear").text(ELECTIONYEARSARRAY[ui.value]).css("font-weight", "Bold");
@@ -82,7 +89,7 @@ $('#year').on('slide', function(event, ui) {
 
 });
 
-
+// Updates the map to the chosen party
 $("#party > .btn").on("click", function() {
 
     miningMode = false;
@@ -97,15 +104,18 @@ $("#party > .btn").on("click", function() {
 
 });
 
-
+// Format the input to match the database
 function formatStringInput(inputString) {
 
     var inputString = inputString.trim();
 
+    // If the string is not empty
     if (inputString.length != 0) {
 
+        // The first element to upper cae and the rest to lower case
         var str = (inputString.substr(0, 1)).toUpperCase() + (inputString.substr(1)).toLowerCase();
 
+        // Handles special symbols
         if (!str.indexOf(" ").length) {
             var i = str.indexOf(" ");
             str = str.replace(str[i + 1], str[i + 1].toUpperCase());
@@ -121,6 +131,8 @@ function formatStringInput(inputString) {
     return str;
 };
 
+// Diables/enables partybuttons
+// Special cases where partys didnt exist that year
 function setButtons(year) {
 
     if (year < 1982) {
@@ -142,6 +154,7 @@ function setButtons(year) {
     }
 };
 
+// Validates the input if it is a real region
 function isRegion(inputString) {
 
     var valid = false;
@@ -153,6 +166,7 @@ function isRegion(inputString) {
     return valid;
 };
 
+// Sends the data to exteral function with the chosen mode
 function functionChose(region, year, functionType) {
 
     if (functionType == "search") {
@@ -166,6 +180,7 @@ function functionChose(region, year, functionType) {
 
 };
 
+// Updates the map to the chosen party and year
 function partyChose(year, party) {
 
     var region = getSearchString("search");
@@ -180,6 +195,7 @@ function partyChose(year, party) {
 
 };
 
+// Collect the input from the field
 function getSearchString(type) {
 
     var str = $('#searchfield').val();
@@ -191,6 +207,7 @@ function getSearchString(type) {
     return str;
 }
 
+// Checks if the input is the same as the last search
 function isSameString() {
 
     var input = $('#searchfield').val();
@@ -199,16 +216,17 @@ function isSameString() {
     return (input.trim() == placeHolder) ? true : false;
 }
 
+// Helper function to execute commandes 
 function navbarCommands(type) {
 
+    // Searchinput and chosen year
     var year = ELECTIONYEARSARRAY[$("#year").slider("value")];
-
     var str = getSearchString(type);
 
+    // Set the searchfield to white space
     $('#searchfield').val('');
 
     var formatString = formatStringInput(str);
-
     var validRegion = isRegion(formatString);
 
     if (validRegion) {
@@ -218,7 +236,6 @@ function navbarCommands(type) {
         } else {
             functionChose(formatString, year, "mining");
         }
-
         $("#searchfield").attr("placeholder", formatString).val("");
     } else {
         $("#searchfield").attr("placeholder", "Ingen kommun").val("");

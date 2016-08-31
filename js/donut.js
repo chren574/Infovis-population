@@ -37,6 +37,9 @@ function donut(data) {
 
     draw(getMunData(DEFAULTREGION, DEFAULTYEAR));
 
+    /**
+    * Function to update the graphic
+    */
     function draw(data_arr) {
 
         var path = donutGraficsRoot.selectAll(".arc")
@@ -163,10 +166,14 @@ function donut(data) {
             });
     }
 
+    /**
+    * Collects data for the regions for the chosen year
+    */
     function getMunData(mun, electionYear) {
 
         var year = electionYear;
 
+        // Sort data
         var nested_data = d3.nest()
             .key(function(d) {
                 return d.region;
@@ -175,6 +182,7 @@ function donut(data) {
                 return b.parti - a.parti;
             })
             .entries(data);
+        
         nested_data = nested_data.filter(function(d) {
             return d.key == mun;
         })
@@ -190,14 +198,13 @@ function donut(data) {
         return munData;
     }
 
-    // Sends the name of the mun to other .js-files
+    /**
+    * Function to get the name of the region from other .js-files
+    * Updates the donut
+    */
     this.drawMun = function(mun, electionYear) {
 
-        // Temporary fix
-        //var electionYear = ELECTIONYEARSARRAY[$("#year").slider("value")];
-
         var filteredData = getMunData(mun, electionYear);
-
 
         var redrawdount = d3.selectAll(".arc")
             .data(pie(filteredData));
@@ -287,6 +294,9 @@ function donut(data) {
             });
     }
 
+    /**
+    * Function to check if the year is valide
+    */
     function isYearNaN(element, index, array) {
         return !isNaN(element.year);
     }

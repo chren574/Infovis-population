@@ -1,3 +1,6 @@
+/**
+ * Function to setup the map
+ */
 function map(data) {
 
     var zoom = d3.behavior.zoom()
@@ -46,6 +49,9 @@ function map(data) {
         draw(mun, data);
     });
 
+    /**
+    * Function to update the graphic
+    */
     function draw(mun, electionData) {
 
         regiondData = d3.nest()
@@ -75,8 +81,8 @@ function map(data) {
                 return COLOR.get(colorOfParty[index].par);
             })
             .attr("stroke-width", function(d) {
-                    return (d.properties.name == DEFAULTREGION) ? 1 : .2;
-                })
+                return (d.properties.name == DEFAULTREGION) ? 1 : .2;
+            })
             .attr("stroke", "black")
 
 
@@ -118,7 +124,7 @@ function map(data) {
 
         .on("click", function(d) {
 
-            if(d.properties.name != $("#searchfield").attr("placeholder")) {
+            if (d.properties.name != $("#searchfield").attr("placeholder")) {
                 var year = ELECTIONYEARSARRAY[$("#year").slider("value")];
                 map1.selectedMun(d.properties.name, year);
             }
@@ -206,6 +212,10 @@ function map(data) {
             .text("Data saknas");
     }
 
+    /**
+    * Extarnal function to update the map by year
+    * The region gets colored with the biggest party of the regin the chosen year 
+    */
     this.colorByYear = function(year, region) {
 
         if (year < 1991) {
@@ -250,6 +260,11 @@ function map(data) {
 
     }
 
+    /**
+    * Extarnal function to update the map by one party
+    * The region gets the parties color with different opacity depending on how 
+    * how string the party was that year
+    */
     this.colorByParty = function(year, party) {
 
         showPartyLegend();
@@ -307,6 +322,10 @@ function map(data) {
         updatePartyLegend(min, max, COLOR.get(party));
     }
 
+    /**
+    * Function to find the biggest party of the region and associate it by the parties color
+    * The data is saved in an array
+    */
     function partyColor(electionData, year) {
 
         var nested_data = d3.nest()
@@ -344,6 +363,9 @@ function map(data) {
         }
     }
 
+    /**
+    * Checks if the region have any data the chosen year
+    */
     function hasData(mun) {
 
         var totalProcent = 0;
@@ -362,7 +384,9 @@ function map(data) {
         return totalProcent ? true : false;
     }
 
-    //zoom and panning method
+    /**
+    * Function to zoom and panning in the map
+    */
     function move() {
 
         var t = d3.event.translate;
@@ -372,7 +396,10 @@ function map(data) {
         mapGraficsRoot.style("stroke-width", 1 / s).attr("transform", "translate(" + t + ")scale(" + s + ")");
     }
 
-    // Sends the name of the mun to other .js-files
+    /**
+    * Extarnal function to update the map to the selected region
+    * Gets the name of the region from other .js-files
+    */
     this.selectedMun = function(mun, year) {
 
         var validRegion = hasData(mun);
@@ -388,6 +415,9 @@ function map(data) {
         }
     }
 
+    /**
+    * Extarnal function to update the map by datmining mode
+    */
     this.regionsimilarities = function(year, mun, miningAmount) {
 
         showSimLegend();
@@ -437,7 +467,7 @@ function map(data) {
             // a must be equal to b
             return 0;
         });
- 
+
         var len = simmun.length;
         d3.selectAll(".mun").attr("stroke", "black")
         d3.selectAll(".mun").attr("fill", "white")
@@ -446,7 +476,7 @@ function map(data) {
             var point = d3.select(this);
             //OPTIMERA
             point.style("fill", function(d) {
-                
+
                 if (d.properties.name == vald.key) {
                     return "orange"
                 }
@@ -473,42 +503,39 @@ function map(data) {
 
     };
 
-
+    /**
+    * Enable/disable legends
+    */
     function showSimLegend() {
         d3.selectAll("rect.legendRect")
             .style("opacity", 1);
         d3.selectAll("text.legendText")
             .style("opacity", 1);
     };
-
     function hideSimLegend() {
         d3.selectAll("rect.legendRect")
             .style("opacity", 0);
         d3.selectAll("text.legendText")
             .style("opacity", 0);
     };
-
     function showPartyLegend() {
         d3.selectAll("rect.partyLegendRect")
             .style("opacity", 1);
         d3.selectAll("text.partyLegendText")
             .style("opacity", 1);
     };
-
     function hidePartyLegend() {
         d3.selectAll("rect.partyLegendRect")
             .style("opacity", 0);
         d3.selectAll("text.partyLegendText")
             .style("opacity", 0);
     };
-
     function showUndefinedLegend() {
         d3.selectAll("rect.undefinedLegendRect")
             .style("opacity", 1);
         d3.selectAll("text.undefinedLegendText")
             .style("opacity", 1);
     };
-
     function hideUndefinedLegend() {
         d3.selectAll("rect.undefinedLegendRect")
             .style("opacity", 0);
@@ -516,6 +543,10 @@ function map(data) {
             .style("opacity", 0);
     };
 
+    /**
+    * Create a legend with a colorscheme
+    * The colors corrospond to the map and its procentunits
+    */
     function updatePartyLegend(min, max, color) {
         var len = PARTYLEGENDLENGTH;
         len--;
