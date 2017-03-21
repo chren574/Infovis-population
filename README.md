@@ -3,6 +3,6 @@ A web-application where you can see how the populaion in sweden voted in the gen
 
 To use it, click on the [link](http://www.student.itn.liu.se/~chren574/Visualization-of-Swedish-Election-master/).
 
-![alt tag](img/kastbana.PNG)
+![alt tag](img/kastbana.png)
 
 This project was made by Christoffer Engelbrektsson and Marcus Lilja.
